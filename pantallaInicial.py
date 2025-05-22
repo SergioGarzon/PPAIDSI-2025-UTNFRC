@@ -41,11 +41,11 @@ class PantallaInicial():
         image_label = tk.Label(frame1, image=image_open)
         image_label.image = image_open    
 
-        btn_enter = tk.Button(frame1, text="Registrar resultado revisión manual") #, cursor="Hand2")
+        btn_enter = tk.Button(frame1, text="Registrar resultado revisión manual", cursor="Hand2")
         btn_enter.config(fg="white", bg="darkgreen", font=("Arial", 15, "bold"))
         btn_enter.config(command=self.opcion_registrar_resultado_revision_manual)
 
-        btn_quit = tk.Button(frame1, text="Salir del sistema") #, cursor="Hand2")
+        btn_quit = tk.Button(frame1, text="Salir del sistema", cursor="Hand2")
         btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))  
         btn_quit.config(command=self.salir_sistema)
 
@@ -55,7 +55,7 @@ class PantallaInicial():
         label_group.pack()
         label_members.pack()
         label_members2.pack()
-        #image_label.pack(pady=45)  
+        image_label.pack(pady=45)  
         btn_quit.pack(side="left")    
         btn_enter.pack(side="right")
 

@@ -15,7 +15,7 @@ class PantallaRegistrarRevisionManual:
     def windows_properties(self):
         self.new_window.title("Red Sismica")
         self.new_window.geometry("1000x400+500+300")
-        #self.new_window.iconbitmap("./Images/utnfrc.ico")
+        self.new_window.iconbitmap("./Images/utnfrc.ico")
         self.new_window.configure(bg="lightblue")
         self.new_window.resizable(False, False)
 
@@ -44,7 +44,7 @@ class PantallaRegistrarRevisionManual:
         self.table.column("magnitud", width=120, anchor=CENTER)
         self.table.column("seleccione", width=120, anchor=CENTER)
 
-        btn_quit = Button(self.new_window, text="Salir del sistema") #, cursor="Hand2")        
+        btn_quit = Button(self.new_window, text="Salir del sistema", cursor="Hand2")        
         btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
         btn_quit.config(command=self.salir_sistema)        
 
