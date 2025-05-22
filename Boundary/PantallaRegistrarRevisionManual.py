@@ -2,9 +2,8 @@ from tkinter import *
 from tkinter import ttk
 
 new_window = Tk()
- 
-def habilitarPantalla():
 
+def windows_properties():
     new_window.title("Red Sismica")
     new_window.geometry("1000x400+500+300")
     new_window.iconbitmap("./Images/utnfrc.ico")
@@ -17,10 +16,14 @@ def habilitarPantalla():
     label_subtitle = Label(new_window, text="Eventos sismicos detectados sin revisión")
     label_subtitle.config(fg="darkblue", bg="lightblue", font=("Arial", 15, "italic"))     
 
-    table = ttk.Treeview(new_window, columns=('numero', "fecha", "hora", "ubicación", "magnitud", "seleccione"), show="headings")
-
     style = ttk.Style(new_window)
     style.configure("Treeview.Heading", font=(None, 15))
+
+    btn_quit = Button(new_window, text="Salir del sistema", cursor="Hand2")
+    btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))  
+    btn_quit.config(command=salir_sistema)
+
+    table = ttk.Treeview(new_window, columns=('numero', "fecha", "hora", "ubicación", "magnitud", "seleccione"), show="headings")
 
     table.heading("numero", text="Número")   
     table.heading("fecha", text="Fecha del evento")
@@ -36,24 +39,24 @@ def habilitarPantalla():
     table.column("magnitud", width=120)
     table.column("seleccione", width=120)
 
-    btn_quit = Button(new_window, text="Salir del sistema", cursor="Hand2")
-    btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))  
-    btn_quit.config(command=salir_sistema)
-
-    label_title.pack()
-    label_subtitle.pack()
     table.pack()
+    label_title.pack()
+    label_subtitle.pack()    
     btn_quit.pack(side=LEFT)    
 
     mostrar_datos_sismos(table)
-    
 
 def salir_sistema():
-    new_window.destroy()
+    new_window.destroy() 
+
+def habilitarPantalla():
+    windows_properties()
+    new_window.mainloop()
 
 
 #DATOS DE PRUEBA UNICAMENTE
 def mostrar_datos_sismos(table):
+    
     table.insert(parent='', index=0, values=('0', '15/05/2025', '11:30:00', '39°17′ N, 76°36′ O', '15°', 'Seleccione'))
     table.insert(parent='', index=1, values=('1', '20/05/2024', '11:30:00', '39°17′ N, 76°36′ O', '15°', 'Seleccione'))
     table.insert(parent='', index=2, values=('2', '11/05/2023', '11:30:00', '39°17′ N, 76°36′ O', '15°', 'Seleccione'))
@@ -71,4 +74,4 @@ def mostrar_datos_sismos(table):
 
 habilitarPantalla()
 
-new_window.mainloop()
+

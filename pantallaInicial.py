@@ -59,7 +59,7 @@ def salir_sistema():
 
 def opcion_registrar_resultado_revision_manual():
     windows1.destroy()
-    import PantallaRegistrarRevisionManual
+    import Boundary.PantallaRegistrarRevisionManual as PantallaRegistrarRevisionManual
 
 windows_properties(windows1)
 windows_components(windows1)
