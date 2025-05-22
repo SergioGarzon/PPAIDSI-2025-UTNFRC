@@ -12,7 +12,7 @@ class PantallaRegistrarRevisionManual:
     def windows_properties(self):
         self.new_window.title("Red Sismica")
         self.new_window.geometry("1000x400+500+300")
-        self.new_window.iconbitmap("./Images/utnfrc.ico")
+        #self.new_window.iconbitmap("./Images/utnfrc.ico")
         self.new_window.configure(bg="lightblue")
         self.new_window.resizable(False, False)
 
@@ -41,7 +41,7 @@ class PantallaRegistrarRevisionManual:
         self.table.column("magnitud", width=120, anchor=CENTER)
         self.table.column("seleccione", width=120, anchor=CENTER)
 
-        btn_quit = Button(self.new_window, text="Salir del sistema", cursor="Hand2")        
+        btn_quit = Button(self.new_window, text="Salir del sistema") #, cursor="Hand2")        
         btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
         btn_quit.config(command=self.salir_sistema)        
 
@@ -69,16 +69,25 @@ class PantallaRegistrarRevisionManual:
 
             print(f"Pantalla: Procesando Evento #{i+1} (Ocurrencia: {evento.get_fecha_hora_ocurrencia()})")
 
-            print(evento.get_fecha_hora_ocurrencia())
-            print(evento.get_fecha_hora_fin())
-            print(evento.get_latitud_epicentro())
-            print(evento.get_latitud_hipocentro())
-            print(evento.get_longitud_epicentro())
-            print(evento.get_longitud_hipocentro())
-            print(evento.get_valor_magnitud())
+            
+            fecha_ocurrencia_str = evento.get_fecha_hora_ocurrencia().strftime("%d/%m/%Y")
+            hora_ocurrencia_str = evento.get_fecha_hora_ocurrencia().strftime("%H:%M:%S")
 
-            self.table.insert(parent='', index=i, values=((i), evento.get_fecha_hora_ocurrencia(), evento.get_fecha_hora_fin(), evento.get_latitud_epicentro() + '' +evento.get_latitud_hipocentro(), '15°', 'Seleccione'))
+            ubicacion_str = f"Lat: {evento.get_latitud_epicentro()} Lon: {evento.get_longitud_epicentro()}"
+            magnitud_str = f"{evento.get_valor_magnitud()}°" 
 
+            self.table.insert(
+                parent='',
+                index='end', 
+                values=(
+                    str(i + 1),              
+                    fecha_ocurrencia_str,     
+                    hora_ocurrencia_str,      
+                    ubicacion_str,            
+                    magnitud_str,             
+                    "Seleccionar"             
+                )
+            )
 
     def tomar_seleccion_evento():
         pass
