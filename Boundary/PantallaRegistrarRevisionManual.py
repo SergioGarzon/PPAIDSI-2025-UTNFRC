@@ -1,12 +1,15 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from Control.GestorRevManual import GestorRevManual
+from datetime import datetime 
 
 class PantallaRegistrarRevisionManual:
     
     def __init__(self):
         self.new_window = Tk() 
-        self.table = None   
+        self.table = None  
+        self.gestor = None 
         self.windows_properties()
 
     def windows_properties(self):
@@ -50,7 +53,9 @@ class PantallaRegistrarRevisionManual:
         self.table.pack(pady=10, fill=BOTH, expand=True)  
         btn_quit.pack(side=LEFT)    
 
-   
+        self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)
+
+
     def salir_sistema(self):
         self.new_window.destroy() 
 
@@ -63,12 +68,7 @@ class PantallaRegistrarRevisionManual:
 
     def mostrar_eventos_sismicos(self, eventos_sismicos_lista):
 
-        print("Eventos sísmicos ordenados por fecha y hora de ocurrencia.")
-
         for i, evento in enumerate(eventos_sismicos_lista):
-
-            print(f"Pantalla: Procesando Evento #{i+1} (Ocurrencia: {evento.get_fecha_hora_ocurrencia()})")
-
             
             fecha_ocurrencia_str = evento.get_fecha_hora_ocurrencia().strftime("%d/%m/%Y")
             hora_ocurrencia_str = evento.get_fecha_hora_ocurrencia().strftime("%H:%M:%S")
@@ -76,22 +76,38 @@ class PantallaRegistrarRevisionManual:
             ubicacion_str = f"Lat: {evento.get_latitud_epicentro()} Lon: {evento.get_longitud_epicentro()}"
             magnitud_str = f"{evento.get_valor_magnitud()}°" 
 
-            self.table.insert(
-                parent='',
-                index='end', 
-                values=(
-                    str(i + 1),              
-                    fecha_ocurrencia_str,     
-                    hora_ocurrencia_str,      
-                    ubicacion_str,            
-                    magnitud_str,             
-                    "Seleccionar"             
-                )
+            self.table.insert(parent='', index='end', values=(str(i + 1), fecha_ocurrencia_str, hora_ocurrencia_str, ubicacion_str, magnitud_str, "Seleccionar" ))
+
+    def tomar_seleccion_evento(self, event):
+        selected_item = self.table.focus() 
+        if selected_item:
+            item_values = self.table.item(selected_item, 'values')
+
+            numero_fila = item_values[0]
+            fecha_evento_str = item_values[1]
+            hora_evento_str = item_values[2]
+            ubicacion_str = item_values[3]
+            magnitud_str = item_values[4]
+
+            fecha_hora_combinada_str = f"{fecha_evento_str} {hora_evento_str}"
+
+            try:
+                fecha_hora_ocurrencia_dt = datetime.strptime(fecha_hora_combinada_str, "%d/%m/%Y %H:%M:%S")
+            except ValueError as e:
+                fecha_hora_ocurrencia_dt = None 
+
+            latitud_epicentro = ubicacion_str[5:11]
+            longitud_epicentro = ubicacion_str[16:23]
+            magnitud = magnitud_str[0:3]
+
+            messagebox.showinfo("Información", 
+                "Se ha seleccionado "+
+                "\nUbicacion latitud epicentro: " +str(latitud_epicentro) +
+                "\nUbicacion longitud epicentro: " + str(longitud_epicentro) +
+                "\nfecha y hora ocurrencia: "+str(fecha_hora_ocurrencia_dt)+
+                "\nMagnitud: " + str(magnitud)
             )
-
-    def tomar_seleccion_evento():
-        pass
-
+            
     def habilitar_visualizacion_mapa_eventos():
         pass
 

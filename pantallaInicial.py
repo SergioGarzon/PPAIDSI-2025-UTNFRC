@@ -11,8 +11,8 @@ class PantallaInicial():
 
     def windows_properties(self):
         self.windows1.title("Red Sismica")
-        self.windows1.geometry("750x700+250+100")
-        #self.windows1.iconbitmap("./Images/utnfrc.ico")
+        self.windows1.geometry("800x750+250+100")
+        self.windows1.iconbitmap("./Images/utnfrc.ico")
         self.windows1.configure(bg="lightblue")
         self.windows1.resizable(False, False)
 
@@ -55,7 +55,7 @@ class PantallaInicial():
         label_group.pack()
         label_members.pack()
         label_members2.pack()
-        image_label.pack(pady=45)  
+        #image_label.pack(pady=45)  
         btn_quit.pack(side="left")    
         btn_enter.pack(side="right")
 
@@ -69,7 +69,6 @@ class PantallaInicial():
         self.pantallaRegistrarRevisionManual.habilitarPantalla()
     
 
-    # --- Ejemplo de uso ---
 if __name__ == "__main__":
     app_inicial = PantallaInicial()
     app_inicial.windows1.mainloop()

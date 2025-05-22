@@ -4,13 +4,9 @@ class GestorRevManual:
 
     def __init__(self):
         self.eventos_sismicos_lista = []
-
-
     
     def nueva_revision_manual(self):        
-        self.buscar_eventos_sismicos_auto()  
-       
-
+        self.buscar_eventos_sismicos_auto()   
 
     def buscar_eventos_sismicos_auto(self):
       
@@ -32,18 +28,14 @@ class GestorRevManual:
      
         self.ordenarEventosSismicos()
 
-
-
-
     def ordenarEventosSismicos(self):        
         self.eventos_sismicos_lista.sort(key=lambda evento: evento.get_fecha_hora_ocurrencia())       
-
 
     def obtener_eventos_para_mostrar(self):        
         return self.eventos_sismicos_lista
     
-    def tomarSeleccionEvento():
-        pass
+    def tomar_seleccion_evento(self, evento_seleccionado):
+        paint("Hasta aqui llega")
     
     def buscarEstadoBloqEnRevision():
         pass
