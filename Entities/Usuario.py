@@ -1,4 +1,5 @@
 class Usuario:
+    
     def __init__(self, nombre_usuario, contrasenia, empleado=None):
         self.nombre_usuario = nombre_usuario
         self.contrasenia = contrasenia
