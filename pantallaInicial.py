@@ -1,6 +1,7 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 from Boundary.PantallaRegistrarRevisionManual import PantallaRegistrarRevisionManual
+from pantallaIntegrantes import PantallaIntegrantes
 
 class PantallaInicial():
 
@@ -17,6 +18,9 @@ class PantallaInicial():
 
     def salir_sistema(self):
         self.windows1.destroy()
+
+    def pantalla_integrantes(self):
+        self.pantallaIntegrantes = PantallaIntegrantes()
 
     def windows_properties(self):
         self.windows1.title("Red Sismica")
@@ -40,15 +44,7 @@ class PantallaInicial():
 
         btn_integrantes = tk.Button(frame1, text="Integrantes (Grupo 11)", cursor="Hand2")  
         btn_integrantes.config(fg="white", bg="gray", font=("Arial", 15, "bold"))
-        #btn_integrantes.config(command=self.opcion_registrar_resultado_revision_manual)
-
-        '''
-        label_members = tk.Label(frame1, text="Integrantes: de Llamas Agustin, Garzon Sergio, Ibañez Ignacio, Masino Nicolas")
-        label_members.config(fg="black", bg="lightblue", font=("Arial", 15)) 
-
-        label_members2 = tk.Label(frame1, text="Mezzopeva Juan Cruz, Piazza Gonzalo, Roth Max, Tarraga Ezequiel, Vaca Adriel")
-        label_members2.config(fg="black", bg="lightblue", font=("Arial", 15)) 
-        '''
+        btn_integrantes.config(command=self.pantalla_integrantes)
 
         image_open = Image.open("./Images/ImageRedSismica.png")
         image_open = ImageTk.PhotoImage(image_open)
