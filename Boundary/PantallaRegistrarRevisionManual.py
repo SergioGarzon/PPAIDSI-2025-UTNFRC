@@ -14,6 +14,7 @@ class PantallaRegistrarRevisionManual:
     def salir_sistema(self):
         self.new_window.destroy() 
 
+    #METODO 2 (Diagrama de secuencia)
     def habilitarPantalla(self): 
         self.gestor = GestorRevManual()
         self.gestor.nueva_revision_manual()         
@@ -21,10 +22,12 @@ class PantallaRegistrarRevisionManual:
         self.mostrar_eventos_sismicos(self.eventos_para_mostrar)        
         self.new_window.mainloop()       
 
+    #METODO 7 (Diagrama de secuencia)
     def mostrar_eventos_sismicos(self, eventos_sismicos_lista2):
         for i, evento in enumerate(eventos_sismicos_lista2):            
             self.table.insert(parent='', index='end', values=(str(i + 1), evento[0], evento[1], evento[2], evento[3], "Seleccionar" ))
 
+    #METODO 8 (Diagrama de secuencia)
     def tomar_seleccion_evento(self, event):
         selected_item = self.table.focus() 
         if selected_item:

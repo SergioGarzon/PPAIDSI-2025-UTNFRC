@@ -9,9 +9,11 @@ class GestorRevManual:
         self.datos_para_varios_sismos = []
         self.evento_seleccionado = None
     
+    #METODO 3 (Diagrama de secuencia)
     def nueva_revision_manual(self):        
         self.buscar_eventos_sismicos_auto()   
 
+    #METODO 4 (Diagrama de secuencia)
     def buscar_eventos_sismicos_auto(self):             
         self.generar_lista_datos()
 
@@ -25,6 +27,7 @@ class GestorRevManual:
      
         self.ordenarEventosSismicos()
 
+    #METODO 5 (Diagrama de secuencia)
     def ordenarEventosSismicos(self):        
         self.eventos_sismicos_lista.sort(key=lambda evento: evento.get_fecha_hora_ocurrencia(), reverse=True)
 
@@ -38,10 +41,11 @@ class GestorRevManual:
             fila_formateada = (fecha_ocurrencia_str, hora_ocurrencia_str, ubicacion_str, magnitud_str)
             self.eventos_sismicos_lista_vista.append(fila_formateada)
 
-
+    #METODO 6 (Diagrama de secuencia)
     def obtener_eventos_para_mostrar(self):        
         return self.eventos_sismicos_lista_vista
     
+    #METODO 9 (Diagrama de secuencia)
     def tomar_seleccion_evento(self, item_values):
         
         fecha_evento_str = item_values[1]

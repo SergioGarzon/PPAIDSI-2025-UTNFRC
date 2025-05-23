@@ -9,6 +9,7 @@ class PantallaInicial():
         self.windows_properties()
         self.windows_components()
 
+    #METODO 1 (Diagrama de secuencia)
     def opcion_registrar_resultado_revision_manual(self):
         self.windows1.destroy()
         self.pantallaRegistrarRevisionManual = PantallaRegistrarRevisionManual()
@@ -32,16 +33,22 @@ class PantallaInicial():
         label_name.config(fg="darkblue", bg="lightblue", font=("Arial", 25, "italic"))    
 
         label_subject = tk.Label(frame1, text="Diseño de sistemas de información")
-        label_subject.config(fg="black", bg="lightblue", font=("Arial", 15, "bold"))        
+        label_subject.config(fg="black", bg="lightblue", font=("Arial", 15, "bold"))  
 
         label_group = tk.Label(frame1, text="Grupo 11. CU: 23 Registrar resultado de revisión manual")
         label_group.config(fg="black", bg="lightblue", font=("Arial", 15, "bold"))      
 
+        btn_integrantes = tk.Button(frame1, text="Integrantes (Grupo 11)", cursor="Hand2")  
+        btn_integrantes.config(fg="white", bg="gray", font=("Arial", 15, "bold"))
+        #btn_integrantes.config(command=self.opcion_registrar_resultado_revision_manual)
+
+        '''
         label_members = tk.Label(frame1, text="Integrantes: de Llamas Agustin, Garzon Sergio, Ibañez Ignacio, Masino Nicolas")
         label_members.config(fg="black", bg="lightblue", font=("Arial", 15)) 
 
         label_members2 = tk.Label(frame1, text="Mezzopeva Juan Cruz, Piazza Gonzalo, Roth Max, Tarraga Ezequiel, Vaca Adriel")
         label_members2.config(fg="black", bg="lightblue", font=("Arial", 15)) 
+        '''
 
         image_open = Image.open("./Images/ImageRedSismica.png")
         image_open = ImageTk.PhotoImage(image_open)
@@ -61,8 +68,7 @@ class PantallaInicial():
         label_name.pack() 
         label_subject.pack() 
         label_group.pack()
-        label_members.pack()
-        label_members2.pack()
+        btn_integrantes.pack()
         image_label.pack(pady=45)  
         btn_quit.pack(side="left")    
         btn_enter.pack(side="right")  
