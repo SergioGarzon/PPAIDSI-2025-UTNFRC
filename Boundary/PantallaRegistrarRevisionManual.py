@@ -3,7 +3,6 @@ from tkinter import ttk
 from tkinter import messagebox
 from Control.GestorRevManual import GestorRevManual
 
-
 class PantallaRegistrarRevisionManual:
     
     def __init__(self):

@@ -55,40 +55,19 @@ class GestorRevManual:
             fecha_hora_ocurrencia_dt = datetime.strptime(fecha_hora_combinada_str, "%d/%m/%Y %H:%M:%S")
         except ValueError as e:
             fecha_hora_ocurrencia_dt = None 
-
-        print(magnitud_str)
-
+       
         latitud_epicentro = ubicacion_str[5:11]
         longitud_epicentro = ubicacion_str[16:23]
         magnitud = float(magnitud_str[:-1])
 
-        print(type(magnitud))
-
-        print("Información" +
-                "Se ha seleccionado "+
+        print("\n\n\nSe ha seleccionado "+
                 "\nUbicacion latitud epicentro: " +str(latitud_epicentro) +
                 "\nUbicacion longitud epicentro: " + str(longitud_epicentro) +
                 "\nfecha y hora ocurrencia: "+str(fecha_hora_ocurrencia_dt)+
                 "\nMagnitud: " + str(magnitud)
         )
 
-        
-        for i, evento in enumerate(self.datos_para_varios_sismos):
-            if( evento.get_fecha_hora_ocurrencia() == fecha_hora_ocurrencia_dt and 
-               evento.get_latitud_epicentro() == latitud_epicentro and
-               evento.get_longitud_epicentro() == longitud_epicentro and 
-               evento.get_valor_magnitud() == magnitud):
-                print("De la lista: " + str(evento.get_fecha_hora_ocurrencia()))
-                print("De lo seleccionado: " + str(fecha_hora_ocurrencia_dt))
-                print("De la lista: " + str(evento.get_latitud_epicentro()))
-                print("De lo seleccionado: " + str(latitud_epicentro))
-                print("De la lista: " + str(evento.get_longitud_epicentro()))
-                print("De lo seleccionado: " + str(longitud_epicentro))
-                print("De la lista: " + str(evento.get_valor_magnitud()))
-                print("De lo seleccionado: " + str(magnitud))
-                print("Son iguales igual")
-        
-
+      
     def buscarEstadoBloqEnRevision():
         pass
     
