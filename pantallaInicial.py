@@ -9,6 +9,14 @@ class PantallaInicial():
         self.windows_properties()
         self.windows_components()
 
+    def opcion_registrar_resultado_revision_manual(self):
+        self.windows1.destroy()
+        self.pantallaRegistrarRevisionManual = PantallaRegistrarRevisionManual()
+        self.pantallaRegistrarRevisionManual.habilitarPantalla()
+
+    def salir_sistema(self):
+        self.windows1.destroy()
+
     def windows_properties(self):
         self.windows1.title("Red Sismica")
         self.windows1.geometry("800x800+250+100")
@@ -57,18 +65,8 @@ class PantallaInicial():
         label_members2.pack()
         image_label.pack(pady=45)  
         btn_quit.pack(side="left")    
-        btn_enter.pack(side="right")
-
-
-    def salir_sistema(self):
-        self.windows1.destroy()
-
-    def opcion_registrar_resultado_revision_manual(self):
-        self.windows1.destroy()
-        self.pantallaRegistrarRevisionManual = PantallaRegistrarRevisionManual()
-        self.pantallaRegistrarRevisionManual.habilitarPantalla()
+        btn_enter.pack(side="right")  
     
-
 if __name__ == "__main__":
     app_inicial = PantallaInicial()
     app_inicial.windows1.mainloop()
