@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
-from Boundary.PantallaRegistrarRevisionManual import PantallaRegistrarRevisionManual
+from Domain.Boundary.PantallaRegistrarRevisionManual import PantallaRegistrarRevisionManual
 from Utils.pantallaIntegrantes import PantallaIntegrantes
 
 class PantallaInicial():

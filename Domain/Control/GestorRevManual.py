@@ -1,4 +1,4 @@
-from Entities.EventoSismico import EventoSismico
+from Domain.Entities.EventoSismico import EventoSismico
 from datetime import datetime 
 
 class GestorRevManual:

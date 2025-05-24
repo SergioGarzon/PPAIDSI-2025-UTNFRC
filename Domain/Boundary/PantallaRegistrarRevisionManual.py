@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from Control.GestorRevManual import GestorRevManual
+from Domain.Control.GestorRevManual import GestorRevManual
 
 class PantallaRegistrarRevisionManual:
     

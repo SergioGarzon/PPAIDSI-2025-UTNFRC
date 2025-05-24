@@ -1,4 +1,4 @@
-from Entities.Estado import Estado
+from Domain.Entities.Estado import Estado
 from datetime import datetime
 
 class EventoSismico:
