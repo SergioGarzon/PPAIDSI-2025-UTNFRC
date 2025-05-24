@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 from Boundary.PantallaRegistrarRevisionManual import PantallaRegistrarRevisionManual
-from pantallaIntegrantes import PantallaIntegrantes
+from Utils.pantallaIntegrantes import PantallaIntegrantes
 
 class PantallaInicial():
 
@@ -25,7 +25,7 @@ class PantallaInicial():
     def windows_properties(self):
         self.windows1.title("Red Sismica")
         self.windows1.geometry("800x800+250+100")
-        self.windows1.iconbitmap("./Images/utnfrc.ico")
+        self.windows1.iconbitmap("./Resources/Images/utnfrc.ico")
         self.windows1.configure(bg="lightblue")
         self.windows1.resizable(False, False)
 
@@ -46,7 +46,7 @@ class PantallaInicial():
         btn_integrantes.config(fg="white", bg="gray", font=("Arial", 15, "bold"))
         btn_integrantes.config(command=self.pantalla_integrantes)
 
-        image_open = Image.open("./Images/ImageRedSismica.png")
+        image_open = Image.open("./Resources/Images/ImageRedSismica.png")
         image_open = ImageTk.PhotoImage(image_open)
 
         image_label = tk.Label(frame1, image=image_open)

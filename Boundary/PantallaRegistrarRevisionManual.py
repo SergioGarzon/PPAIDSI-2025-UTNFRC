@@ -57,7 +57,7 @@ class PantallaRegistrarRevisionManual:
     def windows_properties(self):
         self.new_window.title("Red Sismica")
         self.new_window.geometry("1000x400+500+300")
-        self.new_window.iconbitmap("./Images/utnfrc.ico")
+        self.new_window.iconbitmap("./Resources/Images/utnfrc.ico")
         self.new_window.configure(bg="lightblue")
         self.new_window.resizable(False, False)
 
