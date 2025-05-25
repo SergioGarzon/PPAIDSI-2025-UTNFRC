@@ -21,7 +21,7 @@ class PantallaIntegrantes():
 
         label_member1 = tk.Label(self.windows1, text="\n\n* De Llamas Agustin " +
         "\n* Garzon Sergio \n* Ibañez Ignacio \n* Masino Nicolas \n* Roth Max" +
-        "\n* Tarraga Ezequiel \n*Mezzopeva Juan Cruz \n*Piazza Gonzalo \n*Vaca Adriel \n\n")
+        "\n* Tarraga Ezequiel \n* Mezzopeva Juan Cruz \n* Piazza Gonzalo \n* Vaca Adriel \n\n")
         label_member1.config(fg="black", bg="lightblue", font=("Arial", 15)) 
       
         btn_quit = tk.Button(self.windows1, text="Cerrar ventana", cursor="Hand2")
