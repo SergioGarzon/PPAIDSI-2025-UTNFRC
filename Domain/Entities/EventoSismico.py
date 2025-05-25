@@ -38,7 +38,7 @@ class EventoSismico:
     def es_pendiente_revision(self):
         valor = False
 
-        if(self.estado_actual.get_nombre_estado() == 'Pendiente'):
+        if(self.estado_actual.get_nombre_estado() == 'Pendiente en revision'):
             valor = True  
 
         return valor    
@@ -49,5 +49,10 @@ class EventoSismico:
         else:
             raise TypeError("Error")
 
+    def es_ambito_evento_sismico(self):        
+        if(self.estado_actual.get_ambito() == 'Evento Sismico'):
+            return True 
+
+        return False  
     
     

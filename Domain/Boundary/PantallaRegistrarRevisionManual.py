@@ -7,12 +7,11 @@ class PantallaRegistrarRevisionManual:
     
     def __init__(self):
         self.new_window = Tk() 
-        self.table = None  
-        self.gestor = None 
-        self.windows_properties()    
+        self.windows_properties() 
+        self.gestor = None          
 
     def salir_sistema(self):
-        self.new_window.destroy() 
+        self.new_window.destroy()
 
     #METODO 2 (Diagrama de secuencia)
     def habilitarPantalla(self): 
@@ -25,15 +24,28 @@ class PantallaRegistrarRevisionManual:
     #METODO 7 (Diagrama de secuencia)
     def mostrar_eventos_sismicos(self, eventos_sismicos_lista2):
         for i, evento in enumerate(eventos_sismicos_lista2):            
-            self.table.insert(parent='', index='end', values=(str(i + 1), evento[0], evento[1], evento[2], evento[3], "Seleccionar" ))
+            self.table.insert(parent='', index='end', values=(str(i + 1), evento[0], evento[1], evento[2], evento[3], evento[4], "Seleccionar"))
 
     #METODO 8 (Diagrama de secuencia)
     def tomar_seleccion_evento(self, event):
         selected_item = self.table.focus() 
         if selected_item:
             item_values = self.table.item(selected_item, 'values')
-            messagebox.showinfo("Información", str(item_values))
-            self.gestor.tomar_seleccion_evento(item_values)
+            
+            response = messagebox.askokcancel("Confirmar: ", "Evento seleccionado: \n\n\n" + 
+                "Número: " + str(item_values[0]) + 
+                "\nFecha del evento: " + str(item_values[1]) +
+                "\nHora del evento: " + str(item_values[2]) +
+                "\nUbicación epicentro: " + str(item_values[3]) +
+                "\nUbicación hipocentro: " + str(item_values[4]) +
+                "\nMagnitud: " + str(item_values[5]) +
+                "\n\n\n¿Desea continuar o cancelar?")
+            
+            if response:
+                self.gestor.tomar_seleccion_evento(item_values)
+                self.table.delete(*self.table.get_children())
+                self.table.pack_forget()
+                self.label_selection.pack_forget()
             
     def habilitar_visualizacion_mapa_eventos():
         pass
@@ -56,7 +68,7 @@ class PantallaRegistrarRevisionManual:
     #Las propiedades de la pantalla las ponemos al último
     def windows_properties(self):
         self.new_window.title("Red Sismica")
-        self.new_window.geometry("1000x400+500+300")
+        self.new_window.geometry("1100x500+500+300")
         self.new_window.iconbitmap("./Resources/Images/utnfrc.ico")
         self.new_window.configure(bg="lightblue")
         self.new_window.resizable(False, False)
@@ -70,21 +82,26 @@ class PantallaRegistrarRevisionManual:
         style = ttk.Style(self.new_window)
         style.configure("Treeview.Heading", font=(None, 15))
 
-        self.table = ttk.Treeview(self.new_window, columns=('numero', "fecha", "hora", "ubicacion", "magnitud", "seleccione"), show="headings")
+        self.table = ttk.Treeview(self.new_window, columns=('numero', "fecha", "hora", "ubicacion_epicentro", "ubicacion_hipocentro", "magnitud", "seleccione"), show="headings")
 
         self.table.heading("numero", text="Número")
         self.table.heading("fecha", text="Fecha del evento")
         self.table.heading("hora", text="Hora del evento")
-        self.table.heading("ubicacion", text="Ubicación")
+        self.table.heading("ubicacion_epicentro", text="Ubicación Epicentro")
+        self.table.heading("ubicacion_hipocentro", text="Ubicación Hipocentro")
         self.table.heading("magnitud", text="Magnitud")
         self.table.heading("seleccione", text="Seleccione") 
 
         self.table.column("numero", width=80, anchor=CENTER)
         self.table.column("fecha", width=160, anchor=CENTER)
         self.table.column("hora", width=150, anchor=CENTER)
-        self.table.column("ubicacion", width=150, anchor=CENTER)
+        self.table.column("ubicacion_epicentro", width=200, anchor=CENTER)
+        self.table.column("ubicacion_hipocentro", width=200, anchor=CENTER)
         self.table.column("magnitud", width=120, anchor=CENTER)
         self.table.column("seleccione", width=120, anchor=CENTER)
+
+        self.label_selection = Label(self.new_window, text=">>>Debe seleccionar un evento de la lista<<<")
+        self.label_selection.config(fg="darkred", bg="lightblue", font=("Arial", 15, "bold"))
 
         btn_quit = Button(self.new_window, text="Salir del sistema", cursor="Hand2")        
         btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
@@ -92,7 +109,8 @@ class PantallaRegistrarRevisionManual:
 
         label_title.pack()
         label_subtitle.pack()  
-        self.table.pack(pady=10, fill=BOTH, expand=True)  
+        self.table.pack(pady=10, fill=BOTH, expand=True)
+        self.label_selection.pack()  
         btn_quit.pack(side=LEFT)    
 
         self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)

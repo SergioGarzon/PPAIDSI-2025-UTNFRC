@@ -1,4 +1,4 @@
-class OrigenDeGeneracion:
+class AlcanceSismo:
 
     def __init__(self, nombre, descripcion):
         self.nombre = nombre

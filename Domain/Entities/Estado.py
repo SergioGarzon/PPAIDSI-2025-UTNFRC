@@ -7,4 +7,7 @@ class Estado:
     def get_nombre_estado(self):
         return self.nombre_estado
     
+    def get_ambito(self):
+        return self.ambito            
+    
     
