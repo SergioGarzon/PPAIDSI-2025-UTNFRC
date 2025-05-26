@@ -51,8 +51,9 @@ class EventoSismico:
 
     def es_ambito_evento_sismico(self):        
         if(self.estado_actual.get_ambito() == 'Evento Sismico'):
-            return True 
-
+            return True
         return False  
     
+    def get_datos_restantes():
+        pass
     

@@ -1,5 +1,6 @@
 from Domain.Entities.EventoSismico import EventoSismico
-from datetime import datetime 
+from datetime import datetime
+from Domain.Entities.Estado import Estado
 
 class GestorRevManual:
 
@@ -7,8 +8,10 @@ class GestorRevManual:
         self.eventos_sismicos_lista = []
         self.eventos_sismicos_lista_vista = []
         self.datos_para_varios_sismos = []
+        self.lista_estados = []
         self.evento_seleccionado = None
         self.evento = None
+        self.estado = None           
     
     #METODO 3 (Diagrama de secuencia)
     def nueva_revision_manual(self):        
@@ -91,9 +94,6 @@ class GestorRevManual:
         longitud_hipocentro = float(ubicacion_hipocentro_str[lista_espacio_2[2]:len(ubicacion_hipocentro_str)])
         magnitud = float(magnitud_str[:-1])
 
-        print(latitud_hipocentro)
-        print(longitud_hipocentro)
-
         # Aqui compara los estados
         for lista in self.eventos_sismicos_lista:
             if(lista.get_valor_magnitud() == magnitud and
@@ -102,30 +102,43 @@ class GestorRevManual:
                lista.get_longitud_epicentro() == longitud_epicentro and
                lista.get_latitud_hipocentro() == latitud_hipocentro and
                lista.get_longitud_hipocentro() == longitud_hipocentro):
-                print(lista.get_fecha_hora_ocurrencia())
-                print(lista.get_fecha_hora_fin())                
-                print(lista.get_latitud_epicentro())
-                print(lista.get_latitud_hipocentro())
-                print(lista.get_longitud_epicentro())
-                print(lista.get_longitud_hipocentro())
-                print(lista.get_valor_magnitud())
-                print(lista.es_pendiente_revision())
+                print("COMPARA Y ESTA TODO OK")
 
         self.buscarEstadoBloqEnRevision()
        
       
     #METODO 10 (Diagrama de secuencia) 
     def buscarEstadoBloqEnRevision(self):
-        for lista in self.eventos_sismicos_lista:
-            pass
-        #FALTA FINALIZAR
+        ambito_evento_sismico = ""
+        nombre_estado_bloqueado_revision = ""     
+
+        self.generar_lista_estados()   
+        
+        for lista in self.lista_estados:
+            # METODO 11 (Diagrama de secuencia)
+            ambito_evento_sismico = lista.es_ambito_evento_sismico()
+
+            # METODO 12 (Diagrama de secuencia)
+            nombre_estado_bloqueado_revision = lista.esBloqEnRevision()
+
+        print("Ambito evento sismico: " + str(ambito_evento_sismico))
+        print("Nombre estado bloqueado en revision: " + str(nombre_estado_bloqueado_revision))
+       
+        self.get_fecha_hora_actual()   
     
-    def get_fecha_hora_actual():
-        pass
+    # METODO 13 (Diagrama de secuencia)
+    def get_fecha_hora_actual(self):
+        fecha_hora_actual = datetime.now()
+        print("Fecha y hora actual: " + str(fecha_hora_actual))
+        self.bloq_evento_sismico()
 
-    def bloq_evento_sismico():
-        pass
+    # METODO 14 (Diagrama de secuencia)
+    def bloq_evento_sismico(self):
+        print("Hasta aqui se llega")
+        # ------ COMPLETAR ESTE METODO, FALTA DESDE EL METODO 14 HASTA EL METODO 20 ------
 
+
+    # METODO 21 (Diagrama de secuencia)
     def buscar_datos_evento_selec():
         pass
 
@@ -152,6 +165,16 @@ class GestorRevManual:
 
     def fin_CU():
         pass
+
+    def generar_lista_estados(self):
+        lista_datos_estado = [
+            ["Evento Sismico", "Pendiente en revision"],
+            ["Evento Sismico", "Bloqueado en revision"]
+        ]
+
+        for lista in lista_datos_estado:
+            self.estado = Estado(*lista)
+            self.lista_estados.append(self.estado)
 
     def generar_lista_datos(self):
         self.datos_para_varios_sismos = [
