@@ -67,6 +67,6 @@ class EventoSismico:
             return True
         return False  
     
-    def get_datos_restantes():
+    def obtener_datos_series_temporales():
         pass
     
