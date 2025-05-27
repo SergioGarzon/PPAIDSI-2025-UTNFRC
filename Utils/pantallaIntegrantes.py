@@ -10,7 +10,7 @@ class PantallaIntegrantes():
     def windows_properties(self):
         self.windows1.title("Red Sismica")
         self.windows1.geometry("500x400+250+100")
-        self.windows1.iconbitmap("./Resources/Images/utnfrc.ico")
+        #self.windows1.iconbitmap("./Resources/Images/utnfrc.ico")
         self.windows1.configure(bg="lightblue")
         self.windows1.resizable(False, False)
 
@@ -24,7 +24,7 @@ class PantallaIntegrantes():
         "\n* Tarraga Ezequiel \n* Mezzopeva Juan Cruz \n* Piazza Gonzalo \n* Vaca Adriel \n\n")
         label_member1.config(fg="black", bg="lightblue", font=("Arial", 15)) 
       
-        btn_quit = tk.Button(self.windows1, text="Cerrar ventana", cursor="Hand2")
+        btn_quit = tk.Button(self.windows1, text="Cerrar ventana") #, cursor="Hand2")
         btn_quit.config(fg="white", bg="blue", font=("Arial", 15, "bold"))  
         btn_quit.config(command=self.quitar_ventana)
 

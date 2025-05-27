@@ -24,7 +24,7 @@ class PantallaInicial():
     def windows_properties(self):
         self.windows1.title("Red Sismica")
         self.windows1.geometry("800x800+250+100")
-        self.windows1.iconbitmap("./Resources/Images/utnfrc.ico")
+        #self.windows1.iconbitmap("./Resources/Images/utnfrc.ico")
         self.windows1.configure(bg="lightblue")
         self.windows1.resizable(False, False)
 
@@ -41,7 +41,7 @@ class PantallaInicial():
         label_group = tk.Label(frame1, text="Grupo 11. CU: 23 Registrar resultado de revisión manual")
         label_group.config(fg="black", bg="lightblue", font=("Arial", 15, "bold"))      
 
-        btn_integrantes = tk.Button(frame1, text="Integrantes (Grupo 11)", cursor="Hand2")  
+        btn_integrantes = tk.Button(frame1, text="Integrantes (Grupo 11)") #, cursor="Hand2")  
         btn_integrantes.config(fg="white", bg="gray", font=("Arial", 15, "bold"))
         btn_integrantes.config(command=self.pantalla_integrantes)
 
@@ -51,11 +51,11 @@ class PantallaInicial():
         image_label = tk.Label(frame1, image=image_open)
         image_label.image = image_open    
 
-        btn_enter = tk.Button(frame1, text="Ingresar al sistema", cursor="Hand2")
+        btn_enter = tk.Button(frame1, text="Ingresar al sistema") #, cursor="Hand2")
         btn_enter.config(fg="white", bg="darkblue", font=("Arial", 15, "bold"))
         btn_enter.config(command=self.ingresar_sistema)
 
-        btn_quit = tk.Button(frame1, text="Salir del sistema", cursor="Hand2")
+        btn_quit = tk.Button(frame1, text="Salir del sistema") #, cursor="Hand2")
         btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))  
         btn_quit.config(command=self.salir_sistema)
 
@@ -63,10 +63,10 @@ class PantallaInicial():
         label_name.pack() 
         label_subject.pack() 
         label_group.pack()
-        btn_integrantes.pack()
-        image_label.pack(pady=45)  
+        btn_integrantes.pack()  
+        image_label.pack(pady=45)       
         btn_quit.pack(side="left")    
-        btn_enter.pack(side="right")  
+        btn_enter.pack(side="right")   
     
 if __name__ == "__main__":
     app_inicial = PantallaInicial()

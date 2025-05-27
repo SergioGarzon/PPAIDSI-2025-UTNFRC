@@ -2,6 +2,10 @@
 
 <br />
 
+<img src="/Resources/Images/logo_UTN.png" alt="Imagen logo UTN" />
+
+<br />
+
 ##### **Integrantes:**
 > * Vaca Adriel
 > * Roth Max		
