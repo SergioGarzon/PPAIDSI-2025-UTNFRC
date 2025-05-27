@@ -24,11 +24,11 @@ class GestorRevManual:
         self.eventos_sismicos_lista = []
 
         for datos_evento in self.datos_para_varios_sismos:
-            self.evento = EventoSismico(*datos_evento)
+            self.evento = EventoSismico(*datos_evento)            
 
             if self.evento.es_pendiente_revision():
                 self.eventos_sismicos_lista.append(self.evento)
-             
+            
         self.ordenarEventosSismicos()
 
     #METODO 5 (Diagrama de secuencia)
@@ -45,6 +45,7 @@ class GestorRevManual:
 
             fila_formateada = (fecha_ocurrencia_str, hora_ocurrencia_str, epicentro_str, hipocentro_str,magnitud_str)
             self.eventos_sismicos_lista_vista.append(fila_formateada)
+        
 
     #METODO 6 (Diagrama de secuencia)
     def obtener_eventos_para_mostrar(self): 
@@ -52,7 +53,7 @@ class GestorRevManual:
     
     #METODO 9 (Diagrama de secuencia)
     def tomar_seleccion_evento(self, item_values):
-        
+                
         fecha_evento_str = item_values[1]
         hora_evento_str = item_values[2]
         ubicacion_epicentro_str = str(item_values[3])
@@ -178,6 +179,8 @@ class GestorRevManual:
 
     def generar_lista_datos(self):
         self.datos_para_varios_sismos = [
+            # magnitud no debe superar el valor 4.0
+            # Pendiente de revision (cambiarlos), Bloqueado en revision, Rechazado
             ["2025-05-22 15:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 6.5, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
             ["2025-05-21 10:15:00", "2025-05-21 10:00:00", -32.000, -32.010, -65.000, -65.005, 4.2, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
             ["2025-05-20 08:00:00", "2025-05-20 07:50:00", -33.500, -33.510, -66.100, -66.105, 7.1, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
@@ -186,7 +189,7 @@ class GestorRevManual:
             ["2025-05-17 02:30:00", "2025-05-17 02:00:00", -30.880, -30.885, -64.550, -64.552, 2.9, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
             ["2025-05-16 11:45:00", "2025-05-16 11:30:00", -31.700, -31.705, -63.900, -63.903, 5.5, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
             ["2025-05-15 20:00:00", "2025-05-15 19:50:00", -32.120, -32.125, -65.300, -65.305, 3.1, "Evento Sismico", "Bloqueado en revision", "", "", "", "", "", 0, 0],
-            ["2025-05-14 05:10:00", "2025-05-14 05:00:00", -29.990, -29.992, -61.500, -61.501, 4.8, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
+            ["2025-05-15 05:10:00", "2025-05-15 05:00:00", -29.990, -29.992, -61.500, -61.501, 4.8, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
             ["2025-05-13 18:20:00", "2025-05-13 18:10:00", -30.500, -30.505, -62.800, -62.802, 6.0, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
             ["2025-05-12 09:00:00", "2025-05-12 08:55:00", -33.000, -33.001, -66.500, -66.501, 2.5, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],
             ["2025-05-11 01:05:00", "2025-05-11 00:55:00", -31.250, -31.252, -64.050, -64.053, 5.9, "Evento Sismico", "Pendiente en revision", "", "", "", "", "", 0, 0],

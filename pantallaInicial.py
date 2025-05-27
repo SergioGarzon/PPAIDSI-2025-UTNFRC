@@ -10,8 +10,7 @@ class PantallaInicial():
         self.windows_properties()
         self.windows_components()
 
-    #METODO 1 (Diagrama de secuencia)
-    def opcion_registrar_resultado_revision_manual(self):
+    def ingresar_sistema(self):
         self.windows1.destroy()
         self.pantallaRegistrarRevisionManual = PantallaRegistrarRevisionManual()
         self.pantallaRegistrarRevisionManual.habilitarPantalla()
@@ -52,9 +51,9 @@ class PantallaInicial():
         image_label = tk.Label(frame1, image=image_open)
         image_label.image = image_open    
 
-        btn_enter = tk.Button(frame1, text="Registrar resultado revisión manual", cursor="Hand2")
-        btn_enter.config(fg="white", bg="darkgreen", font=("Arial", 15, "bold"))
-        btn_enter.config(command=self.opcion_registrar_resultado_revision_manual)
+        btn_enter = tk.Button(frame1, text="Ingresar al sistema", cursor="Hand2")
+        btn_enter.config(fg="white", bg="darkblue", font=("Arial", 15, "bold"))
+        btn_enter.config(command=self.ingresar_sistema)
 
         btn_quit = tk.Button(frame1, text="Salir del sistema", cursor="Hand2")
         btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))  

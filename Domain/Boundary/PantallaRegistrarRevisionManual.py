@@ -13,6 +13,15 @@ class PantallaRegistrarRevisionManual:
     def salir_sistema(self):
         self.new_window.destroy()
 
+    #METODO 1 (Diagrama de secuencia)
+    def opcion_registrar_resultado_revision_manual(self):
+        self.btn_enter.pack_forget()
+        self.btn_quit.pack_forget()        
+        self.table.pack(pady=10, fill=BOTH, expand=True)
+        self.label_selection.pack()
+        self.btn_quit_2.pack(side=LEFT)  
+        self.habilitarPantalla()
+
     #METODO 2 (Diagrama de secuencia)
     def habilitarPantalla(self): 
         self.gestor = GestorRevManual()
@@ -30,22 +39,12 @@ class PantallaRegistrarRevisionManual:
     def tomar_seleccion_evento(self, event):
         selected_item = self.table.focus() 
         if selected_item:
-            item_values = self.table.item(selected_item, 'values')
+            item_values = self.table.item(selected_item, 'values')            
             
-            response = messagebox.askokcancel("Confirmar: ", "Evento seleccionado: \n\n\n" + 
-                "Número: " + str(item_values[0]) + 
-                "\nFecha del evento: " + str(item_values[1]) +
-                "\nHora del evento: " + str(item_values[2]) +
-                "\nUbicación epicentro: " + str(item_values[3]) +
-                "\nUbicación hipocentro: " + str(item_values[4]) +
-                "\nMagnitud: " + str(item_values[5]) +
-                "\n\n\n¿Desea continuar o cancelar?")
-            
-            if response:
-                self.gestor.tomar_seleccion_evento(item_values)
-                self.table.delete(*self.table.get_children())
-                self.table.pack_forget()
-                self.label_selection.pack_forget()
+            self.gestor.tomar_seleccion_evento(item_values)
+            self.table.delete(*self.table.get_children())
+            self.table.pack_forget()
+            self.label_selection.pack_forget()
             
     def habilitar_visualizacion_mapa_eventos():
         pass
@@ -72,6 +71,10 @@ class PantallaRegistrarRevisionManual:
         self.new_window.iconbitmap("./Resources/Images/utnfrc.ico")
         self.new_window.configure(bg="lightblue")
         self.new_window.resizable(False, False)
+
+        self.btn_enter = Button(self.new_window, text="Registrar resultado revisión manual", cursor="Hand2")
+        self.btn_enter.config(fg="white", bg="darkgreen", font=("Arial", 15, "bold"))
+        self.btn_enter.config(command=self.opcion_registrar_resultado_revision_manual)
 
         label_title = Label(self.new_window, text="Red Sismica")
         label_title.config(fg="darkblue", bg="lightblue", font=("Arial", 25, "italic"))   
@@ -103,14 +106,16 @@ class PantallaRegistrarRevisionManual:
         self.label_selection = Label(self.new_window, text=">>>Debe seleccionar un evento de la lista<<<")
         self.label_selection.config(fg="darkred", bg="lightblue", font=("Arial", 15, "bold"))
 
-        btn_quit = Button(self.new_window, text="Salir del sistema", cursor="Hand2")        
-        btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
-        btn_quit.config(command=self.salir_sistema)        
-
+        self.btn_quit = Button(self.new_window, text="Salir del sistema", cursor="Hand2")        
+        self.btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
+        self.btn_quit.config(command=self.salir_sistema)
+        
+        self.btn_quit_2 = Button(self.new_window, text="Salir del sistema", cursor="Hand2")        
+        self.btn_quit_2.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
+        self.btn_quit_2.config(command=self.salir_sistema)
+        
         label_title.pack()
         label_subtitle.pack()  
-        self.table.pack(pady=10, fill=BOTH, expand=True)
-        self.label_selection.pack()  
-        btn_quit.pack(side=LEFT)    
-
+        self.btn_enter.pack()        
+        self.btn_quit.pack(side=LEFT)
         self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)
