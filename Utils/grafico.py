@@ -14,20 +14,16 @@ class Grafico():
 
     def create_static_seismogram_gui(self):
         
-        self.root.title("Sismograma Simulado")
-
-        
+        self.root.title("Sismograma Simulado")        
 
         button_generar = ttk.Button(self.root, text="Generar", command=self.regenerar_sismograma)
         button_generar.pack(side=tk.TOP, pady=5)
 
-        '''
         exit_button = ttk.Button(self.root, text="Salir", command=self.root.quit)
-        exit_button.pack(side=tk.TOP, pady=5)
-        '''
-
-        self.generar_sismograma()
+        exit_button.pack(side=tk.BOTTOM, pady=5)
         
+
+        self.generar_sismograma()       
 
         
     def generar_sismograma(self):
@@ -35,18 +31,17 @@ class Grafico():
         time = np.linspace(0, randint(0, 10), randint(0, 500)) 
         amplitude = np.sin(time * 5) * np.exp(-time / 2) + np.random.randn(len(time)) * 0.1
 
-        fig, ax_sismogram = plt.subplots(figsize=(8, 4)) 
+        fig, self.ax_sismogram = plt.subplots(figsize=(8, 4)) 
 
-        ax_sismogram.plot(time, amplitude, color='purple')
-        ax_sismogram.set_title("Sismograma Simulado")
-        ax_sismogram.set_xlabel("Tiempo (s)")
-        ax_sismogram.set_ylabel("Amplitud")
-        ax_sismogram.grid(True)
+        self.ax_sismogram.plot(time, amplitude, color='purple')
+        self.ax_sismogram.set_title("Sismograma Simulado")
+        self.ax_sismogram.set_xlabel("Tiempo (s)")
+        self.ax_sismogram.set_ylabel("Amplitud")
+        self.ax_sismogram.grid(True)
 
         self.canvas = FigureCanvasTkAgg(fig, master=self.root)
         self.canvas_widget = self.canvas.get_tk_widget()
         self.canvas_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-
 
         self.toolbar_frame = ttk.Frame(self.root)
         self.toolbar_frame.pack(side=tk.BOTTOM, fill=tk.X)
