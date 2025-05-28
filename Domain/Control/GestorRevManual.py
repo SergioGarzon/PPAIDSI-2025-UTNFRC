@@ -1,4 +1,5 @@
 from Domain.Entities.EventoSismico import EventoSismico
+from Domain.Entities.Sesion import Sesion
 from datetime import datetime
 from Domain.Entities.Estado import Estado
 
@@ -14,8 +15,11 @@ class GestorRevManual:
         self.estado = None           
     
     #METODO 3 (Diagrama de secuencia)
-    def nueva_revision_manual(self):        
-        self.buscar_eventos_sismicos_auto()   
+    def nueva_revision_manual(self):
+        self.sesion= self.generar_sesion_empleado()   
+        print(self.sesion.obtener_empleado())
+
+        #self.buscar_eventos_sismicos_auto()   
 
     #METODO 4 (Diagrama de secuencia)
     def buscar_eventos_sismicos_auto(self):             
@@ -167,6 +171,9 @@ class GestorRevManual:
     def fin_CU():
         pass
 
+    def generar_sesion_empleado(self):        
+        self.sesion = Sesion(1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), None, "adminsismos", "1234", "Pablo", "Paez", "ppaez@sismos-conicet.com.ar", 351000000)
+        
     def generar_lista_estados(self):
         lista_datos_estado = [
             ["Evento Sismico", "Pendiente en revision"],

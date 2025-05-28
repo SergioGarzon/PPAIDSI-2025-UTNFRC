@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
+import platform
 from Domain.Control.GestorRevManual import GestorRevManual
 
 class PantallaRegistrarRevisionManual:
@@ -68,11 +68,18 @@ class PantallaRegistrarRevisionManual:
     def windows_properties(self):
         self.new_window.title("Red Sismica")
         self.new_window.geometry("1100x500+500+300")
-        #self.new_window.iconbitmap("./Resources/Images/utnfrc.ico")
+
+        if str(platform.system()) == "Windows":
+            self.new_window.iconbitmap("./Resources/Images/utnfrc.ico")
+
         self.new_window.configure(bg="lightblue")
         self.new_window.resizable(False, False)
 
-        self.btn_enter = Button(self.new_window, text="Registrar resultado revisión manual") #, cursor="Hand2")
+        if str(platform.system()) == "Windows":
+            self.btn_enter = Button(self.new_window, text="Registrar resultado revisión manual", cursor="Hand2")
+        else:
+            self.btn_enter = Button(self.new_window, text="Registrar resultado revisión manual")
+
         self.btn_enter.config(fg="white", bg="darkgreen", font=("Arial", 15, "bold"))
         self.btn_enter.config(command=self.opcion_registrar_resultado_revision_manual)
 
@@ -106,11 +113,19 @@ class PantallaRegistrarRevisionManual:
         self.label_selection = Label(self.new_window, text=">>>Debe seleccionar un evento de la lista<<<")
         self.label_selection.config(fg="darkred", bg="lightblue", font=("Arial", 15, "bold"))
 
-        self.btn_quit = Button(self.new_window, text="Salir del sistema") #, cursor="Hand2")        
+        if str(platform.system()) == "Windows":
+            self.btn_quit = Button(self.new_window, text="Salir del sistema", cursor="Hand2")  
+        else:
+            self.btn_quit = Button(self.new_window, text="Salir del sistema")
+
         self.btn_quit.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
         self.btn_quit.config(command=self.salir_sistema)
         
-        self.btn_quit_2 = Button(self.new_window, text="Salir del sistema") #, cursor="Hand2")        
+        if str(platform.system()) == "Windows":
+            self.btn_quit_2 = Button(self.new_window, text="Salir del sistema", cursor="Hand2")    
+        else:
+            self.btn_quit_2 = Button(self.new_window, text="Salir del sistema")
+
         self.btn_quit_2.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
         self.btn_quit_2.config(command=self.salir_sistema)
         
