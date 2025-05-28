@@ -101,12 +101,26 @@ class EventoSismico:
         # METODO 29 (Diagrama de secuencia)
         self.cambio_estado_bloq_rev = self.cambio_estado
 
+    # METODO 31 (Diagrama de secuencia)
+    def get_datos_restante(self):
+        # METODO 32, 33, 34 (Diagrama de secuencia)
+        datos = [
+            self.alcance_sismo.get_nombre(), 
+            self.generacion_sismo.get_nombre(), 
+            self.clasificacion_sismo.get_nombre()
+        ]
 
+        self.obtener_datos_series_temporales()
+        return datos
+    
+    # METODO 35 (Diagrama de secuencia)
+    def obtener_datos_series_temporales(self):
+        print("Llega aca para obtener datos de las series temporales")
 
 
 
     ############################################################
-    ##### METODOS AUXILIARES
+    ##### METODOS AUXILIARES ###################################
     ############################################################
     
     def obtener_cambio_estado_bloq_rev(self):
@@ -134,10 +148,4 @@ class EventoSismico:
 
 
     
-    # DATOS RESTANTES PARA BUSCAR TODOS
-    def get_datos_restante(self):
-        return AlcanceSismo.get_nombre() + OrigenDeGeneracion.get_nombre() + ClasificacionSismo.get_nombre()
-       
-    def obtener_datos_series_temporales():
-        pass
     

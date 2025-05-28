@@ -112,9 +112,13 @@ class GestorRevManual:
         print("Obtencion del cambio de estado OK")
         print(self.eventos_sismicos_lista[self.valor_indice].obtener_cambio_estado_bloq_rev())
 
-    
-    def buscar_datos_evento_selec():
-        pass
+        self.buscar_datos_evento_selec()
+
+    # METODO 30 (Diagrama de secuencia)
+    def buscar_datos_evento_selec(self):
+        # METODO 31 (Diagrama de secuencia)
+        print(self.eventos_sismicos_lista[self.valor_indice].get_datos_restante())
+        print("Empieza a buscar los datos del evento seleccionado")
 
     def clasificar_por_estacion():
         pass
@@ -140,6 +144,10 @@ class GestorRevManual:
     def fin_CU():
         pass
 
+    ############################################################
+    ##### METODOS AUXILIARES ###################################
+    ############################################################
+
     def generar_sesion_empleado(self): 
         datos_sesion = [1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), None, "adminsismos", "1234", "Pablo", "Paez", "ppaez@sismos-conicet.com.ar", 351000000]       
         return datos_sesion
@@ -158,25 +166,86 @@ class GestorRevManual:
             self.estado = Estado(*lista)
             self.lista_estados.append(self.estado)
 
+
     def generar_lista_datos(self):
 
         datos_para_varios_sismos = [
-            ["2025-05-22 16:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 2.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-21 10:15:00", "2025-05-21 10:00:00", -32.000, -32.010, -65.000, -65.005, 2.2, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-20 08:00:00", "2025-05-20 07:50:00", -33.500, -33.510, -66.100, -66.105, 1.1, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-19 23:00:00", "2025-05-19 22:45:00", -30.123, -30.125, -63.456, -63.458, 3.8, "Evento Sismico", "Bloqueado en revision", "", "", "", "", "", 0, 0],
-            ["2025-05-18 07:00:00", "2025-05-18 06:30:00", -29.000, -29.010, -62.000, -62.005, 1.0, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-22 02:30:00", "2025-05-17 02:00:00", -24.555, -30.885, -44.556, -64.552, 4.9, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-22 15:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 0.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-16 11:45:00", "2025-05-16 11:30:00", -31.700, -31.705, -63.900, -63.903, 3.4, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-15 20:00:00", "2025-05-15 19:50:00", -32.120, -32.125, -65.300, -65.305, 3.1, "Evento Sismico", "Bloqueado en revision", "", "", "", "", "", 0, 0],
-            ["2025-05-15 05:10:00", "2025-05-15 05:00:00", -29.990, -29.992, -61.500, -61.501, 3.3, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-15 18:20:00", "2025-05-13 18:10:00", -30.500, -30.505, -62.800, -62.802, 3.0, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-12 09:00:00", "2025-05-12 08:55:00", -33.000, -33.001, -66.500, -66.501, 2.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-11 01:05:00", "2025-05-11 00:55:00", -31.250, -31.252, -64.050, -64.053, 4.0, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-10 16:30:00", "2025-05-10 16:15:00", -29.500, -29.501, -60.800, -60.803, 3.5, "Evento Sismico", "Bloqueado en revision", "", "", "", "", "", 0, 0],
-            ["2025-05-22 04:40:00", "2025-05-09 04:30:00", -32.700, -32.705, -67.000, -67.008, 2.1, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-08 21:00:00", "2025-05-08 20:45:00", -30.000, -30.001, -63.000, -63.002, 4.0, "Evento Sismico", "Rechazado", "", "", "", "", "", 0, 0]
+            ["2025-05-22 16:00:00", # Fecha y hora ocurrencia (Clase EventoSismico)
+             "2025-05-22 14:30:00", # Fecha y hora fin (Clase EventoSismico)
+             -31.416, # Latitud epicentro (Clase EventoSismico)
+             -31.420, # Longuitud epicentro (Clase EventoSismico)
+             -64.183, # Latitud hipocentro (Clase EventoSismico)
+             -64.190, # Longuitud hipocentro (Clase EventoSismico)
+             2.5, # Magnitud (Clase EventoSismico)
+             "Evento Sismico", # Ambito estado (Clase Estado)
+             "Pendiente de revision", # Nombre estado (Clase Estado)
+             "nombre alcance 1", # Nombre alcance (Clase Alcance)
+             "descripcion alcance 1", # Descripcion alcance (Clase Alcance)
+             "nombre generacion 1", # Nombre Generacion (Clase OrigenGeneracion)
+             "descripcion generacion 1", # Descripcion Generacion (Clase OrigenGeneracion)
+             "Superficial", # Nombre Clasificacion Sismo (Clase ClasificacionSismo) 
+             0, # Kilometros profundidad desde (Clase ClasificacionSismo) 
+             70], # Kilometros profundidad hasta (Clase ClasificacionSismo) 
+
+            ["2025-05-21 10:15:00", "2025-05-21 10:00:00", -32.000, -32.010, -65.000, -65.005, 2.2, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 2", "descripcion generacion 2", 
+             "Intermedio Bajo", 70,  150],
+
+            ["2025-05-20 08:00:00", "2025-05-20 07:50:00", -33.500, -33.510, -66.100, -66.105, 1.1, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 3", "descripcion generacion 3",
+             "Intermedio Alto", 150, 300],
+
+            ["2025-05-19 23:00:00", "2025-05-19 22:45:00", -30.123, -30.125, -63.456, -63.458, 3.8, 
+             "Evento Sismico", "Bloqueado en revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 4",
+             "descripcion generacion 4", "Profundo", 300, 700],
+
+            ["2025-05-18 07:00:00", "2025-05-18 06:30:00", -29.000, -29.010, -62.000, -62.005, 1.0, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 5", "descripcion generacion 5", 
+             "Muy Superficial", 0, 15],
+
+            ["2025-05-22 02:30:00", "2025-05-17 02:00:00", -24.555, -30.885, -44.556, -64.552, 4.9, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 6", "descripcion generacion 6", 
+             "Poco Profundo", 15, 40],
+
+            ["2025-05-22 15:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 0.5, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 7", "descripcion generacion 7", 
+             "Media Profundidad", 40, 70],
+
+            ["2025-05-16 11:45:00", "2025-05-16 11:30:00", -31.700, -31.705, -63.900, -63.903, 3.4, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 8", "descripcion generacion 8", 
+             "Sub-Intermedio 1", 70, 100],
+
+            ["2025-05-15 20:00:00", "2025-05-15 19:50:00", -32.120, -32.125, -65.300, -65.305, 3.1, "Evento Sismico", 
+             "Bloqueado en revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 9", "descripcion generacion 9", 
+             "Sub-Intermedio 2", 100, 150],
+
+            ["2025-05-15 05:10:00", "2025-05-15 05:00:00", -29.990, -29.992, -61.500, -61.501, 3.3, "Evento Sismico",
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 10", "descripcion generacion 10", 
+             "Sub-Intermedio 3", 150, 220],
+
+            ["2025-05-15 18:20:00", "2025-05-13 18:10:00", -30.500, -30.505, -62.800, -62.802, 3.0, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 11", "descripcion generacion 11", 
+             "Sub-Intermedio 4", 220, 300],
+
+            ["2025-05-12 09:00:00", "2025-05-12 08:55:00", -33.000, -33.001, -66.500, -66.501, 2.5, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 12", "descripcion generacion 12", 
+             "Profundo Leve", 300, 450],
+
+            ["2025-05-11 01:05:00", "2025-05-11 00:55:00", -31.250, -31.252, -64.050, -64.053, 4.0, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 13", "descripcion generacion 13", 
+             "Profundo Moderado", 450, 600],
+
+            ["2025-05-10 16:30:00", "2025-05-10 16:15:00", -29.500, -29.501, -60.800, -60.803, 3.5, "Evento Sismico",
+             "Bloqueado en revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 14", "descripcion generacion 14", 
+             "Profundo Extremo", 600, 700],
+
+            ["2025-05-22 04:40:00", "2025-05-09 04:30:00", -32.700, -32.705, -67.000, -67.008, 2.1, "Evento Sismico", 
+             "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 15", "descripcion generacion 15", 
+             "Manto Superior", 0, 400],
+
+            ["2025-05-08 21:00:00", "2025-05-08 20:45:00", -30.000, -30.001, -63.000, -63.002, 4.0, "Evento Sismico", 
+             "Rechazado", "nombre alcance 16", "descripcion alcance 16", "nombre generacion 16", "descripcion generacion 1", 
+             "Zona de Subducción", 0, 700]
         ]
 
         self.eventos_sismicos_lista = []

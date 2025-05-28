@@ -120,7 +120,10 @@ class PantallaRegistrarRevisionManual:
 
     '''
 
-    #Las propiedades de la pantalla las ponemos al último
+    ############################################################
+    ##### METODOS PROPIEDADES VENTANA###########################
+    ############################################################
+
     def windows_properties(self):
         self.new_window.title("Red Sismica")
         self.new_window.geometry("1100x500+500+300")
