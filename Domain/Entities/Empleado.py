@@ -8,6 +8,9 @@ class Empleado:
 
     def obtener_mail(self):
         return self.mail
+
+    def get_nombre(self):
+        return self.nombre
     
     def es_responsable_de_reparacion(self):
         return 0

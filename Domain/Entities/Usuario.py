@@ -9,7 +9,7 @@ class Usuario:
         self.empleado = Empleado(nombre_empleado, apellido_empleado, mail_empleado, telefono_empleado)
 
     def obtener_empleado(self):
-        return (self.empleado)
+        return (str(self.empleado.get_nombre()))
     
     def getRILogueado(self):
         return self.nombre_usuario + ", logueado con exito!"

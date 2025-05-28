@@ -32,8 +32,28 @@ class PantallaRegistrarRevisionManual:
 
     #METODO 7 (Diagrama de secuencia)
     def mostrar_eventos_sismicos(self, eventos_sismicos_lista2):
+        
+        for i, evento in enumerate(eventos_sismicos_lista2):
+            fecha_ocurrencia_str = evento[0].strftime("%d/%m/%Y")
+            hora_ocurrencia_str = evento[1].strftime("%H:%M:%S")
+
+            epicentro_str = f"Latitud: {evento[2]} Longitud: {evento[4]}"
+            hipocentro_str = f"Latitud: {evento[3]} Longitud: {evento[5]}"
+            magnitud_str = f"{evento[6]}°"
+
+            self.table.insert(parent='', index='end', values=(str(i + 1), fecha_ocurrencia_str, hora_ocurrencia_str, epicentro_str, hipocentro_str, magnitud_str, "Seleccionar"))
+
+           
+            #fila_formateada = (fecha_ocurrencia_str, hora_ocurrencia_str, epicentro_str, hipocentro_str,magnitud_str)
+            #self.eventos_sismicos_lista_vista.append(fila_formateada)
+        
+        
+        '''
         for i, evento in enumerate(eventos_sismicos_lista2):            
             self.table.insert(parent='', index='end', values=(str(i + 1), evento[0], evento[1], evento[2], evento[3], evento[4], "Seleccionar"))
+        '''
+
+    '''
 
     #METODO 8 (Diagrama de secuencia)
     def tomar_seleccion_evento(self, event):
@@ -63,6 +83,8 @@ class PantallaRegistrarRevisionManual:
 
     def opcion_no_modificar_datos_evento_sismico():
         pass
+
+    '''
 
     #Las propiedades de la pantalla las ponemos al último
     def windows_properties(self):
@@ -133,4 +155,4 @@ class PantallaRegistrarRevisionManual:
         label_subtitle.pack()  
         self.btn_enter.pack()        
         self.btn_quit.pack(side=LEFT)
-        self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)
+        #self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)

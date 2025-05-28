@@ -13,8 +13,7 @@ class PantallaInicial():
 
     def ingresar_sistema(self):
         self.windows1.destroy()
-        self.pantallaRegistrarRevisionManual = PantallaRegistrarRevisionManual()
-        self.pantallaRegistrarRevisionManual.habilitarPantalla()
+        PantallaRegistrarRevisionManual()
 
     def salir_sistema(self):
         self.windows1.destroy()
@@ -36,14 +35,20 @@ class PantallaInicial():
         frame1 = tk.Frame(self.windows1)   
         frame1.configure(bg="lightblue")    
 
-        label_name = tk.Label(frame1, text="Red Sismica")
-        label_name.config(fg="darkblue", bg="lightblue", font=("Arial", 25, "italic"))    
+        label_name = tk.Label(frame1, text="Red Sismica")        
 
-        label_subject = tk.Label(frame1, text="Diseño de sistemas de información")
-        label_subject.config(fg="black", bg="lightblue", font=("Arial", 15, "bold"))  
+        label_subject = tk.Label(frame1, text="Diseño de sistemas de información")       
 
         label_group = tk.Label(frame1, text="Grupo 11. CU: 23 Registrar resultado de revisión manual")
-        label_group.config(fg="black", bg="lightblue", font=("Arial", 15, "bold"))      
+        
+        if str(platform.system()) == "Windows":
+            label_name.config(fg="darkblue", bg="lightblue", font=("Arial", 25, "italic"))    
+            label_group.config(fg="black", bg="lightblue", font=("Arial", 15, "bold"))
+            label_subject.config(fg="black", bg="lightblue", font=("Arial", 15, "bold"))    
+        else:
+             label_group.config(fg="black", bg="lightblue")    
+             label_name.config(fg="darkblue", bg="lightblue")    
+             label_subject.config(fg="black", bg="lightblue")  
 
         if str(platform.system()) == "Windows":
             btn_integrantes = tk.Button(frame1, text="Integrantes (Grupo 11)", cursor="Hand2")
