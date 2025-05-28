@@ -8,7 +8,7 @@ class GestorRevManual:
     def __init__(self):
         self.eventos_sismicos_lista = []
         self.eventos_sismicos_lista_vista = []
-        self.datos_para_varios_sismos = []
+        self.lista_enviar_vista = []
         self.lista_estados = []
         self.evento_seleccionado = None
         self.evento = None
@@ -16,13 +16,14 @@ class GestorRevManual:
         self.empleado_dato = None   
     
     #METODO 3 (Diagrama de secuencia)
-    def nueva_revision_manual(self):
+    def nueva_revision_manual(self):        
         datos_sesion_usuario = self.generar_sesion_empleado()  
 
         self.sesion = Sesion(*datos_sesion_usuario)
-        self.empleado_dato = self.sesion.obtener_empleado()        
+        self.empleado_dato = self.sesion.obtener_empleado()   
 
-        self.buscar_eventos_sismicos_auto()   
+        self.buscar_eventos_sismicos_auto() 
+        
 
     #METODO 4 (Diagrama de secuencia)
     def buscar_eventos_sismicos_auto(self):             
@@ -31,7 +32,8 @@ class GestorRevManual:
         self.eventos_sismicos_lista_vista = []
 
         for datos in self.eventos_sismicos_lista:
-            if datos.es_pendiente_revision():
+                       
+            if datos.es_pendiente_revision():  
                 lista_aux = [
                     datos.get_fecha_hora_ocurrencia(), 
                     datos.get_fecha_hora_fin(), 
@@ -41,19 +43,18 @@ class GestorRevManual:
                     datos.get_longitud_hipocentro(),
                     datos.get_valor_magnitud()
                 ]
-                
-                self.eventos_sismicos_lista_vista.append(lista_aux)
-            
+              
+                self.eventos_sismicos_lista_vista.append(lista_aux)                   
+        
         self.ordenarEventosSismicos()
 
     #METODO 5 (Diagrama de secuencia)
-    def ordenarEventosSismicos(self): 
-        self.eventos_sismicos_lista_vista.sort(key=lambda evento: self.evento.get_fecha_hora_ocurrencia(), reverse=True)
-        
+    def ordenarEventosSismicos(self):
+        self.lista_enviar_vista = sorted(self.eventos_sismicos_lista_vista, key=lambda x: x[0], reverse=True)             
 
     #METODO 6 (Diagrama de secuencia)
     def obtener_eventos_para_mostrar(self): 
-        return self.eventos_sismicos_lista_vista
+        return self.lista_enviar_vista
     
     #METODO 9 (Diagrama de secuencia)
     def tomar_seleccion_evento(self, item_values):
@@ -186,13 +187,14 @@ class GestorRevManual:
             self.lista_estados.append(self.estado)
 
     def generar_lista_datos(self):
-        self.datos_para_varios_sismos = [
+        datos_para_varios_sismos = [
             ["2025-05-22 15:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 2.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-21 10:15:00", "2025-05-21 10:00:00", -32.000, -32.010, -65.000, -65.005, 2.2, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-20 08:00:00", "2025-05-20 07:50:00", -33.500, -33.510, -66.100, -66.105, 1.1, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-19 23:00:00", "2025-05-19 22:45:00", -30.123, -30.125, -63.456, -63.458, 3.8, "Evento Sismico", "Bloqueado en revision", "", "", "", "", "", 0, 0],
             ["2025-05-18 07:00:00", "2025-05-18 06:30:00", -29.000, -29.010, -62.000, -62.005, 1.0, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-17 02:30:00", "2025-05-17 02:00:00", -30.880, -30.885, -64.550, -64.552, 2.9, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
+            ["2025-05-22 02:30:00", "2025-05-17 02:00:00", -24.555, -30.885, -44.556, -64.552, 4.9, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
+            ["2025-05-22 15:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 2.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-16 11:45:00", "2025-05-16 11:30:00", -31.700, -31.705, -63.900, -63.903, 3.4, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-15 20:00:00", "2025-05-15 19:50:00", -32.120, -32.125, -65.300, -65.305, 3.1, "Evento Sismico", "Bloqueado en revision", "", "", "", "", "", 0, 0],
             ["2025-05-15 05:10:00", "2025-05-15 05:00:00", -29.990, -29.992, -61.500, -61.501, 3.3, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
@@ -206,6 +208,6 @@ class GestorRevManual:
 
         self.eventos_sismicos_lista = []
 
-        for datos_evento in self.datos_para_varios_sismos:
+        for datos_evento in datos_para_varios_sismos:
             self.evento = EventoSismico(*datos_evento)   
             self.eventos_sismicos_lista.append(self.evento)

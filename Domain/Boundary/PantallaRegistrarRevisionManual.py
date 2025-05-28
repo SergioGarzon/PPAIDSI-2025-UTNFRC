@@ -25,8 +25,8 @@ class PantallaRegistrarRevisionManual:
     #METODO 2 (Diagrama de secuencia)
     def habilitarPantalla(self): 
         self.gestor = GestorRevManual()
-        self.gestor.nueva_revision_manual()         
-        self.eventos_para_mostrar = self.gestor.obtener_eventos_para_mostrar()
+        self.gestor.nueva_revision_manual()  
+        self.eventos_para_mostrar = self.gestor.obtener_eventos_para_mostrar()    
         self.mostrar_eventos_sismicos(self.eventos_para_mostrar)        
         self.new_window.mainloop()       
 
@@ -34,9 +34,11 @@ class PantallaRegistrarRevisionManual:
     def mostrar_eventos_sismicos(self, eventos_sismicos_lista2):
         
         for i, evento in enumerate(eventos_sismicos_lista2):
-            fecha_ocurrencia_str = evento[0].strftime("%d/%m/%Y")
-            hora_ocurrencia_str = evento[1].strftime("%H:%M:%S")
+            print(str(evento[0]) + ", " + "Latitud: " + str(evento[2]) + "Longitud: " + str(evento[4]) + 
+                  "Latitud: " + str(evento[3]) + " Longitud: " + str(evento[5]))
 
+            fecha_ocurrencia_str = evento[0].strftime("%d/%m/%Y")
+            hora_ocurrencia_str = evento[0].strftime("%H:%M:%S")
             epicentro_str = f"Latitud: {evento[2]} Longitud: {evento[4]}"
             hipocentro_str = f"Latitud: {evento[3]} Longitud: {evento[5]}"
             magnitud_str = f"{evento[6]}°"
