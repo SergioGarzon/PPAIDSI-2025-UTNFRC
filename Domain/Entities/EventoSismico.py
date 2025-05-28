@@ -6,13 +6,13 @@ from datetime import datetime
 
 class EventoSismico:
     
-    def __init__(self, fecha_hora_fin, fecha_hora_ocurrencia, latitud_epicentro, latitud_hipocentro, 
+    def __init__(self, fecha_hora_ocurrencia, fecha_hora_fin, latitud_epicentro, latitud_hipocentro, 
                  longitud_epicentro, longitud_hipocentro, valor_magnitud, ambito, nombre_estado,
                  nombre_alcance, descripcion_alcance,
                  nombre_origen_generacion, descripcion_origen_generacion,
                  nombre_clasificacion_sismo, kilometro_profundidad_desde, kilometro_profundidad_hasta):
-        self.fecha_hora_fin = datetime.strptime(fecha_hora_fin, "%Y-%m-%d %H:%M:%S")
         self.fecha_hora_ocurrencia = datetime.strptime(fecha_hora_ocurrencia, "%Y-%m-%d %H:%M:%S")
+        self.fecha_hora_fin = datetime.strptime(fecha_hora_fin, "%Y-%m-%d %H:%M:%S")        
         self.latitud_epicentro = latitud_epicentro
         self.latitud_hipocentro = latitud_hipocentro
         self.longitud_epicentro = longitud_epicentro
@@ -23,50 +23,65 @@ class EventoSismico:
         self.generacion_sismo = OrigenDeGeneracion(nombre_origen_generacion, descripcion_origen_generacion)
         self.clasificacion_sismo = ClasificacionSismo(nombre_clasificacion_sismo, kilometro_profundidad_desde, kilometro_profundidad_hasta)
     
+    # METODO 9 (Diagrama de secuencia)
     def get_fecha_hora_ocurrencia(self):
         return self.fecha_hora_ocurrencia
     
     def get_fecha_hora_fin(self):
         return self.fecha_hora_fin
     
+    # METODO 10 (Diagrama de secuencia) 
     def get_latitud_epicentro(self):
         return self.longitud_hipocentro
 
+    # METODO 11 (Diagrama de secuencia) 
     def get_latitud_hipocentro(self):
         return self.latitud_hipocentro
     
+    # METODO 12 (Diagrama de secuencia)
     def get_longitud_epicentro(self):
         return self.longitud_epicentro
     
+    # METODO 13 (Diagrama de secuencia)
     def get_longitud_hipocentro(self):
         return self.longitud_hipocentro
     
+    # METODO 14 (Diagrama de secuencia)
     def get_valor_magnitud(self):
         return self.valor_magnitud
     
-    # DATOS RESTANTES PARA BUSCAR TODOS
-    def get_datos_restante(self):
-        return AlcanceSismo.get_nombre() + OrigenDeGeneracion.get_nombre() + ClasificacionSismo.get_nombre()
-    
+    # METODO 7 (Diagrama de secuencia)
     def es_pendiente_revision(self):
         valor = False
 
-        if(self.estado_actual.get_nombre_estado() == 'Pendiente de revision'):
+        if(self.estado_actual.es_pendiente_revision() == 'Pendiente de revision'):
             valor = True  
 
         return valor    
     
-    def set_estado_actual(self, nuevo_estado):
+    # METODO 24 (Diagrama de secuencia)
+    def bloquear_evento(self, nuevo_estado):
         if isinstance(nuevo_estado, Estado):
             self.estado_actual = nuevo_estado
         else:
             raise TypeError("Error")
 
-    def es_ambito_evento_sismico(self):        
-        if(self.estado_actual.get_ambito() == 'Evento Sismico'):
-            return True
-        return False  
+    # METODO 24 (Diagrama de secuencia)
+    def buscar_estado_actual(self):
+        pass
+
+
+
+    # DATOS RESTANTES PARA BUSCAR TODOS
+    def get_datos_restante(self):
+        return AlcanceSismo.get_nombre() + OrigenDeGeneracion.get_nombre() + ClasificacionSismo.get_nombre()
     
+
+    
+    
+
+
+
     def obtener_datos_series_temporales():
         pass
     

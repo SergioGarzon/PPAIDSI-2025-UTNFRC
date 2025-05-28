@@ -8,6 +8,7 @@ class Usuario:
         self.contrasenia = contrasenia
         self.empleado = Empleado(nombre_empleado, apellido_empleado, mail_empleado, telefono_empleado)
 
+    #METODO 5 (Diagrama de secuencia)
     def obtener_empleado(self):
         return (str(self.empleado.get_nombre()))
     

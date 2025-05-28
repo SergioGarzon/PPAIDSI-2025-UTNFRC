@@ -12,6 +12,7 @@ class Sesion:
     def get_usuario(self):
         return self.usuario_actual
     
+    #METODO 4 (Diagrama de secuencia)
     def obtener_empleado(self):
         return self.usuario_actual.obtener_empleado()
     

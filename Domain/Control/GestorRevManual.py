@@ -10,141 +10,106 @@ class GestorRevManual:
         self.eventos_sismicos_lista_vista = []
         self.lista_enviar_vista = []
         self.lista_estados = []
+        self.valor_indice = 0
         self.evento_seleccionado = None
+        self.fecha_hora_actual = None
         self.evento = None
         self.estado = None
-        self.empleado_dato = None   
+        self.empleado_dato = None 
+        self.ambito_estado = ""  
+        self.estado_bloq_rev = "" 
     
     #METODO 3 (Diagrama de secuencia)
     def nueva_revision_manual(self):        
         datos_sesion_usuario = self.generar_sesion_empleado()  
 
         self.sesion = Sesion(*datos_sesion_usuario)
+        #METODO 4 (Diagrama de secuencia)
         self.empleado_dato = self.sesion.obtener_empleado()   
 
         self.buscar_eventos_sismicos_auto() 
         
 
-    #METODO 4 (Diagrama de secuencia)
+    #METODO 6 (Diagrama de secuencia)
     def buscar_eventos_sismicos_auto(self):             
         self.generar_lista_datos()
 
         self.eventos_sismicos_lista_vista = []
 
         for datos in self.eventos_sismicos_lista:
-                       
-            if datos.es_pendiente_revision():  
+            
+            # METODO 7 (Diagrama de secuencia)
+            if datos.es_pendiente_revision():
+                
                 lista_aux = [
-                    datos.get_fecha_hora_ocurrencia(), 
-                    datos.get_fecha_hora_fin(), 
+                    # METODO 9 (Diagrama de secuencia)
+                    datos.get_fecha_hora_ocurrencia(),                     
+                    datos.get_fecha_hora_fin(),
+                    # METODO 10 (Diagrama de secuencia) 
                     datos.get_latitud_epicentro(),
+                    # METODO 11 (Diagrama de secuencia) 
                     datos.get_latitud_hipocentro(),
+                    # METODO 12 (Diagrama de secuencia) 
                     datos.get_longitud_epicentro(),
+                    # METODO 13 (Diagrama de secuencia)
                     datos.get_longitud_hipocentro(),
+                    # METODO 14 (Diagrama de secuencia)
                     datos.get_valor_magnitud()
                 ]
-              
-                self.eventos_sismicos_lista_vista.append(lista_aux)                   
-        
+
+                self.eventos_sismicos_lista_vista.append(lista_aux)   
+           
         self.ordenarEventosSismicos()
 
-    #METODO 5 (Diagrama de secuencia)
+    # METODO 15 (Diagrama de secuencia) 
     def ordenarEventosSismicos(self):
-        self.lista_enviar_vista = sorted(self.eventos_sismicos_lista_vista, key=lambda x: x[0], reverse=True)             
+        self.lista_enviar_vista = sorted(self.eventos_sismicos_lista_vista, key=lambda x: x[0], reverse=True)
 
-    #METODO 6 (Diagrama de secuencia)
     def obtener_eventos_para_mostrar(self): 
         return self.lista_enviar_vista
     
-    #METODO 9 (Diagrama de secuencia)
-    def tomar_seleccion_evento(self, item_values):
-                
-        fecha_evento_str = item_values[1]
-        hora_evento_str = item_values[2]
-        ubicacion_epicentro_str = str(item_values[3])
-        ubicacion_hipocentro_str = str(item_values[4])
-        magnitud_str = item_values[5]
+    # METODO 18 (Diagrama de secuencia)
+    def tomar_seleccion_evento(self, lista_devolucion):              
 
-        fecha_hora_combinada_str = f"{fecha_evento_str} {hora_evento_str}"
+        # Comparo que este todo correcto
+        for indice, lista in enumerate(self.eventos_sismicos_lista):
+            if (lista.get_fecha_hora_ocurrencia() == lista_devolucion[0] and
+                lista.get_latitud_epicentro() == lista_devolucion[1] and
+                lista.get_latitud_hipocentro() == lista_devolucion[2] and 
+                lista.get_longitud_epicentro() == lista_devolucion[3] and
+                lista.get_longitud_hipocentro() == lista_devolucion[4] and
+                lista.get_valor_magnitud() == lista_devolucion[5]):
+                    self.valor_indice = indice
+   
+        self.buscar_estado_bloq_en_revision()
+                  
+    # METODO 19 (Diagrama de secuencia) 
+    def buscar_estado_bloq_en_revision(self):                    
 
-        try:
-            fecha_hora_ocurrencia_dt = datetime.strptime(fecha_hora_combinada_str, "%d/%m/%Y %H:%M:%S")
-        except ValueError as e:
-            fecha_hora_ocurrencia_dt = None        
+        self.generar_lista_estados() 
 
-        cadena = ubicacion_epicentro_str
-        posicion = 0
-        lista_espacio = []
-
-        while True:
-            posicion = cadena.find(" ", posicion)
-            if posicion == -1:
-                break 
-            lista_espacio.append(posicion)
-            posicion += 1  
-
-        cadena_2 = ubicacion_hipocentro_str
-        posicion_2 = 0
-        lista_espacio_2 = []
-
-        while True:
-            posicion_2 = cadena_2.find(" ", posicion_2)
-            if posicion_2 == -1:
-                break 
-            lista_espacio_2.append(posicion_2)
-            posicion_2 += 1  
-        
-        latitud_epicentro = float(ubicacion_epicentro_str[lista_espacio[0]:lista_espacio[1]])
-        longitud_epicentro = float(ubicacion_epicentro_str[lista_espacio[2]:len(ubicacion_epicentro_str)])
-        latitud_hipocentro = float(ubicacion_hipocentro_str[lista_espacio_2[0]:lista_espacio_2[1]])
-        longitud_hipocentro = float(ubicacion_hipocentro_str[lista_espacio_2[2]:len(ubicacion_hipocentro_str)])
-        magnitud = float(magnitud_str[:-1])
-
-        # Aqui compara los estados
-        for lista in self.eventos_sismicos_lista:
-            if(lista.get_valor_magnitud() == magnitud and
-               lista.get_fecha_hora_ocurrencia() == fecha_hora_ocurrencia_dt and
-               lista.get_latitud_epicentro() == latitud_epicentro and
-               lista.get_longitud_epicentro() == longitud_epicentro and
-               lista.get_latitud_hipocentro() == latitud_hipocentro and
-               lista.get_longitud_hipocentro() == longitud_hipocentro):
-                print("COMPARA Y ESTA TODO OK")
-
-        self.buscarEstadoBloqEnRevision()
-       
-      
-    #METODO 10 (Diagrama de secuencia) 
-    def buscarEstadoBloqEnRevision(self):
-        ambito_evento_sismico = ""
-        nombre_estado_bloqueado_revision = ""     
-
-        self.generar_lista_estados()   
-        
         for lista in self.lista_estados:
-            # METODO 11 (Diagrama de secuencia)
-            ambito_evento_sismico = lista.es_ambito_evento_sismico()
+            if lista.es_ambito_evento_sismico() != None and lista.es_bloq_en_revision() != None:
+                # METODO 20 (Diagrama de secuencia)
+                self.ambito_estado = lista.es_ambito_evento_sismico()
 
-            # METODO 12 (Diagrama de secuencia)
-            nombre_estado_bloqueado_revision = lista.esBloqEnRevision()
+                # METODO 21 (Diagrama de secuencia)
+                self.estado_bloq_rev = lista.es_bloq_en_revision()
 
-        print("Ambito evento sismico: " + str(ambito_evento_sismico))
-        print("Nombre estado bloqueado en revision: " + str(nombre_estado_bloqueado_revision))
-       
-        self.get_fecha_hora_actual()   
+        self.get_fecha_hora_actual()
     
-    # METODO 13 (Diagrama de secuencia)
+    # METODO 22 (Diagrama de secuencia) 
     def get_fecha_hora_actual(self):
-        fecha_hora_actual = datetime.now()
-        print("Fecha y hora actual: " + str(fecha_hora_actual))
+        self.fecha_hora_actual = datetime.now()
         self.bloq_evento_sismico()
 
-    # METODO 14 (Diagrama de secuencia)
+    # METODO 23 (Diagrama de secuencia)
     def bloq_evento_sismico(self):
-        print("Hasta aqui se llega")
-        # ------ COMPLETAR ESTE METODO, FALTA DESDE EL METODO 14 HASTA EL METODO 20 ------
+        # METODO 24 (Diagrama de secuencia)
+        self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(Estado(self.ambito_estado, self.estado_bloq_rev))
+        print("Evento bloqueado correctamente")
 
-
-    # METODO 21 (Diagrama de secuencia)
+    
     def buscar_datos_evento_selec():
         pass
 
@@ -178,8 +143,12 @@ class GestorRevManual:
         
     def generar_lista_estados(self):
         lista_datos_estado = [
-            ["Evento Sismico", "Pendiente en revision"],
-            ["Evento Sismico", "Bloqueado en revision"]
+            ["Evento Sismico", "Pendiente de revision"],
+            ["Evento Sismico", "Bloqueado en revision"],
+            ["Evento Sismico", "Rechazado"],
+            ["Sismografo", ""],
+            ["Orden de inspeccion", ""],
+            ["Serie temporal", ""]
         ]
 
         for lista in lista_datos_estado:
@@ -187,14 +156,15 @@ class GestorRevManual:
             self.lista_estados.append(self.estado)
 
     def generar_lista_datos(self):
+
         datos_para_varios_sismos = [
-            ["2025-05-22 15:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 2.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
+            ["2025-05-22 16:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 2.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-21 10:15:00", "2025-05-21 10:00:00", -32.000, -32.010, -65.000, -65.005, 2.2, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-20 08:00:00", "2025-05-20 07:50:00", -33.500, -33.510, -66.100, -66.105, 1.1, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-19 23:00:00", "2025-05-19 22:45:00", -30.123, -30.125, -63.456, -63.458, 3.8, "Evento Sismico", "Bloqueado en revision", "", "", "", "", "", 0, 0],
             ["2025-05-18 07:00:00", "2025-05-18 06:30:00", -29.000, -29.010, -62.000, -62.005, 1.0, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-22 02:30:00", "2025-05-17 02:00:00", -24.555, -30.885, -44.556, -64.552, 4.9, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
-            ["2025-05-22 15:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 2.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
+            ["2025-05-22 15:00:00", "2025-05-22 14:30:00", -31.416, -31.420, -64.183, -64.190, 0.5, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-16 11:45:00", "2025-05-16 11:30:00", -31.700, -31.705, -63.900, -63.903, 3.4, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],
             ["2025-05-15 20:00:00", "2025-05-15 19:50:00", -32.120, -32.125, -65.300, -65.305, 3.1, "Evento Sismico", "Bloqueado en revision", "", "", "", "", "", 0, 0],
             ["2025-05-15 05:10:00", "2025-05-15 05:00:00", -29.990, -29.992, -61.500, -61.501, 3.3, "Evento Sismico", "Pendiente de revision", "", "", "", "", "", 0, 0],

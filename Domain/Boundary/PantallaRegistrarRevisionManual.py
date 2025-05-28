@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import ttk
-import platform
+from datetime import datetime
 from Domain.Control.GestorRevManual import GestorRevManual
+import platform
 
 class PantallaRegistrarRevisionManual:
     
@@ -16,7 +17,8 @@ class PantallaRegistrarRevisionManual:
     #METODO 1 (Diagrama de secuencia)
     def opcion_registrar_resultado_revision_manual(self):
         self.btn_enter.pack_forget()
-        self.btn_quit.pack_forget()        
+        self.btn_quit.pack_forget() 
+        self.label_subtitle.pack()
         self.table.pack(pady=10, fill=BOTH, expand=True)
         self.label_selection.pack()
         self.btn_quit_2.pack(side=LEFT)  
@@ -30,12 +32,10 @@ class PantallaRegistrarRevisionManual:
         self.mostrar_eventos_sismicos(self.eventos_para_mostrar)        
         self.new_window.mainloop()       
 
-    #METODO 7 (Diagrama de secuencia)
+    # METODO 16 (Diagrama de secuencia) 
     def mostrar_eventos_sismicos(self, eventos_sismicos_lista2):
         
         for i, evento in enumerate(eventos_sismicos_lista2):
-            print(str(evento[0]) + ", " + "Latitud: " + str(evento[2]) + "Longitud: " + str(evento[4]) + 
-                  "Latitud: " + str(evento[3]) + " Longitud: " + str(evento[5]))
 
             fecha_ocurrencia_str = evento[0].strftime("%d/%m/%Y")
             hora_ocurrencia_str = evento[0].strftime("%H:%M:%S")
@@ -44,30 +44,62 @@ class PantallaRegistrarRevisionManual:
             magnitud_str = f"{evento[6]}°"
 
             self.table.insert(parent='', index='end', values=(str(i + 1), fecha_ocurrencia_str, hora_ocurrencia_str, epicentro_str, hipocentro_str, magnitud_str, "Seleccionar"))
-
-           
-            #fila_formateada = (fecha_ocurrencia_str, hora_ocurrencia_str, epicentro_str, hipocentro_str,magnitud_str)
-            #self.eventos_sismicos_lista_vista.append(fila_formateada)
-        
-        
-        '''
-        for i, evento in enumerate(eventos_sismicos_lista2):            
-            self.table.insert(parent='', index='end', values=(str(i + 1), evento[0], evento[1], evento[2], evento[3], evento[4], "Seleccionar"))
-        '''
-
-    '''
-
-    #METODO 8 (Diagrama de secuencia)
+            
+    # METODO 17 (Diagrama de secuencia)
     def tomar_seleccion_evento(self, event):
         selected_item = self.table.focus() 
         if selected_item:
-            item_values = self.table.item(selected_item, 'values')            
+            item_values = self.table.item(selected_item, 'values')     
+                 
+            fecha_evento_str = item_values[1]
+            hora_evento_str = item_values[2]
+            ubicacion_epicentro_str = str(item_values[3])
+            ubicacion_hipocentro_str = str(item_values[4])
+            magnitud_str = item_values[5]   
+
+            fecha_hora_combinada_str = f"{fecha_evento_str} {hora_evento_str}"
+
+            try:
+                fecha_hora_ocurrencia_dt = datetime.strptime(fecha_hora_combinada_str, "%d/%m/%Y %H:%M:%S")
+            except ValueError as e:
+                fecha_hora_ocurrencia_dt = None        
+
+            cadena = ubicacion_epicentro_str
+            posicion = 0
+            lista_espacio = []
+
+            while True:
+                posicion = cadena.find(" ", posicion)
+                if posicion == -1:
+                    break 
+                lista_espacio.append(posicion)
+                posicion += 1  
+
+            cadena_2 = ubicacion_hipocentro_str
+            posicion_2 = 0
+            lista_espacio_2 = []
+
+            while True:
+                posicion_2 = cadena_2.find(" ", posicion_2)
+                if posicion_2 == -1:
+                    break 
+                lista_espacio_2.append(posicion_2)
+                posicion_2 += 1  
+        
+            latitud_epicentro = float(ubicacion_epicentro_str[lista_espacio[0]:lista_espacio[1]])
+            longitud_epicentro = float(ubicacion_epicentro_str[lista_espacio[2]:len(ubicacion_epicentro_str)])
+            latitud_hipocentro = float(ubicacion_hipocentro_str[lista_espacio_2[0]:lista_espacio_2[1]])
+            longitud_hipocentro = float(ubicacion_hipocentro_str[lista_espacio_2[2]:len(ubicacion_hipocentro_str)])
+            magnitud = float(magnitud_str[:-1])
+
+            lista_devolucion = [fecha_hora_ocurrencia_dt, latitud_epicentro, latitud_hipocentro, longitud_epicentro, longitud_hipocentro, magnitud]
             
-            self.gestor.tomar_seleccion_evento(item_values)
+            self.gestor.tomar_seleccion_evento(lista_devolucion)
             self.table.delete(*self.table.get_children())
             self.table.pack_forget()
             self.label_selection.pack_forget()
-            
+
+    '''   
     def habilitar_visualizacion_mapa_eventos():
         pass
 
@@ -110,8 +142,8 @@ class PantallaRegistrarRevisionManual:
         label_title = Label(self.new_window, text="Red Sismica")
         label_title.config(fg="darkblue", bg="lightblue", font=("Arial", 25, "italic"))   
 
-        label_subtitle = Label(self.new_window, text="Eventos sismicos detectados sin revisión")
-        label_subtitle.config(fg="darkblue", bg="lightblue", font=("Arial", 15, "italic"))     
+        self.label_subtitle = Label(self.new_window, text="Eventos sismicos detectados sin revisión")
+        self.label_subtitle.config(fg="darkblue", bg="lightblue", font=("Arial", 15, "italic"))     
 
         style = ttk.Style(self.new_window)
         style.configure("Treeview.Heading", font=(None, 15))
@@ -153,8 +185,7 @@ class PantallaRegistrarRevisionManual:
         self.btn_quit_2.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
         self.btn_quit_2.config(command=self.salir_sistema)
         
-        label_title.pack()
-        label_subtitle.pack()  
+        label_title.pack()          
         self.btn_enter.pack()        
         self.btn_quit.pack(side=LEFT)
-        #self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)
+        self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)
