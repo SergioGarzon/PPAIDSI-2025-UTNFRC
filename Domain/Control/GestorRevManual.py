@@ -106,8 +106,11 @@ class GestorRevManual:
     # METODO 23 (Diagrama de secuencia)
     def bloq_evento_sismico(self):
         # METODO 24 (Diagrama de secuencia)
-        self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(Estado(self.ambito_estado, self.estado_bloq_rev))
+        self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(Estado(self.ambito_estado, self.estado_bloq_rev), self.fecha_hora_actual)
         print("Evento bloqueado correctamente")
+
+        print("Obtencion del cambio de estado OK")
+        print(self.eventos_sismicos_lista[self.valor_indice].obtener_cambio_estado_bloq_rev())
 
     
     def buscar_datos_evento_selec():
