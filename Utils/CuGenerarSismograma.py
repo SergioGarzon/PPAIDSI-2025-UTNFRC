@@ -11,7 +11,7 @@ class CuGenerarSismograma():
     def __init__(self):
         self.root = tk.Tk()
         self.create_static_seismogram_gui()
-        self.root.mainloop()
+        #self.root.mainloop()
 
     def create_static_seismogram_gui(self):
         
@@ -59,5 +59,9 @@ class CuGenerarSismograma():
     def cerrar_ventana(self):
         self.root.quit()
         self.root.destroy()
+
+
+    
+        
     
 

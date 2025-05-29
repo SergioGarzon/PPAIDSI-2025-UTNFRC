@@ -99,6 +99,8 @@ class EventoSismico:
     def crear_cambio_estado(self):        
         new_cambio_estado = CambioEstado(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"), "", self.estado_actual)
         self.lista_cambio_estado.append(new_cambio_estado)
+        print("CAMBIO DE ESTADO CREADO CORRECTAMENTE")
+        print(self.lista_cambio_estado)
         
     # METODO 30 (Diagrama de secuencia)
     def get_datos_restante(self):
@@ -117,17 +119,19 @@ class EventoSismico:
     
     # METODO 34 (Diagrama de secuencia)
     def obtener_datos_series_temporales(self):
+
+        print("OBTIENE LAS SERIES TEMPORALES")
                
         self.generar_datos_series_temporales()
 
         lista_stemp_aux = []
-
+      
         for lista in self.lista_serie_temp:
             # METODO 35 (Diagrama de secuencia)
             lista_stemp_aux.append(lista.get_datos())
 
+        print(lista_stemp_aux)
         
-        print("Llega aca para obtener datos de las series temporales")
         return lista_stemp_aux
         
 

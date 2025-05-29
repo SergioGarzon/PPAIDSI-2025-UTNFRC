@@ -130,9 +130,11 @@ class GestorRevManual:
 
         print(valor_2[5])
 
-        CuGenerarSismograma()
-
+        self.include()
         
+    # METODO 45 (Diagrama de secuencia)
+    def include(self):
+        CuGenerarSismograma()        
 
     def tomar_seleccion_no_visualizacion():
         pass
