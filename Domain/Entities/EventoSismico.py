@@ -101,7 +101,19 @@ class EventoSismico:
         print(self.cambio_estado.get_fecha_hora_fin())
 
         # METODO 29 (Diagrama de secuencia)
+        #self.cambio_estado_bloq_rev = CambioEstado(self.fecha_hora_seteo, "", self.estado_actual)
+
+        #print(self.cambio_estado_bloq_rev)
+
+        #self.lista_cambio_estado.append(self.cambio_estado_bloq_rev)
+
+        #print(self.lista_cambio_estado)
+
+        #for lis in self.lista_cambio_estado:
+            #print(list)
+
         self.cambio_estado_bloq_rev = self.cambio_estado
+        
 
     # METODO 31 (Diagrama de secuencia)
     def get_datos_restante(self):
@@ -147,7 +159,7 @@ class EventoSismico:
         self.lista_cambio_estado = []
 
         lista_aux = [
-            ["2025-07-15 09:30:10", "2025-07-20 11:45:00", self.estado_actual ],
+            ["2025-07-15 09:30:10", "2025-07-20 11:45:00", self.estado_actual],
             ["2025-02-28 21:05:45", "2025-03-05 10:00:00", self.estado_actual],
             ["2025-11-03 14:18:22", "2025-11-08 16:30:00",self.estado_actual],
             ["2025-04-01 06:50:07", "", self.estado_actual]

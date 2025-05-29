@@ -20,7 +20,7 @@ class GestorRevManual:
         self.estado_bloq_rev = "" 
     
     #METODO 3 (Diagrama de secuencia)
-    def nueva_revision_manual(self):        
+    def nueva_rev_manual(self):        
         datos_sesion_usuario = self.generar_sesion_empleado()  
 
         self.sesion = Sesion(*datos_sesion_usuario)
@@ -110,9 +110,11 @@ class GestorRevManual:
         print("Evento bloqueado correctamente")
 
         print("Obtencion del cambio de estado OK")
+        
         print(self.eventos_sismicos_lista[self.valor_indice].obtener_cambio_estado_bloq_rev())
 
         self.buscar_datos_evento_selec()
+        
 
     # METODO 30 (Diagrama de secuencia)
     def buscar_datos_evento_selec(self):

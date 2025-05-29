@@ -15,19 +15,19 @@ class PantallaRegistrarRevisionManual:
         self.new_window.destroy()
 
     #METODO 1 (Diagrama de secuencia)
-    def opcion_registrar_resultado_revision_manual(self):
+    def opcion_reg_rev_manual(self):
         self.btn_enter.pack_forget()
         self.btn_quit.pack_forget() 
         self.label_subtitle.pack()
         self.table.pack(pady=10, fill=BOTH, expand=True)
         self.label_selection.pack()
         self.btn_quit_2.pack(side=LEFT)  
-        self.habilitarPantalla()
+        self.habilitar_pantalla()
 
     #METODO 2 (Diagrama de secuencia)
-    def habilitarPantalla(self): 
+    def habilitar_pantalla(self): 
         self.gestor = GestorRevManual()
-        self.gestor.nueva_revision_manual()  
+        self.gestor.nueva_rev_manual()  
         self.eventos_para_mostrar = self.gestor.obtener_eventos_para_mostrar()    
         self.mostrar_eventos_sismicos(self.eventos_para_mostrar)        
         self.new_window.mainloop()       
@@ -140,7 +140,7 @@ class PantallaRegistrarRevisionManual:
             self.btn_enter = Button(self.new_window, text="Registrar resultado revisión manual")
 
         self.btn_enter.config(fg="white", bg="darkgreen", font=("Arial", 15, "bold"))
-        self.btn_enter.config(command=self.opcion_registrar_resultado_revision_manual)
+        self.btn_enter.config(command=self.opcion_reg_rev_manual)
 
         label_title = Label(self.new_window, text="Red Sismica")
         label_title.config(fg="darkblue", bg="lightblue", font=("Arial", 25, "italic"))   
