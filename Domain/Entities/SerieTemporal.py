@@ -29,7 +29,7 @@ class SerieTemporal:
 
     # METODO 40 (Diagrama de secuencia)
     def buscar_estacion_sismologica(self):        
-        self.sismografo = Sismografo(randint(0, 999999), randint(0, 100), "2024-09-22 12:00:00", 1, randint(0, 400), "2022-11-15 23:00:00", -155.3, 545.5, "No tiene", randint(0, 1100000))
+        self.sismografo = Sismografo(randint(0, 999999), randint(0, 100), "2024-09-22 12:00:00", randint(1, 20), randint(0, 400), "2022-11-15 23:00:00", -155.3, 545.5, "No tiene", randint(0, 1100000))
 
 
     ############################################################

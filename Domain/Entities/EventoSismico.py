@@ -98,8 +98,14 @@ class EventoSismico:
     def crear_cambio_estado(self):        
         new_cambio_estado = CambioEstado(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"), "", self.estado_actual)
         self.lista_cambio_estado.append(new_cambio_estado)
-        print("CAMBIO DE ESTADO CREADO CORRECTAMENTE")
-        print(self.lista_cambio_estado)
+
+        print("\n\nDATOS DE LOS CAMBIOS DE ESTADOS")
+        for indice, lista in enumerate(self.lista_cambio_estado):
+            print("Numero: " + str(indice) + ", Fecha y hora inicio: " + lista.get_fecha_hora_inicio() + 
+                  ", Fecha y hora fin: " + lista.get_fecha_hora_fin() + ", estados: [ Ambito: " + 
+                  lista.get_estado().get_ambito() + ", nombre: " + lista.get_estado().get_nombre_estado() + " ]")
+
+        print("\n\nCAMBIO DE ESTADO CREADO CORRECTAMENTE")
         
     # METODO 30 (Diagrama de secuencia)
     def get_datos_restante(self):
@@ -119,7 +125,7 @@ class EventoSismico:
     # METODO 34 (Diagrama de secuencia)
     def obtener_datos_series_temporales(self):
 
-        print("OBTIENE LAS SERIES TEMPORALES")
+        print("\n\nOBTIENE LAS SERIES TEMPORALES")
                
         self.generar_datos_series_temporales()
 
@@ -129,8 +135,30 @@ class EventoSismico:
             # METODO 35 (Diagrama de secuencia)
             lista_stemp_aux.append(lista.get_datos())
 
-        print(lista_stemp_aux)
-        
+        print("\n\nDATOS DE LAS SERIES TEMPORALES")
+
+        for indice, lista in enumerate(lista_stemp_aux):            
+            print("\n\n******************SERIE TEMPORAL " + str(indice + 1))
+            print("\nCondicion nombre: " + str(lista[0]) + ", Fecha y hora inicio registro muestra: " + str(lista[1]) +
+                  ", Fecha y hora de registro: " + str(lista[2]) + 
+                  ", frecuencia de muestreo: " + str(lista[3]) + "")                 
+
+            for indice_m, lista_muestra in enumerate(lista[4]):
+                print("\n******MUESTRA " + str(indice_m + 1))
+                print("Fecha y hora de la muestra: " + str(lista_muestra[0]))
+
+                for indice_dm, lista_dtmuestra in enumerate(lista_muestra[1]):
+                    print("\n***DETALLE DE LA MUESTRA " + str(indice_dm + 1))
+                    print("Valor detalle muestra: " + str(lista_dtmuestra[0]))
+
+                    for indice_tpd, lista_tpdatos in enumerate(lista_dtmuestra[1]):
+                        print("\n*TIPOS DE DATOS " + str(indice_tpd + 1))
+                        print("Denominación: " + str(lista_tpdatos))
+            
+            for indice_sism, lista_sism in enumerate(lista[5]):                
+                print("\n*SISMOGRAFO: " + str(indice_sism + 1))
+                print("Codigo estación y nombre: " + str(lista_sism))            
+
         return lista_stemp_aux
     
     # METODO 62 (Diagrama de secuencia)

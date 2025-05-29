@@ -36,7 +36,7 @@ class CuGenerarSismograma():
         self.ax_sismogram.plot(time, amplitude, color='purple')
         self.ax_sismogram.set_title("Sismograma Simulado")
         self.ax_sismogram.set_xlabel("Tiempo (s)")
-        self.ax_sismogram.set_ylabel("Amplitud")
+        self.ax_sismogram.set_ylabel("Longitud y latitud")
         self.ax_sismogram.grid(True)
 
         self.canvas = FigureCanvasTkAgg(fig, master=self.root)

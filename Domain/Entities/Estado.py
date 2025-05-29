@@ -34,7 +34,11 @@ class Estado:
     # METODO 21 (Diagrama de secuencia)
     def es_bloq_en_revision(self):
         while self.nombre_estado == "Bloqueado en revision":
-            return self.nombre_estado        
+            return self.nombre_estado 
+
+
+    def get_nombre_estado(self):
+        return self.nombre_estado       
 
 
     

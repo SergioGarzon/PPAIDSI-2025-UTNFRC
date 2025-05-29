@@ -6,11 +6,7 @@ from Utils.CuGenerarSismograma import CuGenerarSismograma
 
 class GestorRevManual:
 
-    def __init__(self):
-        self.eventos_sismicos_lista = []
-        self.eventos_sismicos_lista_vista = []
-        self.lista_enviar_vista = []
-        self.lista_estados = []
+    def __init__(self):        
         self.valor_indice = 0
         self.evento_seleccionado = None
         self.fecha_hora_actual = None
@@ -18,6 +14,11 @@ class GestorRevManual:
         self.estado = None
         self.estado_actual = None
         self.empleado_dato = None
+        #Atributos Auxiliares
+        self.eventos_sismicos_lista = []
+        self.eventos_sismicos_lista_vista = []
+        self.lista_enviar_vista = []
+        self.lista_estados = []
             
     #METODO 3 (Diagrama de secuencia)
     def nueva_rev_manual(self):        
@@ -112,7 +113,7 @@ class GestorRevManual:
     def bloq_evento_sismico(self):
         # METODO 24 (Diagrama de secuencia)
         self.lista_datos_restante = self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(self.estado_actual, self.fecha_hora_actual)
-        print("Evento bloqueado correctamente")
+        print("\n\nEVENTO BLOQUEADO CORRECTAMENTE")
         
         self.buscar_datos_evento_selec()
         
@@ -127,17 +128,30 @@ class GestorRevManual:
 
     # METODO 44 (Diagrama de secuencia)
     def clasificar_por_estacion(self):
-        print(len(self.evento_seleccionado_datos_totales))
+        
+        print("\n\n\n\n\n\n**************************************CLASIFICACION POR ESTACION")
+        
+        contador = 0
+        lista_aux = []
+         
+        for lista in self.evento_seleccionado_datos_totales:
+            #Obtenemos las series temporales
+            for lista_serie_temp in lista[3]:
 
-        print(len(self.evento_seleccionado_datos_totales[3]))
+                if contador == 5:
+                    lista_aux.append((lista_serie_temp))
 
-        valor = self.evento_seleccionado_datos_totales[3]
+                if contador == 6:
+                    lista_aux.append(lista_serie_temp)
 
-        valor_2 = valor[3]
+                if contador == 8:
+                    lista_aux.append(lista_serie_temp)
+                
 
-        print(len(valor_2))
-
-        print(valor_2[5])
+                contador = contador + 1
+        
+        for lista in lista_aux:
+            print(lista)
 
         self.include()
         
@@ -148,12 +162,12 @@ class GestorRevManual:
      # METODO 48 (Diagrama de secuencia)
     def tomar_seleccion_no_visualizacion(self):
         print("\n\nEL ANALISTA DE SISMOS NO DESEA VISUALIZAR DATOS DE MAPA")
-        self.no_visualizacion = 1
+        self.no_visualizacion = 1 # Atributo auxiliar
     
     # METODO 53 (Diagrama de secuencia)
     def tomar_opcion_no_modificar_datos_evento_sismico(self):
         print("\n\nEL ANALISTA DE SISMOS NO DESEA MODIFICAR DATOS EVENTO SISMICO")
-        self.modificacion_no = 1
+        self.modificacion_no = 1 # Atributo auxiliar
 
     # METODO 56 (Diagrama de secuencia)
     def tomar_opcion_seleccionada_rechazar_evento(self, magnitud_v, alcance_v, origeneracion_v, clasificacion_v, opcion_sel):
@@ -175,14 +189,10 @@ class GestorRevManual:
                 self.evento_seleccionado_datos_totales[2] == clasificacion_v):
                 self.informacion_ok = 1
 
-                print(len(self.lista_estados))
-
                 for lista in self.lista_estados:
                 # METODO 58, 59 (Diagrama de secuencia)
                     if lista.es_ambito_evento_sismico() != None:
                         if lista.es_rechazado():
-                            print(lista.get_ambito())
-                            print("Encuentra estados rechazados!")
                             self.estado_actual = lista
                 
                 # METODO 60 (Diagrama de secuencia)
@@ -190,18 +200,18 @@ class GestorRevManual:
     
     # METODO 61 (Diagrama de secuencia)
     def rechazar_evento_sismico(self):
-        print("EMPIEZA A RECHAZAR EL EVENTO SISMICO")
-        print("Empleado: \nNombre: " + str(self.empleado_dato.get_nombre()) + ", email: " + str(self.empleado_dato.obtener_mail()))
+        print("\n\nEMPIEZA A RECHAZAR EL EVENTO SISMICO")
+        print("\n\nEmpleado: \nNombre: " + str(self.empleado_dato.get_nombre()) + ", email: " + str(self.empleado_dato.obtener_mail()))
         
         # METODO 62 (Diagrama de secuencia)
         self.eventos_sismicos_lista[self.valor_indice].rechazar_evento_sismico(self.estado_actual, self.fecha_hora_actual)
-        print("EL EVENTO SISMICO SE RECHAZO CORRECTAMENTE")
+        print("\n\nEL EVENTO SISMICO SE RECHAZO CORRECTAMENTE")
 
         self.fin_CU()
         
 
     def fin_CU(self):        
-        print("FINALIZA EL POGRAMA, GRACIAS POR UTILIZARLO!!!")
+        print("\n\nFINALIZA EL POGRAMA, GRACIAS POR UTILIZARLO!!!")
 
     ############################################################
     ##### METODOS AUXILIARES ###################################
