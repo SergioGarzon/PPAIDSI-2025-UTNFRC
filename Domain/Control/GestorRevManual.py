@@ -17,8 +17,8 @@ class GestorRevManual:
         self.evento = None
         self.estado = None
         self.estado_actual = None
-        self.empleado_dato = None 
-    
+        self.empleado_dato = None
+            
     #METODO 3 (Diagrama de secuencia)
     def nueva_rev_manual(self):        
         datos_sesion_usuario = self.generar_sesion_empleado()  
@@ -112,6 +112,7 @@ class GestorRevManual:
     # METODO 29 (Diagrama de secuencia)
     def buscar_datos_evento_selec(self):
         # METODO 30 (Diagrama de secuencia)
+        
         self.evento_seleccionado_datos_totales = self.eventos_sismicos_lista[self.valor_indice].get_datos_restante()
 
         self.clasificar_por_estacion()
@@ -136,11 +137,15 @@ class GestorRevManual:
     def include(self):
         CuGenerarSismograma()        
 
-    def tomar_seleccion_no_visualizacion():
-        pass
+     # METODO 48 (Diagrama de secuencia)
+    def tomar_seleccion_no_visualizacion(self):
+        print("\n\nEL ANALISTA DE SISMOS NO DESEA VISUALIZAR DATOS DE MAPA")
+        self.no_visualizacion = 1
     
-    def tomarOpcionNoModificarDatosEventoSismico():
-        pass
+    # METODO 53 (Diagrama de secuencia)
+    def tomar_opcion_no_modificar_datos_evento_sismico(self):
+        print("\n\nEL ANALISTA DE SISMOS NO DESEA MODIFICAR DATOS EVENTO SISMICO")
+        self.modificacion_no = 1
 
     def tomarOpcionSeleccionadaRechazarEvento():
         pass
@@ -161,10 +166,17 @@ class GestorRevManual:
     ##### METODOS AUXILIARES ###################################
     ############################################################
 
+
     def generar_sesion_empleado(self): 
         datos_sesion = [1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), None]       
         return datos_sesion
         
+    def obtener_lista_datos_totales(self):
+        return self.evento_seleccionado_datos_totales
+
+    def obtener_lista_evento_seleccionado(self):
+        return self.eventos_sismicos_lista[self.valor_indice]
+
     def generar_lista_estados(self):
         lista_datos_estado = [
             ["Evento Sismico", "Pendiente de revision"],
@@ -218,7 +230,7 @@ class GestorRevManual:
              "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 5", "descripcion generacion 5", 
              "Muy Superficial", 0, 15],
 
-            ["2025-05-22 02:30:00", "2025-05-17 02:00:00", -24.555, -30.885, -44.556, -64.552, 4.9, "Evento Sismico", 
+            ["2025-05-22 02:30:00", "2025-05-17 02:00:00", -24.555, -30.885, -44.556, -64.552, 3.9, "Evento Sismico", 
              "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 6", "descripcion generacion 6", 
              "Poco Profundo", 15, 40],
 

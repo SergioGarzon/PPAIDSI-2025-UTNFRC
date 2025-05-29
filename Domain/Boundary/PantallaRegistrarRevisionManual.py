@@ -13,7 +13,7 @@ class PantallaRegistrarRevisionManual:
 
     #METODO 1 (Diagrama de secuencia)
     def opcion_reg_rev_manual(self):
-        self.btn_enter.pack_forget()
+        self.btn_enter.pack_forget() 
         self.btn_quit.pack_forget() 
         self.label_subtitle.pack()
         self.table.pack(pady=10, fill=BOTH, expand=True)
@@ -91,31 +91,227 @@ class PantallaRegistrarRevisionManual:
 
             lista_devolucion = [fecha_hora_ocurrencia_dt, latitud_epicentro, latitud_hipocentro, longitud_epicentro, longitud_hipocentro, magnitud]
             
+            self.label_subtitle.pack_forget() 
             self.gestor.tomar_seleccion_evento(lista_devolucion)
             self.table.delete(*self.table.get_children())
-            self.table.pack_forget()
-            self.label_selection.pack_forget()
+            self.table.pack_forget() 
+            self.btn_quit_2.pack_forget() 
+            self.label_selection.pack_forget() 
+        
+        self.mostrar_datos()
+    
+    # METODO 46 (Diagrama de secuencia)
+    def mostrar_datos(self):
 
-    '''   
-    def habilitar_visualizacion_mapa_eventos():
-        pass
+        self.datos_mostrar = self.gestor.obtener_lista_datos_totales()
 
-    def opcion_seleccion_no_visualizacion():
-        pass
+        self.label_eventsel = Label(self.new_window, text="\nDATOS DEL EVENTO SISMICO SELECCIONADO:")
+        self.label_eventsel.config(fg="darkblue", bg="lightblue", font=("Arial", 25, "italic")) 
+        self.label_eventsel.place(x = 10 , y = 30)
 
-    def habilitar_modificacion_magnitud():
-        pass
+        self.label_alcance = Label(self.new_window, text="\nAlcance:")
+        self.label_alcance.config(fg="black", bg="lightblue", font=("Arial", 15, "italic")) 
+        self.label_alcance.place(x = 10 , y = 30)
+        
+        self.text_box_alcance = Text(self.new_window, width=40, height=2, wrap="word") 
+        self.text_box_alcance.config(font=("Arial", 14)) 
+        self.text_box_alcance.insert("1.0", self.datos_mostrar[0])
+        self.text_box_alcance.config(state="disabled")         
 
-    def habilitar_modificacion_alcance():
-        pass
+        self.label_clasificacion = Label(self.new_window, text="Clasificacion:")
+        self.label_clasificacion.config(fg="black", bg="lightblue", font=("Arial", 15, "italic")) 
+        self.label_clasificacion.place(x = 10 , y = 30)
 
-    def habilitar_modificacion_origen_generacion():
-        pass
+        self.text_box_clasificacion = Text(self.new_window, width=40, height=2, wrap="word") 
+        self.text_box_clasificacion.config(font=("Arial", 14)) 
+        self.text_box_clasificacion.insert("1.0", self.datos_mostrar[2])
+        self.text_box_clasificacion.config(state="disabled")
 
-    def opcion_no_modificar_datos_evento_sismico():
-        pass
+        self.label_origen_generacion = Label(self.new_window, text="Origen Generación:")
+        self.label_origen_generacion.config(fg="black", bg="lightblue", font=("Arial", 15, "italic")) 
+        self.label_origen_generacion.place(x = 10 , y = 30)
 
-    '''
+        self.text_box_origen_generacion = Text(self.new_window, width=40, height=2, wrap="word") 
+        self.text_box_origen_generacion.config(font=("Arial", 14)) 
+        self.text_box_origen_generacion.insert("1.0", self.datos_mostrar[1])
+        self.text_box_origen_generacion.config(state="disabled")
+
+        self.label_magnitud = Label(self.new_window, text="Magnitud:")
+        self.label_magnitud.config(fg="black", bg="lightblue", font=("Arial", 15, "italic")) 
+        self.label_magnitud.place(x = 10 , y = 30)
+
+        self.text_box_magnitud = Text(self.new_window, width=40, height=2, wrap="word") 
+        self.text_box_magnitud.config(font=("Arial", 14)) 
+        self.text_box_magnitud.insert("1.0", self.gestor.obtener_lista_evento_seleccionado().get_valor_magnitud())
+        self.text_box_magnitud.config(state="disabled")
+
+        if str(platform.system()) == "Windows":
+            self.btn_quit_3 = Button(self.new_window, text="Salir del sistema", cursor="Hand2")    
+        else:
+            self.btn_quit_3 = Button(self.new_window, text="Salir del sistema")
+
+        self.btn_quit_3.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
+        self.btn_quit_3.config(command=self.salir_sistema)
+
+        if str(platform.system()) == "Windows":
+            self.btn_editar_datos = Button(self.new_window, text="Editar datos", width=15, height=1, cursor="Hand2")    
+        else:
+            self.btn_editar_datos = Button(self.new_window, text="Editar datos", width=15, height=1)
+
+        self.btn_editar_datos.config(fg="white", bg="blue", font=("Arial", 15, "bold")) 
+
+        if str(platform.system()) == "Windows":
+            self.btn_NO_editar_datos = Button(self.new_window, text="NO editar datos", width=15, height=1, cursor="Hand2")    
+        else:
+            self.btn_NO_editar_datos = Button(self.new_window, text="NO Editar datos", width=15, height=1)
+
+        self.btn_NO_editar_datos.config(fg="white", bg="red", font=("Arial", 15, "bold"))
+        self.btn_NO_editar_datos.config(command=self.opcion_no_modificar_datos_evento_sismico)
+
+        self.label_eventsel.pack()
+        self.label_alcance.pack()
+        self.text_box_alcance.pack(pady=10) 
+        self.btn_editar_datos.pack_forget()
+        self.btn_NO_editar_datos.pack_forget()
+        self.label_clasificacion.pack()
+        self.text_box_clasificacion.pack(pady=10)
+        self.label_origen_generacion.pack()
+        self.text_box_origen_generacion.pack(pady=10)
+        self.label_magnitud.pack()
+        self.text_box_magnitud.pack(pady=10)
+        self.btn_quit.pack(side=LEFT)
+
+        # METODO 47 (Diagrama de secuencia)
+        self.habilitar_visualizacion_mapa_eventos()
+
+    # METODO 47 (Diagrama de secuencia)
+    def habilitar_visualizacion_mapa_eventos(self):
+
+        self.label_visualizacion_evento = Label(self.new_window, text="¿Desea visualizar el mapa de eventos?")
+        self.label_visualizacion_evento.config(fg="black", bg="lightblue", font=("Arial", 15, "italic")) 
+        self.label_visualizacion_evento.place(x = 10 , y = 30)
+
+        if str(platform.system()) == "Windows":
+            self.btn_visualizacion_evento_si = Button(self.new_window, text="SI", width=10, height=1, cursor="Hand2")    
+        else:
+            self.btn_visualizacion_evento_si = Button(self.new_window, text="SI", width=10, height=1)
+
+        self.btn_visualizacion_evento_si.config(fg="white", bg="green", font=("Arial", 15, "bold")) 
+
+        if str(platform.system()) == "Windows":
+            self.btn_visualizacion_evento_no = Button(self.new_window, text="NO", width=10, height=1, cursor="Hand2")    
+        else:
+            self.btn_visualizacion_evento_no = Button(self.new_window, text="NO", width=10, height=1)
+
+        self.btn_visualizacion_evento_no.config(fg="white", bg="red", font=("Arial", 15, "bold"))  
+         # METODO 47 (Diagrama de secuencia)       
+        self.btn_visualizacion_evento_no.config(command=self.opcion_seleccion_no_visualizacion) 
+
+        self.label_visualizacion_evento.pack()
+        self.btn_visualizacion_evento_si.pack(side="right", padx=5, pady=10)
+        self.btn_visualizacion_evento_no.pack(side="right", padx=5, pady=10)
+
+    # METODO 47 (Diagrama de secuencia)
+    def opcion_seleccion_no_visualizacion(self):
+        self.btn_visualizacion_evento_si.pack_forget() 
+        self.btn_visualizacion_evento_no.pack_forget() 
+        self.label_visualizacion_evento.pack_forget() 
+
+        self.label_edicion_datos = Label(self.new_window, text="Puede editar el alcance, origen clasificacion y magnitud")
+        self.label_edicion_datos.config(fg="black", bg="lightblue", font=("Arial", 15, "italic")) 
+        self.label_edicion_datos.place(x = 10 , y = 30)
+        
+        self.label_edicion_datos.pack()
+        self.btn_editar_datos.pack(side="right", padx=5, pady=10)     
+        self.btn_NO_editar_datos.pack(side="right", padx=5, pady=10) 
+
+        # METODO 48 (Diagrama de secuencia)
+        self.gestor.tomar_seleccion_no_visualizacion()
+
+        # METODO 49 (Diagrama de secuencia)
+        self.habilitar_modificacion_magnitud()
+        # METODO 50 (Diagrama de secuencia)
+        self.habilitar_modificacion_alcance() 
+        # METODO 51 (Diagrama de secuencia)
+        self.habilitar_modificacion_origen_generacion() 
+        
+        #self.text_box_clasificacion.config(state="normal")
+
+    # METODO 49 (Diagrama de secuencia)
+    def habilitar_modificacion_magnitud(self):
+        self.text_box_magnitud.config(state="normal")
+
+    # METODO 50 (Diagrama de secuencia)
+    def habilitar_modificacion_alcance(self):
+        self.text_box_alcance.config(state="normal") 
+
+    # METODO 51 (Diagrama de secuencia)
+    def habilitar_modificacion_origen_generacion(self):
+        self.text_box_origen_generacion.config(state="normal")
+
+    # METODO 52 (Diagrama de secuencia)
+    def opcion_no_modificar_datos_evento_sismico(self):
+        self.label_edicion_datos.pack_forget()
+        self.btn_editar_datos.pack_forget()     
+        self.btn_NO_editar_datos.pack_forget() 
+        self.text_box_alcance.delete("1.0", END)
+        self.text_box_clasificacion.delete("1.0", END)
+        self.text_box_origen_generacion.delete("1.0", END)    
+        self.text_box_magnitud.delete("1.0", END)
+        self.text_box_alcance.insert("1.0", self.datos_mostrar[0])
+        self.text_box_clasificacion.insert("1.0", self.datos_mostrar[2])
+        self.text_box_origen_generacion.insert("1.0", self.datos_mostrar[1])
+        self.text_box_magnitud.insert("1.0", self.gestor.obtener_lista_evento_seleccionado().get_valor_magnitud())
+        self.text_box_magnitud.config(state="disabled")
+        self.text_box_alcance.config(state="disabled") 
+        self.text_box_origen_generacion.config(state="disabled")
+
+        # METODO 53 (Diagrama de secuencia)
+        self.gestor.tomar_opcion_no_modificar_datos_evento_sismico()
+
+        # METODO 54 (Diagrama de secuencia)
+        self.mostrar_opciones_eventos()
+    
+    # METODO 54 (Diagrama de secuencia)
+    def mostrar_opciones_eventos(self):
+
+        if str(platform.system()) == "Windows":
+            self.btn_confirmar_evento = Button(self.new_window, text="Confirmar evento", width=20, height=1, cursor="Hand2")    
+        else:
+            self.btn_confirmar_evento = Button(self.new_window, text="Confirmar evento", width=20, height=1)
+
+        self.btn_confirmar_evento.config(fg="white", bg="springgreen", font=("Arial", 15, "bold"))  
+
+        if str(platform.system()) == "Windows":
+            self.btn_rechazar_evento = Button(self.new_window, text="Rechazar evento", width=20, height=1, cursor="Hand2")    
+        else:
+            self.btn_rechazar_evento = Button(self.new_window, text="Rechazar evento", width=20, height=1)
+
+        self.btn_rechazar_evento.config(fg="white", bg="orange", font=("Arial", 15, "bold"))
+        # METODO 55 (Diagrama de secuencia)  
+        self.btn_rechazar_evento.config(command=self.opcion_rechazar_evento)
+
+        if str(platform.system()) == "Windows":
+            self.btn_solicitar_revision_experto = Button(self.new_window, text="Solicitar revision experto", width=20, height=1, cursor="Hand2")    
+        else:
+            self.btn_solicitar_revision_experto = Button(self.new_window, text="Solicitar revision experto", width=20, height=1)
+
+        self.btn_solicitar_revision_experto.config(fg="white", bg="dodgerblue2", font=("Arial", 15, "bold"))
+
+        self.btn_confirmar_evento.pack(side="right", padx=5, pady=10)
+        self.btn_rechazar_evento.pack(side="right", padx=5, pady=10)
+        self.btn_solicitar_revision_experto.pack(side="right", padx=5, pady=10)
+        
+    # METODO 55 (Diagrama de secuencia)
+    def opcion_rechazar_evento(self):
+        self.btn_confirmar_evento.pack_forget()
+        self.btn_rechazar_evento.pack_forget()
+        self.btn_solicitar_revision_experto.pack_forget()
+
+
+        magnitud_valor_extraido = self.text_box_magnitud.get("1.0", "end-1c") 
+        # alcance, origen generacion, clasificacion
+        print(magnitud_valor_extraido)
 
     ############################################################
     ##### METODOS PROPIEDADES VENTANA###########################
@@ -123,7 +319,7 @@ class PantallaRegistrarRevisionManual:
 
     def windows_properties(self):
         self.new_window.title("Red Sismica")
-        self.new_window.geometry("1100x500+500+300")
+        self.new_window.geometry("1100x680+500+300")
 
         if str(platform.system()) == "Windows":
             self.new_window.iconbitmap("./Resources/Images/utnfrc.ico")
@@ -188,8 +384,10 @@ class PantallaRegistrarRevisionManual:
         label_title.pack()          
         self.btn_enter.pack()        
         self.btn_quit.pack(side=LEFT)
+        # METODO 17 (Diagrama de secuencia)
         self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)
 
     def salir_sistema(self):      
         self.new_window.quit()
         self.new_window.destroy()
+    
