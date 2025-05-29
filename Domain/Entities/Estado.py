@@ -16,7 +16,17 @@ class Estado:
         
         return control
    
-   # METODO 20 (Diagrama de secuencia)
+    # METODO 59 (Diagrama de secuencia)
+    def es_rechazado(self):
+        control = False
+
+        if(self.nombre_estado == 'Rechazado'):
+            return True
+        
+        return control
+    
+    # METODO 20 (Diagrama de secuencia)
+    # METODO 58 (Diagrama de secuencia)
     def es_ambito_evento_sismico(self):
         if self.ambito == "Evento Sismico":
             return self.ambito

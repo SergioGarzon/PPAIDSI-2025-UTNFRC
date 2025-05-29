@@ -308,10 +308,32 @@ class PantallaRegistrarRevisionManual:
         self.btn_rechazar_evento.pack_forget()
         self.btn_solicitar_revision_experto.pack_forget()
 
-
         magnitud_valor_extraido = self.text_box_magnitud.get("1.0", "end-1c") 
-        # alcance, origen generacion, clasificacion
-        print(magnitud_valor_extraido)
+        alcance_valor_extraido = self.text_box_alcance.get("1.0", "end-1c") 
+        origeneracion_valor_extraido = self.text_box_origen_generacion.get("1.0", "end-1c")
+        clasificacion_valor_extraido = self.text_box_clasificacion.get("1.0", "end-1c")
+        opcion_elegida = True
+
+        # METODO 56 (Diagrama de secuencia)
+        self.gestor.tomar_opcion_seleccionada_rechazar_evento(magnitud_valor_extraido, alcance_valor_extraido,
+                                                              origeneracion_valor_extraido, clasificacion_valor_extraido,
+                                                              opcion_elegida)
+        
+        self.label_alcance.pack_forget()
+        self.label_eventsel.pack_forget()
+        self.label_clasificacion.pack_forget()
+        self.label_edicion_datos.pack_forget()
+        self.label_magnitud.pack_forget()
+        self.label_origen_generacion.pack_forget()
+        self.text_box_alcance.pack_forget()
+        self.text_box_clasificacion.pack_forget()
+        self.text_box_magnitud.pack_forget()
+        self.text_box_origen_generacion.pack_forget()
+        self.btn_solicitar_revision_experto.pack_forget()
+        self.btn_rechazar_evento.pack_forget()
+        self.btn_confirmar_evento.pack_forget()
+        self.label_agredecimiento.pack()
+
 
     ############################################################
     ##### METODOS PROPIEDADES VENTANA###########################
@@ -365,6 +387,9 @@ class PantallaRegistrarRevisionManual:
         self.label_selection = Label(self.new_window, text=">>>Debe seleccionar un evento de la lista<<<")
         self.label_selection.config(fg="darkred", bg="lightblue", font=("Arial", 15, "bold"))
 
+        self.label_agredecimiento = Label(self.new_window, text="GRACIAS POR HABER \nUTILIZANDO NUESTRO SISTEMA")
+        self.label_agredecimiento.config(fg="darkblue", bg="lightblue", font=("Arial", 35, "italic")) 
+
         if str(platform.system()) == "Windows":
             self.btn_quit = Button(self.new_window, text="Salir del sistema", cursor="Hand2")  
         else:
@@ -381,8 +406,9 @@ class PantallaRegistrarRevisionManual:
         self.btn_quit_2.config(fg="white", bg="red", font=("Arial", 15, "bold"))          
         self.btn_quit_2.config(command=self.salir_sistema)
         
-        label_title.pack()          
-        self.btn_enter.pack()        
+        label_title.pack() 
+        self.btn_enter.pack()   
+        self.label_agredecimiento.pack_forget()     
         self.btn_quit.pack(side=LEFT)
         # METODO 17 (Diagrama de secuencia)
         self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)

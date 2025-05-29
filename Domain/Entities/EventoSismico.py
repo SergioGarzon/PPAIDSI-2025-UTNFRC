@@ -76,9 +76,8 @@ class EventoSismico:
 
     # METODO 25 (Diagrama de secuencia)
     def buscar_estado_actual(self):
-        
-        self.cambio_estado = None
 
+        self.cambio_estado = None
         self.generar_datos_cambio_estados()
 
         for lista in self.lista_cambio_estado:
@@ -133,6 +132,19 @@ class EventoSismico:
         print(lista_stemp_aux)
         
         return lista_stemp_aux
+    
+    # METODO 62 (Diagrama de secuencia)
+    def rechazar_evento_sismico(self, nuevo_estado, fecha_hora_actual):
+        if isinstance(nuevo_estado, Estado):
+            self.estado_actual = nuevo_estado # Aqui setea al estado actual el evento sismico seleccionado
+            self.fecha_hora_seteo = fecha_hora_actual
+           
+           # METODO 63 (Diagrama de secuencia) 
+            self.set_fecha_hora_fin()
+            # METODO 64 (Diagrama de secuencia)
+            self.crear_cambio_estado()
+        else:
+            raise TypeError("Error")
         
 
     ############################################################

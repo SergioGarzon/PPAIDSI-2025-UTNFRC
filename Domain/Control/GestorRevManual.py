@@ -92,18 +92,26 @@ class GestorRevManual:
             # METODO 20, 21 (Diagrama de secuencia)
             if lista.es_ambito_evento_sismico() != None and lista.es_bloq_en_revision() != None:
                 self.estado_actual = lista
-
-        self.get_fecha_hora_actual()
+        
+        # METODO 22 (Diagrama de secuencia)
+        self.get_fecha_hora_actual(1)
     
     # METODO 22 (Diagrama de secuencia) 
-    def get_fecha_hora_actual(self):
+    # METODO 60 (Diagrama de secuencia)
+    def get_fecha_hora_actual(self, verificacion):
         self.fecha_hora_actual = datetime.now()
-        self.bloq_evento_sismico()
+
+        if verificacion == 1:
+            self.bloq_evento_sismico()
+
+        if verificacion == 2:
+            # METODO 61 (Diagrama de secuencia)
+            self.rechazar_evento_sismico()
 
     # METODO 23 (Diagrama de secuencia)
     def bloq_evento_sismico(self):
         # METODO 24 (Diagrama de secuencia)
-        self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(self.estado_actual, self.fecha_hora_actual)
+        self.lista_datos_restante = self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(self.estado_actual, self.fecha_hora_actual)
         print("Evento bloqueado correctamente")
         
         self.buscar_datos_evento_selec()
@@ -147,20 +155,53 @@ class GestorRevManual:
         print("\n\nEL ANALISTA DE SISMOS NO DESEA MODIFICAR DATOS EVENTO SISMICO")
         self.modificacion_no = 1
 
-    def tomarOpcionSeleccionadaRechazarEvento():
-        pass
+    # METODO 56 (Diagrama de secuencia)
+    def tomar_opcion_seleccionada_rechazar_evento(self, magnitud_v, alcance_v, origeneracion_v, clasificacion_v, opcion_sel):
+        print("\n\nEL ANALISTA DE SISMOS SELECCIONA LA OPCION DE RECHAZAR EVENTO")
 
-    def tomarOpcionSeleccionadaRechazarEvento():
-        pass
-    
-    def getFechaHoraActual():
-        pass
-    
-    def rechazarEventoSismico():
-        pass
+        # METODO 57 (Diagrama de secuencia)
+        self.validar_informacion(magnitud_v, alcance_v, origeneracion_v, clasificacion_v, opcion_sel)
 
-    def fin_CU():
-        pass
+    # METODO 57 (Diagrama de secuencia)
+    def validar_informacion(self, magnitud_v, alcance_v, origeneracion_v, clasificacion_v, opcion_sel):
+
+        # Se valida que la informacion sea la misma para el caso de rechazado, tambien que exista  
+
+        if( magnitud_v != None and alcance_v != None and origeneracion_v != None and clasificacion_v != None and
+           opcion_sel == True):   
+            if (self.eventos_sismicos_lista[self.valor_indice].get_valor_magnitud() == float(magnitud_v) and
+                self.evento_seleccionado_datos_totales[0] == alcance_v and 
+                self.evento_seleccionado_datos_totales[1] == origeneracion_v and
+                self.evento_seleccionado_datos_totales[2] == clasificacion_v):
+                self.informacion_ok = 1
+
+                print(len(self.lista_estados))
+
+                for lista in self.lista_estados:
+                # METODO 58, 59 (Diagrama de secuencia)
+                    if lista.es_ambito_evento_sismico() != None:
+                        if lista.es_rechazado():
+                            print(lista.get_ambito())
+                            print("Encuentra estados rechazados!")
+                            self.estado_actual = lista
+                
+                # METODO 60 (Diagrama de secuencia)
+                self.get_fecha_hora_actual(2)
+    
+    # METODO 61 (Diagrama de secuencia)
+    def rechazar_evento_sismico(self):
+        print("EMPIEZA A RECHAZAR EL EVENTO SISMICO")
+        print("Empleado: \nNombre: " + str(self.empleado_dato.get_nombre()) + ", email: " + str(self.empleado_dato.obtener_mail()))
+        
+        # METODO 62 (Diagrama de secuencia)
+        self.eventos_sismicos_lista[self.valor_indice].rechazar_evento_sismico(self.estado_actual, self.fecha_hora_actual)
+        print("EL EVENTO SISMICO SE RECHAZO CORRECTAMENTE")
+
+        self.fin_CU()
+        
+
+    def fin_CU(self):        
+        print("FINALIZA EL POGRAMA, GRACIAS POR UTILIZARLO!!!")
 
     ############################################################
     ##### METODOS AUXILIARES ###################################
