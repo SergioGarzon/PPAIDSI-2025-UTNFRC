@@ -6,11 +6,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
-class Grafico():
+class CuGenerarSismograma():
 
     def __init__(self):
         self.root = tk.Tk()
         self.create_static_seismogram_gui()
+        self.root.mainloop()
 
     def create_static_seismogram_gui(self):
         
@@ -19,10 +20,9 @@ class Grafico():
         button_generar = ttk.Button(self.root, text="Generar", command=self.regenerar_sismograma)
         button_generar.pack(side=tk.TOP, pady=5)
 
-        exit_button = ttk.Button(self.root, text="Salir", command=self.root.quit)
+        exit_button = ttk.Button(self.root, text="Salir", command=self.cerrar_ventana)
         exit_button.pack(side=tk.BOTTOM, pady=5)
         
-
         self.generar_sismograma()       
 
         
@@ -55,8 +55,9 @@ class Grafico():
         self.toolbar_frame.pack_forget()
         self.canvas_widget.pack_forget()
         self.generar_sismograma()
+
+    def cerrar_ventana(self):
+        self.root.quit()
+        self.root.destroy()
     
 
-if __name__ == "__main__":
-    app_inicial = Grafico()
-    app_inicial.root.mainloop()

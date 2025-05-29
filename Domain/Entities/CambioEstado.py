@@ -27,4 +27,7 @@ class CambioEstado:
     
     def get_fecha_hora_fin(self):
         return self.fecha_hora_fin
+    
+    def get_estado(self):
+        return self.estado
             

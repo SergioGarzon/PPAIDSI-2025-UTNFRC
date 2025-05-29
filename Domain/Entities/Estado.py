@@ -9,8 +9,12 @@ class Estado:
     
     # METODO 8 (Diagrama de secuencia)
     def es_pendiente_revision(self):
+        control = False
+
         while(self.nombre_estado == 'Pendiente de revision'):
-            return self.nombre_estado
+            return True
+        
+        return control
    
    # METODO 20 (Diagrama de secuencia)
     def es_ambito_evento_sismico(self):

@@ -2,6 +2,7 @@ from Domain.Entities.EventoSismico import EventoSismico
 from Domain.Entities.Sesion import Sesion
 from datetime import datetime
 from Domain.Entities.Estado import Estado
+from Utils.CuGenerarSismograma import CuGenerarSismograma
 
 class GestorRevManual:
 
@@ -15,9 +16,8 @@ class GestorRevManual:
         self.fecha_hora_actual = None
         self.evento = None
         self.estado = None
+        self.estado_actual = None
         self.empleado_dato = None 
-        self.ambito_estado = ""  
-        self.estado_bloq_rev = "" 
     
     #METODO 3 (Diagrama de secuencia)
     def nueva_rev_manual(self):        
@@ -89,12 +89,9 @@ class GestorRevManual:
         self.generar_lista_estados() 
 
         for lista in self.lista_estados:
+            # METODO 20, 21 (Diagrama de secuencia)
             if lista.es_ambito_evento_sismico() != None and lista.es_bloq_en_revision() != None:
-                # METODO 20 (Diagrama de secuencia)
-                self.ambito_estado = lista.es_ambito_evento_sismico()
-
-                # METODO 21 (Diagrama de secuencia)
-                self.estado_bloq_rev = lista.es_bloq_en_revision()
+                self.estado_actual = lista
 
         self.get_fecha_hora_actual()
     
@@ -106,24 +103,36 @@ class GestorRevManual:
     # METODO 23 (Diagrama de secuencia)
     def bloq_evento_sismico(self):
         # METODO 24 (Diagrama de secuencia)
-        self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(Estado(self.ambito_estado, self.estado_bloq_rev), self.fecha_hora_actual)
+        self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(self.estado_actual, self.fecha_hora_actual)
         print("Evento bloqueado correctamente")
-
-        print("Obtencion del cambio de estado OK")
         
-        print(self.eventos_sismicos_lista[self.valor_indice].obtener_cambio_estado_bloq_rev())
-
         self.buscar_datos_evento_selec()
         
 
-    # METODO 30 (Diagrama de secuencia)
+    # METODO 29 (Diagrama de secuencia)
     def buscar_datos_evento_selec(self):
-        # METODO 31 (Diagrama de secuencia)
-        print(self.eventos_sismicos_lista[self.valor_indice].get_datos_restante())
-        print("Empieza a buscar los datos del evento seleccionado")
+        # METODO 30 (Diagrama de secuencia)
+        self.evento_seleccionado_datos_totales = self.eventos_sismicos_lista[self.valor_indice].get_datos_restante()
 
-    def clasificar_por_estacion():
-        pass
+        self.clasificar_por_estacion()
+
+    # METODO 44 (Diagrama de secuencia)
+    def clasificar_por_estacion(self):
+        print(len(self.evento_seleccionado_datos_totales))
+
+        print(len(self.evento_seleccionado_datos_totales[3]))
+
+        valor = self.evento_seleccionado_datos_totales[3]
+
+        valor_2 = valor[3]
+
+        print(len(valor_2))
+
+        print(valor_2[5])
+
+        CuGenerarSismograma()
+
+        
 
     def tomar_seleccion_no_visualizacion():
         pass
@@ -151,7 +160,7 @@ class GestorRevManual:
     ############################################################
 
     def generar_sesion_empleado(self): 
-        datos_sesion = [1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), None, "adminsismos", "1234", "Pablo", "Paez", "ppaez@sismos-conicet.com.ar", 351000000]       
+        datos_sesion = [1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), None]       
         return datos_sesion
         
     def generar_lista_estados(self):

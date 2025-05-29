@@ -2,15 +2,15 @@ from Domain.Entities.Empleado import Empleado
 
 class Usuario:
     
-    def __init__(self, nombre_usuario, contrasenia, nombre_empleado, apellido_empleado, 
-                 mail_empleado, telefono_empleado):
+    def __init__(self, nombre_usuario, contrasenia):
         self.nombre_usuario = nombre_usuario
         self.contrasenia = contrasenia
-        self.empleado = Empleado(nombre_empleado, apellido_empleado, mail_empleado, telefono_empleado)
+        self.empleado = None
 
     #METODO 5 (Diagrama de secuencia)
     def obtener_empleado(self):
-        return (str(self.empleado.get_nombre()))
+        self.empleado = Empleado("Pablo", "Paez", "ppaez@sismos-conicet.com.ar", 351000000)
+        return (self.empleado)
     
     def getRILogueado(self):
         return self.nombre_usuario + ", logueado con exito!"

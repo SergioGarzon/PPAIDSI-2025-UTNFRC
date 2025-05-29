@@ -13,4 +13,4 @@ class Empleado:
         return self.nombre
     
     def es_responsable_de_reparacion(self):
-        return 0
+        pass

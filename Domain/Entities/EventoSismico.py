@@ -4,6 +4,7 @@ from Domain.Entities.OrigenDeGeneracion import OrigenDeGeneracion
 from Domain.Entities.ClasificacionSismo import ClasificacionSismo
 from Domain.Entities.SerieTemporal import SerieTemporal
 from Domain.Entities.CambioEstado import CambioEstado
+from Domain.Entities.Sismografo import Sismografo
 from datetime import datetime
 
 class EventoSismico:
@@ -26,6 +27,7 @@ class EventoSismico:
         self.clasificacion_sismo = ClasificacionSismo(nombre_clasificacion_sismo, kilometro_profundidad_desde, kilometro_profundidad_hasta)
         self.serie_temporal = None
         self.cambio_estado_bloq_rev = None
+
     
     # METODO 9 (Diagrama de secuencia)
     def get_fecha_hora_ocurrencia(self):
@@ -58,7 +60,7 @@ class EventoSismico:
     def es_pendiente_revision(self):
         valor = False
 
-        if(self.estado_actual.es_pendiente_revision() == 'Pendiente de revision'):
+        if self.estado_actual.es_pendiente_revision() :
             valor = True  
 
         return valor    
@@ -66,7 +68,7 @@ class EventoSismico:
     # METODO 24 (Diagrama de secuencia)
     def bloquear_evento(self, nuevo_estado, fecha_hora_actual):
         if isinstance(nuevo_estado, Estado):
-            self.estado_actual = nuevo_estado
+            self.estado_actual = nuevo_estado # Aqui setea al estado actual el evento sismico seleccionado
             self.fecha_hora_seteo = fecha_hora_actual
             self.buscar_estado_actual()
         else:
@@ -75,7 +77,7 @@ class EventoSismico:
     # METODO 25 (Diagrama de secuencia)
     def buscar_estado_actual(self):
         
-        self.cambio_estado = None 
+        self.cambio_estado = None
 
         self.generar_datos_cambio_estados()
 
@@ -83,54 +85,37 @@ class EventoSismico:
             # METODO 26 (Diagrama de secuencia)
             if lista.es_estado_actual():                
                 self.cambio_estado = lista
-                # METODO 27 (Diagrama de secuencia) 
-                self.set_fecha_hora_fin()
-
+        
+        # METODO 27 (Diagrama de secuencia) 
+        self.set_fecha_hora_fin()
+        # METODO 28 (Diagrama de secuencia)
+        self.crear_cambio_estado()
 
     # METODO 27 (Diagrama de secuencia)
-    def set_fecha_hora_fin(self):
-        print("SIN LA FECHA ACTUALIZADA")
-        print(self.cambio_estado.get_fecha_hora_inicio())
-        print(self.cambio_estado.get_fecha_hora_fin())
+    def set_fecha_hora_fin(self):        
+        self.cambio_estado.set_fecha_hora_fin(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"))
 
-        self.cambio_estado.set_fecha_hora_fin(self.fecha_hora_seteo)
-
-        print("CON LA FECHA ACTUALIZADA")
-        print(self.cambio_estado)
-        print(self.cambio_estado.get_fecha_hora_inicio())
-        print(self.cambio_estado.get_fecha_hora_fin())
-
-        # METODO 29 (Diagrama de secuencia)
-        #self.cambio_estado_bloq_rev = CambioEstado(self.fecha_hora_seteo, "", self.estado_actual)
-
-        #print(self.cambio_estado_bloq_rev)
-
-        #self.lista_cambio_estado.append(self.cambio_estado_bloq_rev)
-
-        #print(self.lista_cambio_estado)
-
-        #for lis in self.lista_cambio_estado:
-            #print(list)
-
-        self.cambio_estado_bloq_rev = self.cambio_estado
+    # METODO 28 (Diagrama de secuencia)
+    def crear_cambio_estado(self):        
+        new_cambio_estado = CambioEstado(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"), "", self.estado_actual)
+        self.lista_cambio_estado.append(new_cambio_estado)
         
-
-    # METODO 31 (Diagrama de secuencia)
+    # METODO 30 (Diagrama de secuencia)
     def get_datos_restante(self):
-        # METODO 32, 33, 34 (Diagrama de secuencia)
-
-        lista_devuelta = self.obtener_datos_series_temporales()
-
+        # METODO 31, 32, 33 (Diagrama de secuencia)
         datos = [
             self.alcance_sismo.get_nombre(), 
             self.generacion_sismo.get_nombre(), 
-            self.clasificacion_sismo.get_nombre(),
-            lista_devuelta
+            self.clasificacion_sismo.get_nombre()
         ]
+
+        # METODO 34 (Diagrama de secuencia)
+        lista_devuelta = self.obtener_datos_series_temporales()  
+        datos.append(lista_devuelta)
         
         return datos
     
-    # METODO 35 (Diagrama de secuencia)
+    # METODO 34 (Diagrama de secuencia)
     def obtener_datos_series_temporales(self):
                
         self.generar_datos_series_temporales()
@@ -138,26 +123,22 @@ class EventoSismico:
         lista_stemp_aux = []
 
         for lista in self.lista_serie_temp:
-            lista_stemp_aux.append(lista)
+            # METODO 35 (Diagrama de secuencia)
+            lista_stemp_aux.append(lista.get_datos())
 
+        
         print("Llega aca para obtener datos de las series temporales")
         return lista_stemp_aux
         
-
-
 
     ############################################################
     ##### METODOS AUXILIARES ###################################
     ############################################################
     
-    def obtener_cambio_estado_bloq_rev(self):
-        return self.cambio_estado_bloq_rev
-
-
     def generar_datos_cambio_estados(self):
 
         self.lista_cambio_estado = []
-
+        
         lista_aux = [
             ["2025-07-15 09:30:10", "2025-07-20 11:45:00", self.estado_actual],
             ["2025-02-28 21:05:45", "2025-03-05 10:00:00", self.estado_actual],
@@ -167,9 +148,7 @@ class EventoSismico:
 
         for datos_cestado in lista_aux:
             self.cambio_estado = CambioEstado(*datos_cestado)
-            self.lista_cambio_estado.append(self.cambio_estado)
-        
-        return self.lista_cambio_estado
+            self.lista_cambio_estado.append(self.cambio_estado)       
     
     
     def generar_datos_series_temporales(self):

@@ -11,9 +11,6 @@ class PantallaRegistrarRevisionManual:
         self.windows_properties() 
         self.gestor = None          
 
-    def salir_sistema(self):
-        self.new_window.destroy()
-
     #METODO 1 (Diagrama de secuencia)
     def opcion_reg_rev_manual(self):
         self.btn_enter.pack_forget()
@@ -192,3 +189,7 @@ class PantallaRegistrarRevisionManual:
         self.btn_enter.pack()        
         self.btn_quit.pack(side=LEFT)
         self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)
+
+    def salir_sistema(self):      
+        self.new_window.quit()
+        self.new_window.destroy()
