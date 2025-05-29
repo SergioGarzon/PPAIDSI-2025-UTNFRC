@@ -170,7 +170,8 @@ class GestorRevManual:
     def generar_lista_datos(self):
 
         datos_para_varios_sismos = [
-            ["2025-05-22 16:00:00", # Fecha y hora ocurrencia (Clase EventoSismico)
+            [
+             "2025-05-22 16:00:00", # Fecha y hora ocurrencia (Clase EventoSismico)
              "2025-05-22 14:30:00", # Fecha y hora fin (Clase EventoSismico)
              -31.416, # Latitud epicentro (Clase EventoSismico)
              -31.420, # Longuitud epicentro (Clase EventoSismico)
@@ -185,7 +186,8 @@ class GestorRevManual:
              "descripcion generacion 1", # Descripcion Generacion (Clase OrigenGeneracion)
              "Superficial", # Nombre Clasificacion Sismo (Clase ClasificacionSismo) 
              0, # Kilometros profundidad desde (Clase ClasificacionSismo) 
-             70], # Kilometros profundidad hasta (Clase ClasificacionSismo) 
+             70 # Kilometros profundidad hasta (Clase ClasificacionSismo)             
+            ],
 
             ["2025-05-21 10:15:00", "2025-05-21 10:00:00", -32.000, -32.010, -65.000, -65.005, 2.2, "Evento Sismico", 
              "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 2", "descripcion generacion 2", 
@@ -195,11 +197,11 @@ class GestorRevManual:
              "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 3", "descripcion generacion 3",
              "Intermedio Alto", 150, 300],
 
-            ["2025-05-19 23:00:00", "2025-05-19 22:45:00", -30.123, -30.125, -63.456, -63.458, 3.8, 
-             "Evento Sismico", "Bloqueado en revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 4",
-             "descripcion generacion 4", "Profundo", 300, 700],
+            ["2025-05-19 23:00:00", "2025-05-19 22:45:00", -30.123, -30.125, -63.456, -63.458, 3.8, "Evento Sismico", 
+             "Bloqueado en revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 4", "descripcion generacion 4", 
+             "Muy Superficial", 100, 10],
 
-            ["2025-05-18 07:00:00", "2025-05-18 06:30:00", -29.000, -29.010, -62.000, -62.005, 1.0, "Evento Sismico", 
+             ["2025-05-18 07:00:00", "2025-05-18 06:30:00", -29.000, -29.010, -62.000, -62.005, 1.0, "Evento Sismico", 
              "Pendiente de revision", "nombre alcance 1", "descripcion alcance 1", "nombre generacion 5", "descripcion generacion 5", 
              "Muy Superficial", 0, 15],
 
@@ -246,6 +248,7 @@ class GestorRevManual:
             ["2025-05-08 21:00:00", "2025-05-08 20:45:00", -30.000, -30.001, -63.000, -63.002, 4.0, "Evento Sismico", 
              "Rechazado", "nombre alcance 16", "descripcion alcance 16", "nombre generacion 16", "descripcion generacion 1", 
              "Zona de Subducción", 0, 700]
+                        
         ]
 
         self.eventos_sismicos_lista = []
