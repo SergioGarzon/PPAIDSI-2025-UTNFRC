@@ -11,7 +11,7 @@ class Estado:
     def es_pendiente_revision(self):
         control = False
 
-        while(self.nombre_estado == 'Pendiente de revision'):
+        if(self.nombre_estado == 'Pendiente de revision'):
             return True
         
         return control
@@ -28,13 +28,21 @@ class Estado:
     # METODO 20 (Diagrama de secuencia)
     # METODO 58 (Diagrama de secuencia)
     def es_ambito_evento_sismico(self):
+        control = False 
+
         if self.ambito == "Evento Sismico":
-            return self.ambito
+            control = True
+
+        return control
     
     # METODO 21 (Diagrama de secuencia)
     def es_bloq_en_revision(self):
-        while self.nombre_estado == "Bloqueado en revision":
-            return self.nombre_estado 
+        control = False
+
+        if self.nombre_estado == "Bloqueado en revision":
+            control = True
+        
+        return control
 
 
     def get_nombre_estado(self):

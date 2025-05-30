@@ -91,7 +91,7 @@ class GestorRevManual:
 
         for lista in self.lista_estados:
             # METODO 20, 21 (Diagrama de secuencia)
-            if lista.es_ambito_evento_sismico() != None and lista.es_bloq_en_revision() != None:
+            if lista.es_ambito_evento_sismico() and lista.es_bloq_en_revision():
                 self.estado_actual = lista
         
         # METODO 22 (Diagrama de secuencia)
@@ -191,7 +191,7 @@ class GestorRevManual:
 
                 for lista in self.lista_estados:
                 # METODO 58, 59 (Diagrama de secuencia)
-                    if lista.es_ambito_evento_sismico() != None:
+                    if lista.es_ambito_evento_sismico():
                         if lista.es_rechazado():
                             self.estado_actual = lista
                 
