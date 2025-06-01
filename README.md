@@ -27,7 +27,7 @@
 
 ### Pantalla 2
 
-<img src="/Resources/Images/sistema2.png" alt="Imagen sistema 2" />
+<img src="/Resources/Images/sistemas2.png" alt="Imagen sistema 2" />
 
 <br />
 
