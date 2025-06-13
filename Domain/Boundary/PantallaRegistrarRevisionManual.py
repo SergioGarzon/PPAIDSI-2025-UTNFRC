@@ -334,7 +334,6 @@ class PantallaRegistrarRevisionManual:
         self.btn_confirmar_evento.pack_forget()
         self.label_agredecimiento.pack()
 
-
     ############################################################
     ##### METODOS PROPIEDADES VENTANA###########################
     ############################################################

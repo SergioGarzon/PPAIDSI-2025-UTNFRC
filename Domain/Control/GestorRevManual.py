@@ -28,6 +28,7 @@ class GestorRevManual:
         #METODO 4 (Diagrama de secuencia)
         self.empleado_dato = self.sesion.obtener_empleado()   
 
+        #METODO 6 (Diagrama de secuencia)
         self.buscar_eventos_sismicos_auto() 
         
 
@@ -219,7 +220,7 @@ class GestorRevManual:
 
 
     def generar_sesion_empleado(self): 
-        datos_sesion = [1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), None]       
+        datos_sesion = [1, datetime.now().strftime("%Y-%m-%d %H:%M:%S"), None, "adminsismos", "1234", "Pablo", "Paez", "ppaez@sismos-conicet.com.ar", 351000000]       
         return datos_sesion
         
     def obtener_lista_datos_totales(self):
