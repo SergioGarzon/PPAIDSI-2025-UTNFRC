@@ -8,7 +8,7 @@ class Usuario:
         self.empleado = Empleado(nombre, apellido, mail, telefono)
 
     #METODO 5 (Diagrama de secuencia)
-    def obtener_empleado(self):
+    def get_empleado(self):
         return (self.empleado)
     
     def getRILogueado(self):
