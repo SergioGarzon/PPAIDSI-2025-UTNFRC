@@ -332,7 +332,6 @@ class PantallaRegistrarRevisionManual:
         self.btn_solicitar_revision_experto.pack_forget()
         self.btn_rechazar_evento.pack_forget()
         self.btn_confirmar_evento.pack_forget()
-        #self.label_agredecimiento.pack()
         self.btn_enter.pack()
 
     ############################################################
@@ -387,9 +386,6 @@ class PantallaRegistrarRevisionManual:
         self.label_selection = Label(self.new_window, text=">>>Debe seleccionar un evento de la lista<<<")
         self.label_selection.config(fg="darkred", bg="lightblue", font=("Arial", 15, "bold"))
 
-        #self.label_agredecimiento = Label(self.new_window, text="GRACIAS POR HABER \nUTILIZANDO NUESTRO SISTEMA")
-        #self.label_agredecimiento.config(fg="darkblue", bg="lightblue", font=("Arial", 35, "italic")) 
-
         if str(platform.system()) == "Windows":
             self.btn_quit = Button(self.new_window, text="Salir del sistema", cursor="Hand2")  
         else:
@@ -407,9 +403,9 @@ class PantallaRegistrarRevisionManual:
         self.btn_quit_2.config(command=self.salir_sistema)
         
         label_title.pack() 
-        self.btn_enter.pack()   
-        #self.label_agredecimiento.pack_forget()     
+        self.btn_enter.pack()     
         self.btn_quit.pack(side=LEFT)
+        
         # METODO 17 (Diagrama de secuencia)
         self.table.bind('<ButtonRelease-1>', self.tomar_seleccion_evento)
 

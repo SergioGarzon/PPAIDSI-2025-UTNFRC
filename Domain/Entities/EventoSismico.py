@@ -135,30 +135,6 @@ class EventoSismico:
             # METODO 35 (Diagrama de secuencia)
             lista_stemp_aux.append(lista.get_datos())
 
-        print("\n\nDATOS DE LAS SERIES TEMPORALES")
-
-        for indice, lista in enumerate(lista_stemp_aux):            
-            print("\n\n******************SERIE TEMPORAL " + str(indice + 1))
-            print("\nCondicion nombre: " + str(lista[0]) + ", Fecha y hora inicio registro muestra: " + str(lista[1]) +
-                  ", Fecha y hora de registro: " + str(lista[2]) + 
-                  ", frecuencia de muestreo: " + str(lista[3]) + "")                 
-
-            for indice_m, lista_muestra in enumerate(lista[4]):
-                print("\n******MUESTRA " + str(indice_m + 1))
-                print("Fecha y hora de la muestra: " + str(lista_muestra[0]))
-
-                for indice_dm, lista_dtmuestra in enumerate(lista_muestra[1]):
-                    print("\n***DETALLE DE LA MUESTRA " + str(indice_dm + 1))
-                    print("Valor detalle muestra: " + str(lista_dtmuestra[0]))
-
-                    for indice_tpd, lista_tpdatos in enumerate(lista_dtmuestra[1]):
-                        print("\n*TIPOS DE DATOS " + str(indice_tpd + 1))
-                        print("Denominación: " + str(lista_tpdatos))
-            
-            for indice_sism, lista_sism in enumerate(lista[5]):                
-                print("\n*SISMOGRAFO: " + str(indice_sism + 1))
-                print("Codigo estación y nombre: " + str(lista_sism))            
-
         return lista_stemp_aux
     
     # METODO 62 (Diagrama de secuencia)
