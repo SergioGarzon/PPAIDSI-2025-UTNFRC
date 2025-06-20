@@ -4,7 +4,6 @@ from Domain.Entities.OrigenDeGeneracion import OrigenDeGeneracion
 from Domain.Entities.ClasificacionSismo import ClasificacionSismo
 from Domain.Entities.SerieTemporal import SerieTemporal
 from Domain.Entities.CambioEstado import CambioEstado
-from Domain.Entities.Sismografo import Sismografo
 from datetime import datetime
 
 class EventoSismico:
@@ -151,6 +150,19 @@ class EventoSismico:
             raise TypeError("Error")
         
 
+
+
+
+
+
+
+
+
+
+
+
+        
+
     ############################################################
     ##### METODOS AUXILIARES ###################################
     ############################################################
@@ -176,16 +188,19 @@ class EventoSismico:
         self.lista_serie_temp = []
 
         lista_aux_serie = [            
-            ["Monitoreo Volcánico", "2025-02-10 09:00:00", "2025-02-17 09:00:00", 160],
-            ["Pequeño Enjambre Sísmico", "2025-12-01 03:00:00", "2025-12-02 03:00:00", 200],
-            ["Sismo Distante", "2025-07-01 15:00:00", "2025-07-01 17:00:00", 100],
-            ["Actividad Diaria Normal", "2025-02-28 21:05:45", "2025-03-05 10:00:00", 50]
+            [1,"Monitoreo Volcánico", "2025-02-10 09:00:00", "2025-02-17 09:00:00", 160],
+            [2,"Pequeño Enjambre Sísmico", "2025-12-01 03:00:00", "2025-12-02 03:00:00", 200],
+            [3,"Sismo Distante", "2025-07-01 15:00:00", "2025-07-01 17:00:00", 100],
+            [4,"Actividad Diaria Normal", "2025-02-28 21:05:45", "2025-03-05 10:00:00", 50]
         ]
 
         for datos_stemporales in lista_aux_serie:
             self.serie_temporal = SerieTemporal(*datos_stemporales)
             self.lista_serie_temp.append(self.serie_temporal)
 
+
+    def devolver_series_temporales(self):
+        return self.lista_serie_temp
 
 
     

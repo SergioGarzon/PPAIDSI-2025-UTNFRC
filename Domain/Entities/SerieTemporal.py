@@ -1,10 +1,9 @@
 from Domain.Entities.MuestraSismica import MuestraSismica
-from Domain.Entities.Sismografo import Sismografo
-
 
 class SerieTemporal:
 
-    def __init__(self, condicion_nombre, fecha_hora_inicio_registro_muestra, fecha_hora_registro, frecuencia_muestreo):
+    def __init__(self, identificador, condicion_nombre, fecha_hora_inicio_registro_muestra, fecha_hora_registro, frecuencia_muestreo):
+        self.identificador = identificador
         self.condicion_nombre = condicion_nombre
         self.fecha_hora_inicio_registro_muestra = fecha_hora_inicio_registro_muestra
         self.fecha_hora_registro = fecha_hora_registro
@@ -13,6 +12,7 @@ class SerieTemporal:
 
     # METODO 35 (Diagrama de secuencia)
     def get_datos(self):  
+
         self.generar_muestras_sismicas()
         
         datos = []
@@ -30,11 +30,30 @@ class SerieTemporal:
 
     # METODO 40 (Diagrama de secuencia)
     def buscar_estacion_sismologica(self): 
-        Sismografo.generar_datos_sismografo(self)       
-        lista = Sismografo.retornar_lista(self)
+        #Sismografo.generar_datos_sismografo(self)       
+        #lista = Sismografo.conocer_sismografo(self)
+        print("SE BUSCA ESTACION SISMOLOGICA")
 
-        for l in lista:
-            print(l)
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -42,6 +61,7 @@ class SerieTemporal:
     ############################################################
     ##### METODOS AUXILIARES ###################################
     ############################################################
+
 
     def generar_muestras_sismicas(self):
 
