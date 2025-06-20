@@ -208,9 +208,11 @@ class GestorRevManual:
         self.eventos_sismicos_lista[self.valor_indice].rechazar_evento_sismico(self.estado_actual, self.fecha_hora_actual)
         print("\n\nEL EVENTO SISMICO SE RECHAZO CORRECTAMENTE")
 
+        # METODO 65 (Diagrama de secuencia)
         self.fin_CU()
         
 
+    # METODO 65 (Diagrama de secuencia)
     def fin_CU(self):        
         print("\n\nFINALIZA EL POGRAMA, GRACIAS POR UTILIZARLO!!!")
 
