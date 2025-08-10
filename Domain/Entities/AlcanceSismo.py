@@ -4,6 +4,8 @@ class AlcanceSismo:
         self.nombre = nombre
         self.descripcion = descripcion
 
-    # METODO 31 (Diagrama de secuencia)
     def get_nombre(self):
         return self.nombre
+    
+    def get_descripcion(self):
+        return self.descripcion

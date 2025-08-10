@@ -28,41 +28,27 @@ class EventoSismico:
         self.cambio_estado_bloq_rev = None
 
     
-    # METODO 9 (Diagrama de secuencia)
     def get_fecha_hora_ocurrencia(self):
         return self.fecha_hora_ocurrencia
     
     def get_fecha_hora_fin(self):
         return self.fecha_hora_fin
     
-    # METODO 10 (Diagrama de secuencia) 
     def get_latitud_epicentro(self):
         return self.longitud_hipocentro
 
-    # METODO 11 (Diagrama de secuencia) 
     def get_latitud_hipocentro(self):
         return self.latitud_hipocentro
     
-    # METODO 12 (Diagrama de secuencia)
     def get_longitud_epicentro(self):
         return self.longitud_epicentro
     
-    # METODO 13 (Diagrama de secuencia)
     def get_longitud_hipocentro(self):
         return self.longitud_hipocentro
     
-    # METODO 14 (Diagrama de secuencia)
     def get_valor_magnitud(self):
         return self.valor_magnitud
     
-    # METODO 7 (Diagrama de secuencia)
-    def es_pendiente_revision(self):
-        valor = False
-
-        if self.estado_actual.es_pendiente_revision() :
-            valor = True  
-
-        return valor    
     
     
 

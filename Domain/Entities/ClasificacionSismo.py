@@ -5,6 +5,11 @@ class ClasificacionSismo:
         self.kilometro_profundidad_desde = kilometro_profundidad_desde
         self.kilometro_profundidad_hasta = kilometro_profundidad_hasta
 
-    # METODO 33 (Diagrama de secuencia)
     def get_nombre(self):
         return self.nombre
+    
+    def get_kilometro_profundidad_desde(self):
+        return self.kilometro_profundidad_desde
+    
+    def get_kilometro_profundidad_hasta(self):
+        return self.kilometro_profundidad_hasta
