@@ -61,3 +61,23 @@ class GestorRevManual:
         self.sesion = Sesion(*datos_sesion)   
         return self.sesion
 
+    def generar_lista_eventos_sismicos(self):
+        datos_para_varios_sismos = [
+            "2025-05-22 16:00:00", # Fecha y hora ocurrencia (Clase EventoSismico)
+            "2025-05-22 14:30:00", # Fecha y hora fin (Clase EventoSismico)
+            -31.416, # Latitud epicentro (Clase EventoSismico)
+            -31.420, # Longuitud epicentro (Clase EventoSismico)
+            -64.183, # Latitud hipocentro (Clase EventoSismico)
+            -64.190, # Longuitud hipocentro (Clase EventoSismico)
+            2.5, # Magnitud (Clase EventoSismico)
+            "Evento Sismico", # Ambito estado (Clase Estado)
+            "Pendiente de revision", # Nombre estado (Clase Estado)
+            "nombre alcance 1", # Nombre alcance (Clase Alcance)
+            "descripcion alcance 1", # Descripcion alcance (Clase Alcance)
+            "nombre generacion 1", # Nombre Generacion (Clase OrigenGeneracion)
+            "descripcion generacion 1", # Descripcion Generacion (Clase OrigenGeneracion)
+            "Superficial", # Nombre Clasificacion Sismo (Clase ClasificacionSismo) 
+            0, # Kilometros profundidad desde (Clase ClasificacionSismo) 
+            70 # Kilometros profundidad hasta (Clase ClasificacionSismo)             
+            ]
+
