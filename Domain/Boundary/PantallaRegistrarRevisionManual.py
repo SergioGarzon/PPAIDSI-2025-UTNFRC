@@ -27,11 +27,25 @@ class PantallaRegistrarRevisionManual:
         self.gestor = GestorRevManual()
         #METODO 3 (Diagrama de secuencia), aqui es donde invoca al metodo 3
         self.gestor.nueva_rev_manual()  
-        
-               
+        self.eventos_para_mostrar = self.gestor.obtener_eventos_para_mostrar()    
+        self.mostrar_eventos_sismicos(self.eventos_para_mostrar)        
         self.new_window.mainloop()       
 
+    # METODO 16 (Diagrama de secuencia) 
+    def mostrar_eventos_sismicos(self, eventos_sismicos_lista2):
+        
+        for i, evento in enumerate(eventos_sismicos_lista2):
 
+            fecha_ocurrencia_str = evento[0].strftime("%d/%m/%Y")
+            hora_ocurrencia_str = evento[0].strftime("%H:%M:%S")
+            epicentro_str = f"Latitud: {evento[2]} Longitud: {evento[4]}"
+            hipocentro_str = f"Latitud: {evento[3]} Longitud: {evento[5]}"
+            magnitud_str = f"{evento[6]}°"
+
+            self.table.insert(parent='', index='end', values=(str(i + 1), fecha_ocurrencia_str, hora_ocurrencia_str, epicentro_str, hipocentro_str, magnitud_str, "Seleccionar"))
+            
+
+        
     ############################################################
     ##### METODOS PROPIEDADES VENTANA###########################
     ############################################################

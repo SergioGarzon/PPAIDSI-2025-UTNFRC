@@ -42,13 +42,7 @@ class GestorRevManual:
 
         self.eventos_sismicos_lista_vista = []
 
-        print("\nLista original: \n\n")
-
         for datos in self.eventos_sismicos_lista:
-
-            print(str(datos))
-
-            print(datos.es_pendiente_revision())
             
             # METODO 7 (Diagrama de secuencia)
             if datos.es_pendiente_revision():
@@ -69,12 +63,19 @@ class GestorRevManual:
                     datos.get_valor_magnitud()
                 ]
 
-                self.eventos_sismicos_lista_vista.append(lista_aux)   
-                print("\nLista filtrada: \n\n")
-                print(self.eventos_sismicos_lista_vista)
+                self.eventos_sismicos_lista_vista.append(lista_aux) 
+               
+            
+        # METODO 15 (Diagrama de secuencia) 
+        self.ordenar_eventos_sismicos()
 
-                            
 
+    # METODO 15 (Diagrama de secuencia)                   
+    def ordenar_eventos_sismicos(self):
+        self.lista_enviar_vista = sorted(self.eventos_sismicos_lista_vista, key=lambda x: x[0], reverse=True)
+
+    def obtener_eventos_para_mostrar(self): 
+        return self.lista_enviar_vista
 
 
 
@@ -112,11 +113,12 @@ class GestorRevManual:
         self.sesion = Sesion(*datos_sesion)   
         return self.sesion
 
+
     def generar_lista_eventos_sismicos(self):
 
         self.eventos_sismicos_lista = []
 
-        for i in range(25):
+        for i in range(15):
 
             estado_descripcion = ""
             estado_valor = random.randint(1, 10)
@@ -184,8 +186,8 @@ class GestorRevManual:
             self.clasificacion_sismo = ClasificacionSismo(*lista_clasificacion_sismo)
     
             lista_datos_para_varios_sismos = [
-                "2025-05-22 16:00:00", # Fecha y hora ocurrencia (Clase EventoSismico)
-                "2025-05-22 14:30:00", # Fecha y hora fin (Clase EventoSismico)
+                "2023-05-13 12:30:02", # Fecha y hora ocurrencia (Clase EventoSismico)
+                "2025-05-26 12:30:02", # Fecha y hora fin (Clase EventoSismico)
                 random.uniform(-100, 100), # Latitud epicentro (Clase EventoSismico)
                 random.uniform(-100, 100), # Longuitud epicentro (Clase EventoSismico)
                 random.uniform(-100, 100), # Latitud hipocentro (Clase EventoSismico)
@@ -205,3 +207,6 @@ class GestorRevManual:
             self.evento = EventoSismico(*lista_datos_para_varios_sismos)
             
             self.eventos_sismicos_lista.append(self.evento)
+
+
+    
