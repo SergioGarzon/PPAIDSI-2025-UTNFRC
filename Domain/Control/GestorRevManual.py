@@ -22,16 +22,59 @@ class GestorRevManual:
         self.alcance = None
         self.origen_generacion = None
         self.clasificacion_sismo = None
-        self.empleado = None
+        self.empleado = None        
         self.empleado_dato = None        
+        self.eventos_sismicos_lista = None
             
     #METODO 3 (Diagrama de secuencia)
     def nueva_rev_manual(self):     
         #METODO 4 (Diagrama de secuencia), aqui encontraremos el metodo  
-        self.empleado_dato = self.generar_sesion_empleado().obtener_empleado()        
-        print("\nSe obtiene el empleado\n" + str(self.empleado_dato))
+        self.empleado_dato = self.generar_sesion_empleado().obtener_empleado() 
+            
+        print("\nSe obtiene el empleado: \n" + str(self.empleado_dato)) 
+
+        self.buscar_eventos_sismicos_auto()
+
+    # METODO 6 (Diagrama de secuencia)
+    def buscar_eventos_sismicos_auto(self):
 
         self.generar_lista_eventos_sismicos()
+
+        self.eventos_sismicos_lista_vista = []
+
+        print("\nLista original: \n\n")
+
+        for datos in self.eventos_sismicos_lista:
+
+            print(str(datos))
+
+            print(datos.es_pendiente_revision())
+            
+            # METODO 7 (Diagrama de secuencia)
+            if datos.es_pendiente_revision():
+                
+                lista_aux = [
+                    # METODO 9 (Diagrama de secuencia)
+                    datos.get_fecha_hora_ocurrencia(),                     
+                    datos.get_fecha_hora_fin(),
+                    # METODO 10 (Diagrama de secuencia) 
+                    datos.get_latitud_epicentro(),
+                    # METODO 11 (Diagrama de secuencia) 
+                    datos.get_latitud_hipocentro(),
+                    # METODO 12 (Diagrama de secuencia) 
+                    datos.get_longitud_epicentro(),
+                    # METODO 13 (Diagrama de secuencia)
+                    datos.get_longitud_hipocentro(),
+                    # METODO 14 (Diagrama de secuencia)
+                    datos.get_valor_magnitud()
+                ]
+
+                self.eventos_sismicos_lista_vista.append(lista_aux)   
+                print("\nLista filtrada: \n\n")
+                print(self.eventos_sismicos_lista_vista)
+
+                            
+
 
 
 
@@ -71,16 +114,18 @@ class GestorRevManual:
 
     def generar_lista_eventos_sismicos(self):
 
-        for i in range(10):
+        self.eventos_sismicos_lista = []
+
+        for i in range(25):
 
             estado_descripcion = ""
-            estado_valor = random.randint(1, 2)
+            estado_valor = random.randint(1, 10)
 
-            if estado_valor == 1:
+            if estado_valor >= 1 and estado_valor < 5:
                 estado_descripcion = "Pendiente de revision"
-            elif estado_valor == 2:
+            elif estado_valor >= 5 and estado_valor < 8:
                 estado_descripcion = "Bloqueado en revision"
-            elif estado_valor == 3:
+            elif estado_valor >= 8 and estado_valor <= 10:
                 estado_descripcion = "Rechazado"
 
             lista_estados = [
@@ -141,23 +186,22 @@ class GestorRevManual:
             lista_datos_para_varios_sismos = [
                 "2025-05-22 16:00:00", # Fecha y hora ocurrencia (Clase EventoSismico)
                 "2025-05-22 14:30:00", # Fecha y hora fin (Clase EventoSismico)
-                -31.416, # Latitud epicentro (Clase EventoSismico)
-                -31.420, # Longuitud epicentro (Clase EventoSismico)
-                -64.183, # Latitud hipocentro (Clase EventoSismico)
-                -64.190, # Longuitud hipocentro (Clase EventoSismico)
-                2.5, # Magnitud (Clase EventoSismico)
-                self.estado.get_ambito, # Ambito estado (Clase Estado)
-                self.estado.get_nombre_estado, # Nombre estado (Clase Estado)
-                self.alcance.get_nombre, # Nombre alcance (Clase Alcance)
-                self.alcance.get_descripcion, # Descripcion alcance (Clase Alcance)
-                self.origen_generacion.get_nombre, # Nombre Generacion (Clase OrigenGeneracion)
-                self.origen_generacion.get_descripcion, # Descripcion Generacion (Clase OrigenGeneracion)
-                self.clasificacion_sismo.get_nombre, # Nombre Clasificacion Sismo (Clase ClasificacionSismo) 
-                self.clasificacion_sismo.get_kilometro_profundidad_desde, # Kilometros profundidad desde (Clase ClasificacionSismo) 
-                self.clasificacion_sismo.get_kilometro_profundidad_hasta # Kilometros profundidad hasta (Clase ClasificacionSismo)             
+                random.uniform(-100, 100), # Latitud epicentro (Clase EventoSismico)
+                random.uniform(-100, 100), # Longuitud epicentro (Clase EventoSismico)
+                random.uniform(-100, 100), # Latitud hipocentro (Clase EventoSismico)
+                random.uniform(-100, 100), # Longuitud hipocentro (Clase EventoSismico)
+                random.uniform(1, 10), # Magnitud (Clase EventoSismico)
+                self.estado.get_ambito(), # Ambito estado (Clase Estado)
+                self.estado.get_nombre_estado(), # Nombre estado (Clase Estado)
+                self.alcance.get_nombre(), # Nombre alcance (Clase Alcance)
+                self.alcance.get_descripcion(), # Descripcion alcance (Clase Alcance)
+                self.origen_generacion.get_nombre(), # Nombre Generacion (Clase OrigenGeneracion)
+                self.origen_generacion.get_descripcion(), # Descripcion Generacion (Clase OrigenGeneracion)
+                self.clasificacion_sismo.get_nombre(), # Nombre Clasificacion Sismo (Clase ClasificacionSismo) 
+                self.clasificacion_sismo.get_kilometro_profundidad_desde(), # Kilometros profundidad desde (Clase ClasificacionSismo) 
+                self.clasificacion_sismo.get_kilometro_profundidad_hasta() # Kilometros profundidad hasta (Clase ClasificacionSismo)             
             ]
 
             self.evento = EventoSismico(*lista_datos_para_varios_sismos)
-
-            print(self.evento)
-
+            
+            self.eventos_sismicos_lista.append(self.evento)

@@ -11,5 +11,6 @@ class Estado:
         return self.nombre_estado       
 
 
-    
-    
+    # METODO 8 (Diagrama de secuencia)
+    def es_pendiente_revision(self):
+        return (self.nombre_estado == 'Pendiente de revision')

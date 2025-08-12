@@ -49,10 +49,6 @@ class EventoSismico:
     def get_valor_magnitud(self):
         return self.valor_magnitud
     
-    
-    
-
-
-
-    
-    
+    # METODO 7 (Diagrama de secuencia)
+    def es_pendiente_revision(self):
+        return self.estado_actual.es_pendiente_revision()
