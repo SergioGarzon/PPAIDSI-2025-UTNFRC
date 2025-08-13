@@ -6,7 +6,7 @@ from Domain.Entities.Usuario import Usuario
 from Domain.Entities.Empleado import Empleado
 from Domain.Entities.OrigenDeGeneracion import OrigenDeGeneracion
 from Domain.Entities.ClasificacionSismo import ClasificacionSismo
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 
 class GestorRevManual:
@@ -25,6 +25,7 @@ class GestorRevManual:
         self.empleado = None        
         self.empleado_dato = None        
         self.eventos_sismicos_lista = None
+        self.lista_estados_evento_sismico = []
             
     #METODO 3 (Diagrama de secuencia)
     def nueva_rev_manual(self):     
@@ -76,6 +77,43 @@ class GestorRevManual:
     def obtener_eventos_para_mostrar(self): 
         return self.lista_enviar_vista
 
+    # METODO 18 (Diagrama de secuencia)
+    def tomar_seleccion_evento(self, lista_devolucion):              
+
+        # Comparo que este todo correcto
+        for indice, lista in enumerate(self.eventos_sismicos_lista):
+            if (lista.get_fecha_hora_ocurrencia() == lista_devolucion[0] and
+                lista.get_latitud_epicentro() == lista_devolucion[1] and
+                lista.get_latitud_hipocentro() == lista_devolucion[2] and 
+                lista.get_longitud_epicentro() == lista_devolucion[3] and
+                lista.get_longitud_hipocentro() == lista_devolucion[4] and
+                lista.get_valor_magnitud() == lista_devolucion[5]):
+                    self.valor_indice = indice
+
+        # METODO 19 (Diagrama de secuencia)  
+        self.buscar_estado_bloq_en_revision()
+                  
+    # METODO 19 (Diagrama de secuencia) 
+    def buscar_estado_bloq_en_revision(self): 
+                      
+        for lista in self.generar_lista_estados():
+            # METODO 20, 21 (Diagrama de secuencia)
+            if lista.es_ambito_evento_sismico() and lista.es_bloq_en_revision():
+                self.estado_actual = lista
+                print("Se obtiene el estado de ambito Evento Sismico y de nombre Bloquedo en revision")
+                print("[" + self.estado_actual.get_ambito() + ", " + self.estado_actual.get_nombre_estado() + "]")
+              
+        
+        # METODO 22 (Diagrama de secuencia)
+        self.get_fecha_hora_actual(1)
+        
+    
+    # METODO 22 (Diagrama de secuencia) 
+    def get_fecha_hora_actual(self, verificacion):
+        self.fecha_hora_actual = datetime.now()
+        print(self.fecha_hora_actual)
+       
+    
 
 
     ############################################################
@@ -83,7 +121,7 @@ class GestorRevManual:
     ############################################################
 
 
-    # Este es el metodo para harcodear datos del empleado
+    # Este es el metodo para hardcodear datos del empleado
     def generar_sesion_empleado(self): 
         datos_empleado = ["Pablo", 
                           "Paez", 
@@ -112,12 +150,12 @@ class GestorRevManual:
         self.sesion = Sesion(*datos_sesion)   
         return self.sesion
 
-
+    # Este es el metodo para hardcodear datos de los eventos sismicos
     def generar_lista_eventos_sismicos(self):
 
         self.eventos_sismicos_lista = []
 
-        for i in range(15):
+        for i in range(30):
 
             estado_descripcion = ""
             estado_valor = random.randint(1, 10)
@@ -185,8 +223,8 @@ class GestorRevManual:
             self.clasificacion_sismo = ClasificacionSismo(*lista_clasificacion_sismo)
     
             lista_datos_para_varios_sismos = [
-                "2023-05-13 12:30:02", # Fecha y hora ocurrencia (Clase EventoSismico)
-                "2025-05-26 12:30:02", # Fecha y hora fin (Clase EventoSismico)
+                self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S"), # Fecha y hora ocurrencia (Clase EventoSismico)
+                self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S"), # Fecha y hora fin (Clase EventoSismico)
                 round(random.uniform(-100, 100), 2), # Latitud epicentro (Clase EventoSismico)
                 round(random.uniform(-100, 100), 2), # Longuitud epicentro (Clase EventoSismico)
                 round(random.uniform(-100, 100), 2), # Latitud hipocentro (Clase EventoSismico)
@@ -208,4 +246,36 @@ class GestorRevManual:
             self.eventos_sismicos_lista.append(self.evento)
 
 
+    # Este es un metodo que hice, es auxiliar y es para generar fecha y hora aleatoriamente
+    def generar_fecha_hora_random(self, anio_inicio=1900, anio_fin=datetime.now().year):
     
+        fecha_inicio = datetime(anio_inicio, 1, 1, 0, 0, 0)
+        fecha_fin = datetime(anio_fin, 12, 31, 23, 59, 59)
+
+        diferencia_horaria = fecha_fin - fecha_inicio
+        segundos_total = int(diferencia_horaria.total_seconds())
+
+        segundos_random = random.randint(0, segundos_total)
+
+        fecha_hora_random = fecha_inicio + timedelta(seconds=segundos_random)
+
+        return fecha_hora_random
+    
+    # Este metodo es para generar lista de estados
+    def generar_lista_estados(self):
+        lista_datos_estado = [
+            ["Evento Sismico", "Pendiente de revision"],
+            ["Evento Sismico", "Bloqueado en revision"],
+            ["Evento Sismico", "Rechazado"],
+            ["Sismografo", ""],
+            ["Orden de inspeccion", ""],
+            ["Serie temporal", ""]
+        ]
+
+        for lista in lista_datos_estado:
+            self.estado = Estado(*lista)
+            self.lista_estados_evento_sismico.append(self.estado)
+
+        return self.lista_estados_evento_sismico
+
+

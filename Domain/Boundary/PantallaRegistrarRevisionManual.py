@@ -94,13 +94,14 @@ class PantallaRegistrarRevisionManual:
 
             lista_devolucion = [fecha_hora_ocurrencia_dt, latitud_epicentro, latitud_hipocentro, longitud_epicentro, longitud_hipocentro, magnitud]
             
-            print(lista_devolucion)
-            #self.label_subtitle.pack_forget() 
-            #self.gestor.tomar_seleccion_evento(lista_devolucion)
-            #self.table.delete(*self.table.get_children())
-            #self.table.pack_forget() 
-            #self.btn_quit_2.pack_forget() 
-            #self.label_selection.pack_forget() 
+            # METODO 18 (Diagrama de secuencia)
+            self.gestor.tomar_seleccion_evento(lista_devolucion)
+
+            self.label_subtitle.pack_forget()   
+            self.table.delete(*self.table.get_children())
+            self.table.pack_forget() 
+            self.btn_quit_2.pack_forget() 
+            self.label_selection.pack_forget() 
         
         #self.mostrar_datos()
         
