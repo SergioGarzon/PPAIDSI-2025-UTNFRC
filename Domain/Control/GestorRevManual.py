@@ -63,8 +63,7 @@ class GestorRevManual:
                     datos.get_valor_magnitud()
                 ]
 
-                self.eventos_sismicos_lista_vista.append(lista_aux) 
-               
+                self.eventos_sismicos_lista_vista.append(lista_aux)                
             
         # METODO 15 (Diagrama de secuencia) 
         self.ordenar_eventos_sismicos()
