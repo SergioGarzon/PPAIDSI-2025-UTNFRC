@@ -24,7 +24,7 @@ class EventoSismico:
         self.alcance_sismo = AlcanceSismo(nombre_alcance, descripcion_alcance)
         self.generacion_sismo = OrigenDeGeneracion(nombre_origen_generacion, descripcion_origen_generacion)
         self.clasificacion_sismo = ClasificacionSismo(nombre_clasificacion_sismo, kilometro_profundidad_desde, kilometro_profundidad_hasta)
-        self.serie_temporal = None
+        self.serie_temporal = []
         self.fecha_hora_seteo = None
         self.cambio_estado_bloq_rev = None
         self.cambio_estado = None

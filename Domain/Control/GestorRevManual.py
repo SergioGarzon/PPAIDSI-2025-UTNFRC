@@ -8,7 +8,12 @@ from Domain.Entities.CambioEstado import CambioEstado
 from Domain.Entities.OrigenDeGeneracion import OrigenDeGeneracion
 from Domain.Entities.ClasificacionSismo import ClasificacionSismo
 from Domain.Entities.Sismografo import Sismografo
+from Domain.Entities.SerieTemporal import SerieTemporal
+from Domain.Entities.EstacionSimologica import EstacionSimologica
+from Domain.Entities.TiposDeDatos import TiposDeDatos
+from Domain.Entities.DetalleMuestraSismica import DetalleMuestraSismica
 from datetime import datetime, timedelta
+import string
 import random
 
 class GestorRevManual:
@@ -26,10 +31,17 @@ class GestorRevManual:
         self.clasificacion_sismo = None
         self.empleado = None        
         self.empleado_dato = None    
-        self.cambio_estado = None    
+        self.cambio_estado = None
+        self.serie_temporal = None      
+        self.estacion_sismologica = None  
+        self.sismografo = None    
+        self.tipos_datos = None
         self.eventos_sismicos_lista = None
+        self.detalle_muestra_sismica = None
         self.lista_estados_evento_sismico = []
         self.lista_cambio_estado = []
+        self.lista_serie_temporal = []       
+        self.lista_sismografo = []
             
     #METODO 3 (Diagrama de secuencia)
     def nueva_rev_manual(self):     
@@ -166,11 +178,30 @@ class GestorRevManual:
         # METODO 35 (Diagrama de secuencia)
         self.obtener_sismografos()
 
+    # METODO 35 (Diagrama de secuencia)
     def obtener_sismografos(self):
-        print("\nHOla mundo")
-    
+        datos_sismogafos = self.generar_datos_sismografos()
 
+        print("\nDATOS DE LOS SISMOGRAFOS")
 
+        print("\n[Numero serie, identificador, fecha adquisicion")
+        print("Estacion sismologica[codigo, documento certificacion, latitud, longitud, nombre, numero certificacion ]]")
+        for l in datos_sismogafos:
+            print("[" + str(l.get_nro_serie()) + ", " + 
+            str(l.get_identificacion()) + ", " + 
+            str(l.get_fecha_adquisicion()) + ", [" +
+            str(l.get_estacion_sismologica().get_codigo_estacion()) + ", " +
+            str(l.get_estacion_sismologica().get_documento_certifiacion_adq()) +  ", " + 
+            str(l.get_estacion_sismologica().get_fecha_solicitud_certificacion()) + ", " +
+            str(l.get_estacion_sismologica().get_latitud()) + ", " +
+            str(l.get_estacion_sismologica().get_longitud()) + ", " + 
+            str(l.get_estacion_sismologica().get_nombre()) + ", " +
+            str(l.get_estacion_sismologica().get_nro_certificacion_adquisicion()) + "]")  
+          
+        # Metodo de prueba
+        self.generar_series_temporales()
+
+            
     ############################################################
     ##### METODOS AUXILIARES ###################################
     ############################################################
@@ -350,4 +381,58 @@ class GestorRevManual:
         return self.lista_cambio_estado
 
     # Metodo para generar los sismografos
-    
+    def generar_datos_sismografos(self):
+
+        for i in range(3):
+            lista_estacion_sismologica_aux = [
+                str(random.randint(1, 10)),
+                "131312222",
+                self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S"),
+                str(random.randint(1, 750)),
+                str(random.randint(1, 800)),
+                "Estacion " + str(random.randint(1, 10)),
+                str(random.randint(1, 10))
+            ]
+
+            self.estacion_sismologica = EstacionSimologica(*lista_estacion_sismologica_aux)
+        
+        for i in range(5):
+            lista_sismografo_aux = [
+                "A1" + str(random.randint(1, 10)),
+                str(random.randint(1, 9999)),
+                self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S"),
+                self.estacion_sismologica.get_codigo_estacion(),
+                self.estacion_sismologica.get_documento_certifiacion_adq(),
+                self.estacion_sismologica.get_fecha_solicitud_certificacion(),
+                self.estacion_sismologica.get_latitud(),
+                self.estacion_sismologica.get_longitud(),
+                self.estacion_sismologica.get_nombre(),
+                self.estacion_sismologica.get_nro_certificacion_adquisicion()
+            ]
+            self.sismografo = Sismografo(*lista_sismografo_aux)
+            self.lista_sismografo.append(self.sismografo)
+
+        return self.lista_sismografo
+
+    # Metodo para generar las series temporales
+    def generar_series_temporales(self):
+        for i in range(5):
+            lista_tipo_datos_aux = [
+                str(random.choice(string.ascii_letters)),
+                str(random.choice(string.ascii_letters)),
+                random.randint(0, 800)
+            ]
+
+            self.tipos_datos = TiposDeDatos(*lista_tipo_datos_aux)
+
+            lista_detalle_muestra_sismica_aux = [
+                random.randint(0, 25),
+                self.tipos_datos.get_denominacion(),
+                self.tipos_datos.get_nombre_unidad_medida(),
+                self.tipos_datos.get_valor_umbral()
+            ]
+
+            self.detalle_muestra_sismica = DetalleMuestraSismica(*lista_detalle_muestra_sismica_aux)
+
+            print(self.detalle_muestra_sismica)
+            
