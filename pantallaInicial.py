@@ -23,7 +23,7 @@ class PantallaInicial():
 
     def windows_properties(self):
         self.windows1.title("Red Sismica")
-        self.windows1.geometry("800x800+250+100")
+        self.windows1.geometry("800x750+250+100")
 
         if str(platform.system()) == "Windows":
             self.windows1.iconbitmap("./Resources/Images/utnfrc.ico")
