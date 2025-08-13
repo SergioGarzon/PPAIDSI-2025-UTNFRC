@@ -12,6 +12,7 @@ from Domain.Entities.SerieTemporal import SerieTemporal
 from Domain.Entities.EstacionSimologica import EstacionSimologica
 from Domain.Entities.TiposDeDatos import TiposDeDatos
 from Domain.Entities.DetalleMuestraSismica import DetalleMuestraSismica
+from Domain.Entities.MuestraSismica import MuestraSismica
 from datetime import datetime, timedelta
 import string
 import random
@@ -36,6 +37,7 @@ class GestorRevManual:
         self.estacion_sismologica = None  
         self.sismografo = None    
         self.tipos_datos = None
+        self.muestra_sismica = None
         self.eventos_sismicos_lista = None
         self.detalle_muestra_sismica = None
         self.lista_estados_evento_sismico = []
@@ -416,6 +418,9 @@ class GestorRevManual:
 
     # Metodo para generar las series temporales
     def generar_series_temporales(self):
+
+        print("\n\n")
+    
         for i in range(5):
             lista_tipo_datos_aux = [
                 str(random.choice(string.ascii_letters)),
@@ -435,4 +440,29 @@ class GestorRevManual:
             self.detalle_muestra_sismica = DetalleMuestraSismica(*lista_detalle_muestra_sismica_aux)
 
             print(self.detalle_muestra_sismica)
+        
+        print("\n\n")
+    
+        for i in range(7):
+            lista_muestra_sismica_aux = [
+                self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S")
+            ]
+
+            self.muestra_sismica = MuestraSismica(*lista_muestra_sismica_aux)
+
+            print(self.muestra_sismica)
             
+        print("\n\n")
+
+        for i in range(4):
+            lista_series_temporales_aux = [
+                random.randint(0, 100),
+                str(random.choice(string.ascii_letters)),
+                self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S"),
+                self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S"),
+                random.randint(0, 25)
+            ]
+
+            self.serie_temporal = SerieTemporal(*lista_series_temporales_aux)
+
+            print(self.serie_temporal)
