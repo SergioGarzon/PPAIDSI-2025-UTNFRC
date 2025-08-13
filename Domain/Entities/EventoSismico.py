@@ -25,8 +25,9 @@ class EventoSismico:
         self.generacion_sismo = OrigenDeGeneracion(nombre_origen_generacion, descripcion_origen_generacion)
         self.clasificacion_sismo = ClasificacionSismo(nombre_clasificacion_sismo, kilometro_profundidad_desde, kilometro_profundidad_hasta)
         self.serie_temporal = None
+        self.fecha_hora_seteo = None
         self.cambio_estado_bloq_rev = None
-
+        self.cambio_estado = None
     
     # METODO 9 (Diagrama de secuencia)
     def get_fecha_hora_ocurrencia(self):
@@ -58,3 +59,75 @@ class EventoSismico:
     # METODO 7 (Diagrama de secuencia)
     def es_pendiente_revision(self):
         return self.estado_actual.es_pendiente_revision()
+
+    # METODO 24 (Diagrama de secuencia)
+    def bloquear_evento(self, nuevo_estado, fecha_hora_actual, lista_cambio_estado):
+        if isinstance(nuevo_estado, Estado):
+            self.estado_actual = nuevo_estado # Aqui setea al estado actual el evento sismico seleccionado
+            self.fecha_hora_seteo = fecha_hora_actual
+            self.lista_cestado_dato = lista_cambio_estado
+            # METODO 25 (Diagrama de secuencia)        
+            self.buscar_estado_actual()
+        else:
+            raise TypeError("Error")
+    
+    # METODO 25 (Diagrama de secuencia)
+    def buscar_estado_actual(self):        
+
+        print("\n\nSE OBTIENE EL CAMBIO DE ESTADO SIN FECHA DE FIN\n")
+
+        print("[fecha de inicio, fecha de fin, estado actual]")
+        for lista in self.lista_cestado_dato:
+            # METODO 26 (Diagrama de secuencia)
+            if lista.es_estado_actual():                
+                self.cambio_estado = lista                
+                print("[" + str(self.cambio_estado.get_fecha_hora_inicio()) + ", " + 
+                str(self.cambio_estado.get_fecha_hora_fin()) + ", [" + 
+                str(self.cambio_estado.get_estado().get_ambito()) + ", " +
+                str(self.cambio_estado.get_estado().get_nombre_estado()) + "]]")                
+                print("\n")
+
+        # METODO 27 (Diagrama de secuencia)
+        self.cambio_estado.set_fecha_hora_fin(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"))
+        
+        print("SETEAMOS LA FECHA Y HORA DE FIN Y MOSTRAMOS NUEVAMENTE EL CAMBIO DE ESTADO\n")
+        print("[fecha de inicio, fecha de fin, estado actual]")
+        print("[" + str(self.cambio_estado.get_fecha_hora_inicio()) + 
+        ", " + str(self.cambio_estado.get_fecha_hora_fin()) + ", [" + 
+        str(self.cambio_estado.get_estado().get_ambito()) + ", " + 
+        str(self.cambio_estado.get_estado().get_nombre_estado()) + "]")
+        print("\n")
+
+         # METODO 28 (Diagrama de secuencia)
+        self.crear_cambio_estado()
+
+    
+    # METODO 28 (Diagrama de secuencia)
+    def crear_cambio_estado(self):  
+        # METODO 29 (Diagrama de secuencia)
+        new_cambio_estado = CambioEstado(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"), "", self.estado_actual)
+        self.lista_cestado_dato.append(new_cambio_estado)
+
+        print("SE CREA UN NUEVO CAMBIO DE ESTADO, DATOS DE LOS CAMBIOS DE ESTADOS:")
+        print("\n[fecha de inicio, fecha de fin, estado actual]")
+        for lista in self.lista_cestado_dato:
+            print("[" + lista.get_fecha_hora_inicio() + 
+                  ", " + lista.get_fecha_hora_fin() + ", [" + 
+                  lista.get_estado().get_ambito() + ", " + 
+                  lista.get_estado().get_nombre_estado() + "]]")
+
+        print("\n\nCAMBIO DE ESTADO CREADO CORRECTAMENTE")
+
+    # METODO 31 (Diagrama de secuencia)
+    def get_datos_restante(self):
+        # METODO 32, 33, 34 (Diagrama de secuencia)
+        datos = [
+            # METODO 32 (Diagrama de secuencia)
+            self.generacion_sismo.get_nombre(),
+            # METODO 33 (Diagrama de secuencia)            
+            self.alcance_sismo.get_nombre(),           
+            # METODO 34 (Diagrama de secuencia)   
+            self.clasificacion_sismo.get_nombre()
+        ]
+        
+        return datos

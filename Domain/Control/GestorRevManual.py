@@ -4,8 +4,10 @@ from Domain.Entities.AlcanceSismo import AlcanceSismo
 from Domain.Entities.Sesion import Sesion
 from Domain.Entities.Usuario import Usuario
 from Domain.Entities.Empleado import Empleado
+from Domain.Entities.CambioEstado import CambioEstado
 from Domain.Entities.OrigenDeGeneracion import OrigenDeGeneracion
 from Domain.Entities.ClasificacionSismo import ClasificacionSismo
+from Domain.Entities.Sismografo import Sismografo
 from datetime import datetime, timedelta
 import random
 
@@ -23,16 +25,21 @@ class GestorRevManual:
         self.origen_generacion = None
         self.clasificacion_sismo = None
         self.empleado = None        
-        self.empleado_dato = None        
+        self.empleado_dato = None    
+        self.cambio_estado = None    
         self.eventos_sismicos_lista = None
         self.lista_estados_evento_sismico = []
+        self.lista_cambio_estado = []
             
     #METODO 3 (Diagrama de secuencia)
     def nueva_rev_manual(self):     
         #METODO 4 (Diagrama de secuencia), aqui encontraremos el metodo  
         self.empleado_dato = self.generar_sesion_empleado().obtener_empleado() 
             
-        print("\nSe obtiene el empleado: \n" + str(self.empleado_dato)) 
+        print("\nSE OBTIENEN LOS DATOS DE LOS EMPLEADOS: \n[Nombre: " + str(self.empleado_dato.get_nombre()) +
+        ", apellido: " + str(self.empleado_dato.get_apellido()) + 
+        ", email: " + str(self.empleado.get_mail()) + 
+        ", telefono: " + str(self.empleado_dato.get_telefono()) + "]") 
 
         self.buscar_eventos_sismicos_auto()
 
@@ -80,6 +87,14 @@ class GestorRevManual:
     # METODO 18 (Diagrama de secuencia)
     def tomar_seleccion_evento(self, lista_devolucion):              
 
+        print("\nDATOS DEL EVENTO SISMICO SELECCIONADO:")
+        print("Fecha hora ocurrencia: " + str(lista_devolucion[0]) + 
+        ", latitud del epicentro: " + str(lista_devolucion[1]) + 
+        ", latitud del hipocentro: " + str(lista_devolucion[2]) +
+        ", longitud del epicentro: " + str(lista_devolucion[3]) +
+        ", longitud del hipocentro: " + str(lista_devolucion[4]) + 
+        ", valor de magnitud: " + str(lista_devolucion[5]))
+
         # Comparo que este todo correcto
         for indice, lista in enumerate(self.eventos_sismicos_lista):
             if (lista.get_fecha_hora_ocurrencia() == lista_devolucion[0] and
@@ -100,7 +115,7 @@ class GestorRevManual:
             # METODO 20, 21 (Diagrama de secuencia)
             if lista.es_ambito_evento_sismico() and lista.es_bloq_en_revision():
                 self.estado_actual = lista
-                print("Se obtiene el estado de ambito Evento Sismico y de nombre Bloquedo en revision")
+                print("\n\nSE OBTIENE EL ESTADO DEL AMBITO EVENTO SISMICO Y DE NOMBRE BLOQUEDO EN REVISION")
                 print("[" + self.estado_actual.get_ambito() + ", " + self.estado_actual.get_nombre_estado() + "]")
               
         
@@ -111,8 +126,48 @@ class GestorRevManual:
     # METODO 22 (Diagrama de secuencia) 
     def get_fecha_hora_actual(self, verificacion):
         self.fecha_hora_actual = datetime.now()
-        print(self.fecha_hora_actual)
+        print("\n\nSE OBTIENE LA FECHA Y HORA ACTUAL\n" + str(self.fecha_hora_actual))
        
+        if (verificacion == 1):
+            # METODO 23 (Diagrama de secuencia)
+            self.bloq_evento_sismico()
+
+
+    # METODO 23 (Diagrama de secuencia)
+    def bloq_evento_sismico(self):
+
+        lista_cestado_estados = self.generar_datos_cambio_estados()
+
+        print("\n\nMOSTRAMOS LOS CAMBIOS DE ESTADOS CREADOS\n")
+
+        print("[fecha de inicio, fecha de fin, estado actual]")
+        for l in lista_cestado_estados:
+            print("[" + str(l.get_fecha_hora_inicio()) + ", " +
+                str(l.get_fecha_hora_fin()) + ", [" + 
+                str(l.get_estado().get_ambito()) + ", " + 
+                str(l.get_estado().get_nombre_estado()) + "]]")
+    
+        # METODO 24 (Diagrama de secuencia)        
+        self.lista_datos_restante = self.eventos_sismicos_lista[self.valor_indice].bloquear_evento(self.estado_actual, self.fecha_hora_actual, lista_cestado_estados)
+        print("\nEVENTO BLOQUEADO CORRECTAMENTE")
+
+        # METODO 30 (Diagrama de secuencia)
+        self.buscar_datos_evento_selec()
+    
+    # METODO 30 (Diagrama de secuencia)
+    def buscar_datos_evento_selec(self):
+        # METODO 31 (Diagrama de secuencia)        
+        self.evento_seleccionado_datos_totales = self.eventos_sismicos_lista[self.valor_indice].get_datos_restante()
+
+        print("\nDATOS RESTANTES DEL EVENTO SISMICO SELECCIONADO")
+        print("\n[nombre de origen de generacion, nombre del alcance, nombre de la clasificacion del sismo]")
+        print(self.evento_seleccionado_datos_totales)
+
+        # METODO 35 (Diagrama de secuencia)
+        self.obtener_sismografos()
+
+    def obtener_sismografos(self):
+        print("\nHOla mundo")
     
 
 
@@ -131,21 +186,21 @@ class GestorRevManual:
 
         datos_usuario = ["adminsismos", 
                          "1234", 
-                         self.empleado.get_nombre, 
-                         self.empleado.get_apellido,
-                         self.empleado.get_mail,
-                         self.empleado.get_telefono]
+                         self.empleado.get_nombre(), 
+                         self.empleado.get_apellido(),
+                         self.empleado.get_mail(),
+                         self.empleado.get_telefono()]
         self.usuario = Usuario(*datos_usuario)
 
         datos_sesion = [1, 
                         datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
                         None,
-                        self.usuario.get_nombre_usuario,
-                        self.usuario.get_contrasenia,
-                        self.empleado.get_nombre, 
-                        self.empleado.get_apellido,
-                        self.empleado.get_mail,
-                        self.empleado.get_telefono]  
+                        self.usuario.get_nombre_usuario(),
+                        self.usuario.get_contrasenia(),
+                        self.empleado.get_nombre(), 
+                        self.empleado.get_apellido(),
+                        self.empleado.get_mail(),
+                        self.empleado.get_telefono()]  
              
         self.sesion = Sesion(*datos_sesion)   
         return self.sesion
@@ -278,4 +333,21 @@ class GestorRevManual:
 
         return self.lista_estados_evento_sismico
 
+    # Método para generar el cambio de estados
+    def generar_datos_cambio_estados(self):      
+        
+        lista_cambio_estado_aux = [
+            ["2025-07-15 09:30:10", "2025-07-20 11:45:00", self.estado_actual],
+            ["2025-02-28 21:05:45", "2025-03-05 10:00:00", self.estado_actual],
+            ["2025-11-03 14:18:22", "2025-11-08 16:30:00",self.estado_actual],
+            ["2025-04-01 06:50:07", "", self.estado_actual]
+        ]
 
+        for datos_cestado in lista_cambio_estado_aux:
+            self.cambio_estado = CambioEstado(*datos_cestado)
+            self.lista_cambio_estado.append(self.cambio_estado)  
+
+        return self.lista_cambio_estado
+
+    # Metodo para generar los sismografos
+    

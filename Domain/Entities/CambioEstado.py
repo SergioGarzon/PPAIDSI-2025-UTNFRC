@@ -7,10 +7,6 @@ class CambioEstado:
         self.fecha_hora_fin = fecha_hora_fin
         self.estado = estado
 
-
-    ##############################################################################################
-    ##### METODOS AUXILIARES PARA MOSTRAR PERO NO ESTAN EN EL DIAGRAMA DE CLASES DE ANALISIS #####
-    ##############################################################################################
     def get_fecha_hora_inicio(self):
         return self.fecha_hora_inicio    
     
@@ -19,4 +15,13 @@ class CambioEstado:
     
     def get_estado(self):
         return self.estado
+
+    # METODO 26 (Diagrama de secuencia)
+    def es_estado_actual(self):
+        return self.fecha_hora_fin == ""
+
+    # METODO 27 (Diagrama de secuencia)
+    def set_fecha_hora_fin(self, fecha_hora_fin):
+        self.fecha_hora_fin = fecha_hora_fin
+            
             
