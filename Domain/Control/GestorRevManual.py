@@ -254,6 +254,11 @@ class GestorRevManual:
     ##### METODOS AUXILIARES ###################################
     ############################################################
 
+    def obtener_lista_datos_totales(self):
+        return self.evento_seleccionado_datos_totales
+
+    def obtener_lista_evento_seleccionado(self):
+        return self.eventos_sismicos_lista[self.valor_indice]
 
     # Este es el metodo para hardcodear datos del empleado
     def generar_sesion_empleado(self): 
