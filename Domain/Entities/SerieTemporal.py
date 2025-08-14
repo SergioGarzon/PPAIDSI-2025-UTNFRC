@@ -12,8 +12,11 @@ class SerieTemporal:
         self.muestra_sismica_lista = []
 
     def agregar_muestra_sismica(self, muestra):
-        self.muestra_sismica = MuestraSismica(muestra.get_fecha_hora_muestra())
+        self.muestra_sismica = muestra
         self.muestra_sismica_lista.append(self.muestra_sismica)
+    
+    def get_muestra_sismica(self):
+        return self.muestra_sismica_lista
 
     def get_identificador(self):
         return self.identificador
@@ -29,3 +32,24 @@ class SerieTemporal:
     
     def get_frecuencia_muestreo(self):
         return self.frecuencia_muestreo
+
+    # METODO 37 (Diagrama de secuencia)
+    def get_datos(self, datos_sismogafos):  
+        
+        lista_valor_aux = []
+
+        for data in self.get_muestra_sismica():
+            # METODO 38 (Diagrama de secuencia)
+            lista_valor_aux.append(data.get_datos())
+
+        lista_aux = [
+            self.get_identificador(), 
+            self.get_condicion_nombre(), 
+            self.get_fecha_hora_inicio_registro_muestra(), 
+            self.get_fecha_hora_registro(), 
+            self.get_frecuencia_muestreo(),
+            lista_valor_aux]     
+
+        self.buscar_estacion_sismologica()   
+
+        return lista_aux

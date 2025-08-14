@@ -11,8 +11,21 @@ class MuestraSismica:
         return self.fecha_hora_muestra
 
     def agregar_detalle_muestra_sismica(self, muestra_info):
-        self.detalle_muestra_sismica = DetalleMuestraSismica(muestra_info.get_valor(), muestra_info.get_tipos_datos().get_denominacion(), muestra_info.get_tipos_datos().get_nombre_unidad_medida(), muestra_info.get_tipos_datos().get_valor_umbral())
+        self.detalle_muestra_sismica = muestra_info
         self.detalle_muestra_sismica_lista.append(self.detalle_muestra_sismica)
 
     def get_detalle_muestra_sismica(self):
         return self.detalle_muestra_sismica_lista
+
+    # METODO 38 (Diagrama de secuencia)
+    def get_datos(self):
+
+        lista_aux = []
+        
+        for i in self.get_detalle_muestra_sismica():
+            # METODO 39 (Diagrama de secuencia) 
+            lista_aux.append(i.get_datos())
+            
+        lista_enviar = [self.get_fecha_hora_muestra(), lista_aux]
+        
+        return lista_enviar

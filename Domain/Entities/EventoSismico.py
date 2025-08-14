@@ -24,10 +24,19 @@ class EventoSismico:
         self.alcance_sismo = AlcanceSismo(nombre_alcance, descripcion_alcance)
         self.generacion_sismo = OrigenDeGeneracion(nombre_origen_generacion, descripcion_origen_generacion)
         self.clasificacion_sismo = ClasificacionSismo(nombre_clasificacion_sismo, kilometro_profundidad_desde, kilometro_profundidad_hasta)
-        self.serie_temporal = []
+        self.serie_temporal = None
         self.fecha_hora_seteo = None
         self.cambio_estado_bloq_rev = None
         self.cambio_estado = None
+        self.serie_temporal_lista = []
+        self.lista_datos_serie_temporal = []
+
+    def set_serie_temporal(self, serie):
+        self.serie_temporal = serie
+        self.serie_temporal_lista.append(self.serie_temporal)
+    
+    def get_serie_temporal(self):
+        return self.serie_temporal_lista
     
     # METODO 9 (Diagrama de secuencia)
     def get_fecha_hora_ocurrencia(self):
@@ -59,7 +68,7 @@ class EventoSismico:
     # METODO 7 (Diagrama de secuencia)
     def es_pendiente_revision(self):
         return self.estado_actual.es_pendiente_revision()
-
+    
     # METODO 24 (Diagrama de secuencia)
     def bloquear_evento(self, nuevo_estado, fecha_hora_actual, lista_cambio_estado):
         if isinstance(nuevo_estado, Estado):
@@ -120,6 +129,18 @@ class EventoSismico:
 
     # METODO 31 (Diagrama de secuencia)
     def get_datos_restante(self):
+
+        print("\nSERIES TEMPORALES DEL EVENTO SISMICO SELECCIONADO (Cantidad " + str(len(self.get_serie_temporal())) + ")\n") 
+
+        lista_enviada = []
+        
+        for lista_enviar in self.get_serie_temporal():
+            print("Serie Temporal[" + str(lista_enviar.get_identificador()) + ", " +
+                str(lista_enviar.get_condicion_nombre()) + ", " + 
+                str(lista_enviar.get_fecha_hora_inicio_registro_muestra()) + ", " +
+                str(lista_enviar.get_fecha_hora_registro()) + ", " + 
+                str(lista_enviar.get_frecuencia_muestreo()) + "]")                 
+
         # METODO 32, 33, 34 (Diagrama de secuencia)
         datos = [
             # METODO 32 (Diagrama de secuencia)
@@ -131,3 +152,11 @@ class EventoSismico:
         ]
         
         return datos
+    
+    # METODO 36 (Diagrama de secuencia)
+    def obtener_datos_series_temporales(self, datos_sismogafos):
+        # METODO 37 (Diagrama de secuencia)
+        for datos_serie_tmp in self.get_serie_temporal():
+            self.lista_datos_serie_temporal = datos_serie_tmp.get_datos(datos_sismogafos)
+
+        return self.lista_datos_serie_temporal

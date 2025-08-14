@@ -12,7 +12,8 @@ class Sismografo:
         self.fecha_adquisicion = fecha_adquisicion
         self.estacion_sismologica = EstacionSimologica(codigo_estacion, documento_certifiacion_adq, fecha_solicitud_certificacion, 
                     latitud, longitud, nombre, nro_certificacion_adquisicion)
-        self.series_temporal = []       
+        self.serie_temporal = None 
+        self.serie_temporal_lista = []   
 
     def get_identificacion(self):
         return self.identificador_sismografo
@@ -26,8 +27,12 @@ class Sismografo:
     def get_estacion_sismologica(self):
         return self.estacion_sismologica
 
-    def agregar_serie_temporal(self, serie_temp):
-        self.serie_temporal = serie_temp
-
     def set_estado_actual(self):
         pass  
+
+    def set_serie_temporal(self, serie):
+        self.serie_temporal = serie
+        self.serie_temporal_lista.append(self.serie_temporal)
+    
+    def get_serie_temporal(self):
+        return self.serie_temporal_lista

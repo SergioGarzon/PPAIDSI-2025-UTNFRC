@@ -8,6 +8,7 @@ class TiposDeDatos:
     def es_tu_denominacion(self):
         pass
 
+    # METODO 40 (Diagrama de secuencia) 
     def get_denominacion(self):
         return self.denominacion
     
