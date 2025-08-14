@@ -419,38 +419,42 @@ class GestorRevManual:
     # Metodo para generar las series temporales
     def generar_series_temporales(self):
 
-        print("\n\n")
+        print("\n\nDATOS DE LAS MUESTRAS SISMICAS")
     
-        for i in range(5):
-            lista_tipo_datos_aux = [
-                str(random.choice(string.ascii_letters)),
-                str(random.choice(string.ascii_letters)),
-                random.randint(0, 800)
-            ]
-
-            self.tipos_datos = TiposDeDatos(*lista_tipo_datos_aux)
-
-            lista_detalle_muestra_sismica_aux = [
-                random.randint(0, 25),
-                self.tipos_datos.get_denominacion(),
-                self.tipos_datos.get_nombre_unidad_medida(),
-                self.tipos_datos.get_valor_umbral()
-            ]
-
-            self.detalle_muestra_sismica = DetalleMuestraSismica(*lista_detalle_muestra_sismica_aux)
-
-            print(self.detalle_muestra_sismica)
-        
-        print("\n\n")
-    
-        for i in range(7):
+        for i in range(random.randint(1, 4)):
             lista_muestra_sismica_aux = [
                 self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S")
             ]
 
             self.muestra_sismica = MuestraSismica(*lista_muestra_sismica_aux)
 
-            print(self.muestra_sismica)
+            for i in range(random.randint(1, 2)):
+                lista_tipo_datos_aux = [
+                    str(random.choice(string.ascii_letters)),
+                    str(random.choice(string.ascii_letters)),
+                    random.randint(0, 800)
+                ]
+
+                self.tipos_datos = TiposDeDatos(*lista_tipo_datos_aux)
+
+                lista_detalle_muestra_sismica_aux = [
+                    random.randint(0, 25),
+                    self.tipos_datos.get_denominacion(),
+                    self.tipos_datos.get_nombre_unidad_medida(),
+                    self.tipos_datos.get_valor_umbral()
+                ]
+
+                self.detalle_muestra_sismica = DetalleMuestraSismica(*lista_detalle_muestra_sismica_aux)                
+                self.muestra_sismica.agregar_detalle_muestra_sismica(self.detalle_muestra_sismica)
+
+                print("\nFecha y hora: " + str(self.muestra_sismica.get_fecha_hora_muestra()))
+
+                for i in self.muestra_sismica.get_detalle_muestra_sismica():
+                    print("Detalle Muestra Sismica[Valor: " + str(i.get_valor()) + 
+                    ", Tipos de Datos[ Denominación: " + str(i.get_tipos_datos().get_denominacion()) +
+                    ", Nombre de unidad medida: " + str(i.get_tipos_datos().get_nombre_unidad_medida()) + "]")
+
+        
             
         print("\n\n")
 
@@ -465,4 +469,4 @@ class GestorRevManual:
 
             self.serie_temporal = SerieTemporal(*lista_series_temporales_aux)
 
-            print(self.serie_temporal)
+            
