@@ -8,10 +8,12 @@ class SerieTemporal:
         self.fecha_hora_inicio_registro_muestra = fecha_hora_inicio_registro_muestra
         self.fecha_hora_registro = fecha_hora_registro
         self.frecuencia_muestreo = frecuencia_muestreo
-        self.muestra_sismica = []
+        self.muestra_sismica = None
+        self.muestra_sismica_lista = []
 
     def agregar_muestra_sismica(self, muestra):
-        self.muestra_sismica.append(muestra)
+        self.muestra_sismica = MuestraSismica(muestra.get_fecha_hora_muestra())
+        self.muestra_sismica_lista.append(self.muestra_sismica)
 
     def get_identificador(self):
         return self.identificador

@@ -189,7 +189,7 @@ class GestorRevManual:
         print("\n[Numero serie, identificador, fecha adquisicion")
         print("Estacion sismologica[codigo, documento certificacion, latitud, longitud, nombre, numero certificacion ]]")
         for l in datos_sismogafos:
-            print("[" + str(l.get_nro_serie()) + ", " + 
+            print("Estacion sismologica[" + str(l.get_nro_serie()) + ", " + 
             str(l.get_identificacion()) + ", " + 
             str(l.get_fecha_adquisicion()) + ", [" +
             str(l.get_estacion_sismologica().get_codigo_estacion()) + ", " +
@@ -419,46 +419,9 @@ class GestorRevManual:
     # Metodo para generar las series temporales
     def generar_series_temporales(self):
 
-        print("\n\nDATOS DE LAS MUESTRAS SISMICAS")
+        print("\n\nDATOS DE LAS SERIES TEMPORALES")
     
-        for i in range(random.randint(1, 4)):
-            lista_muestra_sismica_aux = [
-                self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S")
-            ]
-
-            self.muestra_sismica = MuestraSismica(*lista_muestra_sismica_aux)
-
-            for i in range(random.randint(1, 2)):
-                lista_tipo_datos_aux = [
-                    str(random.choice(string.ascii_letters)),
-                    str(random.choice(string.ascii_letters)),
-                    random.randint(0, 800)
-                ]
-
-                self.tipos_datos = TiposDeDatos(*lista_tipo_datos_aux)
-
-                lista_detalle_muestra_sismica_aux = [
-                    random.randint(0, 25),
-                    self.tipos_datos.get_denominacion(),
-                    self.tipos_datos.get_nombre_unidad_medida(),
-                    self.tipos_datos.get_valor_umbral()
-                ]
-
-                self.detalle_muestra_sismica = DetalleMuestraSismica(*lista_detalle_muestra_sismica_aux)                
-                self.muestra_sismica.agregar_detalle_muestra_sismica(self.detalle_muestra_sismica)
-
-                print("\nFecha y hora: " + str(self.muestra_sismica.get_fecha_hora_muestra()))
-
-                for i in self.muestra_sismica.get_detalle_muestra_sismica():
-                    print("Detalle Muestra Sismica[Valor: " + str(i.get_valor()) + 
-                    ", Tipos de Datos[ Denominación: " + str(i.get_tipos_datos().get_denominacion()) +
-                    ", Nombre de unidad medida: " + str(i.get_tipos_datos().get_nombre_unidad_medida()) + "]")
-
-        
-            
-        print("\n\n")
-
-        for i in range(4):
+        for i in range(random.randint(2,5)):
             lista_series_temporales_aux = [
                 random.randint(0, 100),
                 str(random.choice(string.ascii_letters)),
@@ -467,6 +430,47 @@ class GestorRevManual:
                 random.randint(0, 25)
             ]
 
-            self.serie_temporal = SerieTemporal(*lista_series_temporales_aux)
+            self.serie_temporal = SerieTemporal(*lista_series_temporales_aux)  
 
-            
+            print("\nSerie Temporal[" + str(self.serie_temporal.get_identificador()) + ", " +
+            str(self.serie_temporal.get_condicion_nombre()) + "")          
+
+            for i in range(random.randint(1, 4)):
+                lista_muestra_sismica_aux = [
+                    self.generar_fecha_hora_random().strftime("%Y-%m-%d %H:%M:%S")
+                ]
+
+                self.muestra_sismica = MuestraSismica(*lista_muestra_sismica_aux)                
+
+                for i in range(random.randint(1, 2)):
+                    lista_tipo_datos_aux = [
+                        str(random.choice(string.ascii_letters)),
+                        str(random.choice(string.ascii_letters)),
+                        random.randint(0, 800)
+                    ]
+
+                    self.tipos_datos = TiposDeDatos(*lista_tipo_datos_aux)
+
+                    lista_detalle_muestra_sismica_aux = [
+                        random.randint(0, 25),
+                        self.tipos_datos.get_denominacion(),
+                        self.tipos_datos.get_nombre_unidad_medida(),
+                        self.tipos_datos.get_valor_umbral()
+                    ]
+
+                    self.detalle_muestra_sismica = DetalleMuestraSismica(*lista_detalle_muestra_sismica_aux)                
+                    self.muestra_sismica.agregar_detalle_muestra_sismica(self.detalle_muestra_sismica)
+
+                    print("Muestra Sismica[ Fecha y hora: " + str(self.muestra_sismica.get_fecha_hora_muestra()))
+
+                    for i in self.muestra_sismica.get_detalle_muestra_sismica():
+                        print("Detalle Muestra Sismica[Valor: " + str(i.get_valor()) + 
+                        ", Tipos de Datos[ Denominación: " + str(i.get_tipos_datos().get_denominacion()) +
+                        ", Nombre de unidad medida: " + str(i.get_tipos_datos().get_nombre_unidad_medida()) + 
+                        ", Valor umbral: " + str(i.get_tipos_datos().get_valor_umbral()) + "]")
+                
+                    print("]")
+
+                self.serie_temporal.agregar_muestra_sismica(self.muestra_sismica)
+            print("]")
+            self.lista_serie_temporal.append(self.serie_temporal)
