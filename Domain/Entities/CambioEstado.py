@@ -20,7 +20,7 @@ class CambioEstado:
     def es_estado_actual(self):
         return self.fecha_hora_fin == ""
 
-    # METODO 27 (Diagrama de secuencia)
+    # METODO 27, 65 (Diagrama de secuencia)
     def set_fecha_hora_fin(self, fecha_hora_fin):
         self.fecha_hora_fin = fecha_hora_fin
             

@@ -97,27 +97,53 @@ class EventoSismico:
                 print("\n")
 
         # METODO 27 (Diagrama de secuencia)
-        self.cambio_estado.set_fecha_hora_fin(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"))
+        self.set_fecha_hora_fin()        
         
-        print("SETEAMOS LA FECHA Y HORA DE FIN Y MOSTRAMOS NUEVAMENTE EL CAMBIO DE ESTADO\n")
+        print("\nSETEAMOS LA FECHA Y HORA DE FIN Y MOSTRAMOS NUEVAMENTE EL CAMBIO DE ESTADO\n")
         print("[fecha de inicio, fecha de fin, estado actual]")
-        print("[" + str(self.cambio_estado.get_fecha_hora_inicio()) + 
-        ", " + str(self.cambio_estado.get_fecha_hora_fin()) + ", [" + 
-        str(self.cambio_estado.get_estado().get_ambito()) + ", " + 
-        str(self.cambio_estado.get_estado().get_nombre_estado()) + "]")
-        print("\n")
+        for lista in self.lista_cestado_dato:
+            # METODO 26 (Diagrama de secuencia)
+            if lista.es_estado_actual():                
+                self.cambio_estado = lista                
+                print("[" + str(self.cambio_estado.get_fecha_hora_inicio()) + ", " + 
+                str(self.cambio_estado.get_fecha_hora_fin()) + ", [" + 
+                str(self.cambio_estado.get_estado().get_ambito()) + ", " +
+                str(self.cambio_estado.get_estado().get_nombre_estado()) + "]]")                
+                print("\n")
 
          # METODO 28 (Diagrama de secuencia)
         self.crear_cambio_estado()
 
+    # METODO 27, 65 (Diagrama de secuencia)
+    def set_fecha_hora_fin(self):
+
+        for lista in self.lista_cestado_dato:
+            if lista.es_estado_actual():                
+                self.cambio_estado = lista 
+
+        # METODO 27, 65 (Diagrama de secuencia)        
+        self.cambio_estado.set_fecha_hora_fin(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"))
+        
+        for list in self.lista_cestado_dato:            
+            if list == self.cambio_estado:
+                list.set_fecha_hora_fin(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"))
+
+        print("\n\nSETEO DE LA FECHA Y HORA ACTUAL")
+        print("\n[fecha de inicio, fecha de fin, estado actual]")
+        for lista in self.lista_cestado_dato:
+            print("[" + lista.get_fecha_hora_inicio() + 
+                  ", " + lista.get_fecha_hora_fin() + ", [" + 
+                  lista.get_estado().get_ambito() + ", " + 
+                  lista.get_estado().get_nombre_estado() + "]]")
+        
     
-    # METODO 28 (Diagrama de secuencia)
+    # METODO 28, 66 (Diagrama de secuencia)
     def crear_cambio_estado(self):  
-        # METODO 29 (Diagrama de secuencia)
+        # METODO 29, 67 (Diagrama de secuencia)
         new_cambio_estado = CambioEstado(self.fecha_hora_seteo.strftime("%Y-%m-%d %H:%M:%S"), "", self.estado_actual)
         self.lista_cestado_dato.append(new_cambio_estado)
 
-        print("SE CREA UN NUEVO CAMBIO DE ESTADO, DATOS DE LOS CAMBIOS DE ESTADOS:")
+        print("\n\nSE CREA UN NUEVO CAMBIO DE ESTADO, DATOS DE LOS CAMBIOS DE ESTADOS:")
         print("\n[fecha de inicio, fecha de fin, estado actual]")
         for lista in self.lista_cestado_dato:
             print("[" + lista.get_fecha_hora_inicio() + 
@@ -160,3 +186,17 @@ class EventoSismico:
             self.lista_datos_serie_temporal = datos_serie_tmp.get_datos(datos_sismogafos)
 
         return self.lista_datos_serie_temporal
+
+    # METODO 64 (Diagrama de secuencia)
+    def rechazar_evento_sismico(self, nuevo_estado, fecha_hora_actual):
+        if isinstance(nuevo_estado, Estado):
+            self.estado_actual = nuevo_estado # Aqui setea al estado actual el evento sismico seleccionado
+            self.fecha_hora_seteo = fecha_hora_actual
+           
+            # METODO 65 (Diagrama de secuencia) 
+            self.set_fecha_hora_fin()
+
+            # METODO 66 (Diagrama de secuencia)
+            self.crear_cambio_estado()
+        else:
+            raise TypeError("Error")

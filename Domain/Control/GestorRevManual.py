@@ -147,6 +147,10 @@ class GestorRevManual:
         if (verificacion == 1):
             # METODO 23 (Diagrama de secuencia)
             self.bloq_evento_sismico()
+        
+        if verificacion == 2:
+            # METODO 63 (Diagrama de secuencia)
+            self.rechazar_evento_sismico()
 
 
     # METODO 23 (Diagrama de secuencia)
@@ -249,6 +253,63 @@ class GestorRevManual:
     # METODO 46 (Diagrama de secuencia) 
     def include(self):
         CuGenerarSismograma() 
+
+    # METODO 50 (Diagrama de secuencia)
+    def tomar_seleccion_no_visualizacion(self):
+        print("\n\nEL ANALISTA DE SISMOS NO DESEA VISUALIZAR DATOS DE MAPA")
+        self.no_visualizacion = 1 # Atributo auxiliar
+       
+    # METODO 55 (Diagrama de secuencia)
+    def tomar_opcion_no_modificar_datos_evento_sismico(self):
+        print("\n\nEL ANALISTA DE SISMOS NO DESEA MODIFICAR DATOS EVENTO SISMICO")
+        self.modificacion_no = 1 # Atributo auxiliar
+
+    # METODO 58 (Diagrama de secuencia)
+    def tomar_opcion_seleccionada_rechazar_evento(self, magnitud_v, alcance_v, origeneracion_v, clasificacion_v, opcion_sel):
+        print("\n\nEL ANALISTA DE SISMOS SELECCIONA LA OPCION DE RECHAZAR EVENTO")
+
+        # METODO 59 (Diagrama de secuencia)
+        self.validar_informacion(magnitud_v, alcance_v, origeneracion_v, clasificacion_v, opcion_sel)
+
+    # METODO 59 (Diagrama de secuencia)
+    def validar_informacion(self, magnitud_v, alcance_v, origeneracion_v, clasificacion_v, opcion_sel):
+
+        # Se valida que la informacion sea la misma para el caso de rechazado, tambien que exista  
+
+        if( magnitud_v != None and alcance_v != None and origeneracion_v != None and clasificacion_v != None and
+           opcion_sel == True):   
+            if (self.eventos_sismicos_lista[self.valor_indice].get_valor_magnitud() == float(magnitud_v) and
+                self.evento_seleccionado_datos_totales[0] == alcance_v and 
+                self.evento_seleccionado_datos_totales[1] == origeneracion_v and
+                self.evento_seleccionado_datos_totales[2] == clasificacion_v):
+                self.informacion_ok = 1
+
+                for lista in self.generar_lista_estados():
+                # METODO 60, 61 (Diagrama de secuencia)
+                    if lista.es_ambito_evento_sismico():
+                        # METODO 61 (Diagrama de secuencia)
+                        if lista.es_rechazado():
+                            self.estado_actual = lista
+                
+                # METODO 62 (Diagrama de secuencia)
+                self.get_fecha_hora_actual(2)
+
+
+    # METODO 63 (Diagrama de secuencia)
+    def rechazar_evento_sismico(self):
+        print("\n\nEMPIEZA A RECHAZAR EL EVENTO SISMICO")
+        print("\n\nEmpleado: \nNombre: " + str(self.empleado_dato.get_nombre()) + ", email: " + str(self.empleado_dato.obtener_mail()))
+        
+        # METODO 64 (Diagrama de secuencia)
+        self.eventos_sismicos_lista[self.valor_indice].rechazar_evento_sismico(self.estado_actual, self.fecha_hora_actual)
+        print("\n\nEL EVENTO SISMICO SE RECHAZO CORRECTAMENTE")
+
+        # METODO 68 (Diagrama de secuencia)
+        self.fin_CU()
+
+    # METODO 68 (Diagrama de secuencia)
+    def fin_CU(self):        
+        print("\n\nFINALIZA EL POGRAMA, GRACIAS POR UTILIZARLO!!!")
 
     ############################################################
     ##### METODOS AUXILIARES ###################################
