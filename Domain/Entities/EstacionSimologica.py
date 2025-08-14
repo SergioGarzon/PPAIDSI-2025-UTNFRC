@@ -10,9 +10,11 @@ class EstacionSimologica:
         self.nombre = nombre
         self.nro_certificacion_adquisicion = nro_certificacion_adquisicion
 
+    # METODO 43 (Diagrama de secuencia) 
     def get_nombre(self):
         return self.nombre
     
+    # METODO 44 (Diagrama de secuencia) 
     def get_codigo_estacion(self):
         return self.codigo_estacion
 

@@ -13,6 +13,7 @@ from Domain.Entities.EstacionSimologica import EstacionSimologica
 from Domain.Entities.TiposDeDatos import TiposDeDatos
 from Domain.Entities.DetalleMuestraSismica import DetalleMuestraSismica
 from Domain.Entities.MuestraSismica import MuestraSismica
+from Utils.CuGenerarSismograma import CuGenerarSismograma
 from datetime import datetime, timedelta
 import string
 import random
@@ -222,9 +223,32 @@ class GestorRevManual:
         # METODO 36 (Diagrama de secuencia)
         self.lista_datos_mostrar = self.eventos_sismicos_lista[self.valor_indice].obtener_datos_series_temporales(datos_sismogafos)
 
-        print("\nSERIES TEMPORALES ASOCIADAS AL EVENTO SISMICO\n")
-        print(self.lista_datos_mostrar)        
+        # METODO 45 (Diagrama de secuencia)
+        self.clasificar_por_estacion_sismologica()
+        
 
+    # METODO 45 (Diagrama de secuencia) 
+    def clasificar_por_estacion_sismologica(self):
+
+        lista_titulos = [
+            "Identificador: ", 
+            "Condición nombre: ", 
+            "Fecha y hora inicio registro muestra: ", 
+            "Fecha y hora de registro: ", 
+            "Frecuencia de muestreo: ", 
+            "Muestra Sismica[Fecha y hora de la muestra, Valor detalle muestra, Denominación]: ", 
+            "Estacion Sismologica[Código, Nombre]: "]
+
+        print("\nSERIES TEMPORALES ASOCIADAS AL SISMOGRAFO 'CLASIFICADAS POR ESTACION SISMOLOGICA'\n")
+        for indice, datos_st_sism in enumerate(self.lista_datos_mostrar):
+            print(str(lista_titulos[indice]) + str(datos_st_sism))
+
+        # METODO 46 (Diagrama de secuencia) 
+        self.include()
+        
+    # METODO 46 (Diagrama de secuencia) 
+    def include(self):
+        CuGenerarSismograma() 
 
     ############################################################
     ##### METODOS AUXILIARES ###################################

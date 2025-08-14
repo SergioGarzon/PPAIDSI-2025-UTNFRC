@@ -42,14 +42,32 @@ class SerieTemporal:
             # METODO 38 (Diagrama de secuencia)
             lista_valor_aux.append(data.get_datos())
 
+        lista_sismografo = []
+
+        # METODO 41 (Diagrama de secuencia) 
+        lista_sismografo = self.buscar_estacion_sismologica(datos_sismogafos)
+
         lista_aux = [
             self.get_identificador(), 
             self.get_condicion_nombre(), 
             self.get_fecha_hora_inicio_registro_muestra(), 
             self.get_fecha_hora_registro(), 
             self.get_frecuencia_muestreo(),
-            lista_valor_aux]     
-
-        self.buscar_estacion_sismologica()   
-
+            lista_valor_aux, 
+            lista_sismografo]     
+         
         return lista_aux
+    
+    # METODO 41 (Diagrama de secuencia) 
+    def buscar_estacion_sismologica(self, datos_sismogafos):
+        
+        lista_dsi = []
+
+        # Aca se recorre entonces los sismografos para saber si tienen la misma
+        # serie temporal
+        for sism in datos_sismogafos:            
+            for setmp_lista in sism.get_serie_temporal():
+                if (setmp_lista.get_identificador() == self.get_identificador()):                    
+                    lista_dsi.append(sism.get_datos()) 
+
+        return lista_dsi

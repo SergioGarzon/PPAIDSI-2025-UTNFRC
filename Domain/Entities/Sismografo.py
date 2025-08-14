@@ -36,3 +36,8 @@ class Sismografo:
     
     def get_serie_temporal(self):
         return self.serie_temporal_lista
+
+    # METODO 42 (Diagrama de secuencia) 
+    def get_datos(self):
+        # METODO 43, 44 (Diagrama de secuencia) 
+        return [self.get_estacion_sismologica().get_codigo_estacion(), self.get_estacion_sismologica().get_nombre()]
