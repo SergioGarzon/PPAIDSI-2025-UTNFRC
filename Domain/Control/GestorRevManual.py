@@ -538,7 +538,7 @@ class GestorRevManual:
     # Metodo para generar las series temporales
     def generar_series_temporales(self):
   
-        for i in range(random.randint(1,5)):
+        for i in range(random.randint(1,7)):
 
             lista_series_temporales_aux = [
                 random.randint(0, 100),

@@ -13,7 +13,8 @@ class Estado:
 
     # METODO 8 (Diagrama de secuencia)
     def es_pendiente_revision(self):
-        return (self.nombre_estado == 'Pendiente de revision')
+        control = (self.nombre_estado == 'Pendiente de revision')
+        return control
     
     # METODO 20 (Diagrama de secuencia)
     # METODO 60 (Diagrama de secuencia)
@@ -29,6 +30,6 @@ class Estado:
         control = False
 
         if(self.nombre_estado == 'Rechazado'):
-            return True
+            control = True
         
         return control
