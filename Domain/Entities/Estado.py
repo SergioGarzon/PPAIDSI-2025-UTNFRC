@@ -10,7 +10,6 @@ class Estado:
     def get_nombre_estado(self):
         return self.nombre_estado       
 
-
     # METODO 8 (Diagrama de secuencia)
     def es_pendiente_revision(self):
         control = (self.nombre_estado == 'Pendiente de revision')
@@ -19,11 +18,15 @@ class Estado:
     # METODO 20 (Diagrama de secuencia)
     # METODO 60 (Diagrama de secuencia)
     def es_ambito_evento_sismico(self):
-        return self.ambito == "Evento Sismico"
+        control = False
+        if(self.ambito == "Evento Sismico"):
+            control = True
+        
+        return control
     
     # METODO 21 (Diagrama de secuencia)
     def es_bloq_en_revision(self):
-        return self.nombre_estado == "Bloqueado en revision"
+        return (self.nombre_estado == "Bloqueado en revision") 
 
      # METODO 61 (Diagrama de secuencia)
     def es_rechazado(self):
